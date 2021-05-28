@@ -1,4 +1,7 @@
 $test-colour: #bada55;
+$twitter-black: #0f1419;
+$twitter-main: #1da1f2;
+
 * {
   margin: 0;
   padding: 0;
@@ -7,6 +10,10 @@ $test-colour: #bada55;
 
 .--fixed-pos {
   position: fixed;
+}
+
+.--main-colour {
+  color: $twitter-main;
 }
 
 .App {
@@ -33,12 +40,20 @@ $test-colour: #bada55;
 
   &__button {
     display: block;
-    font-size: 1.2em;
+    font-size: 20px;
     font-weight: 700;
     color: black;
     list-style: none;
     background-color: rgb(194, 194, 68);
     // height: auto;
+  }
+
+  &__icon {
+    fill: $twitter-black;
+  }
+
+  &__logo {
+    fill: $twitter-main;
   }
 }
 

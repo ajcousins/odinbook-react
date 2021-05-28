@@ -3,17 +3,13 @@ import React from "react";
 function SvgTwitterLogo(props) {
   return (
     <svg
-      width='90px'
-      height='80px'
-      // viewBox='0 0 90 80'
-      //   enable-background='new 0 0 90 80'
-      //   xml:space='preserve'
+      // width='90px'
+      height={props.height}
+      className='leftsidebar__logo'
+      viewBox='0 0 90 80' // Keep to maintain aspect ratio
     >
       <g id='Layer_3'>
         <path
-          fill={props.color}
-          // fillRule='evenodd'
-          // clipRule='evenodd'
           d='M3.161,66.64c12.25,0.541,17.709-1.25,24.375-6.594
 		c-6.958-0.613-14.333-6.697-14.906-12.438c2.906,0.324,5.072,0.24,7.031-0.281C15.222,45.368,8.245,44.349,5.988,29.95
 		c3.548,1.898,5.257,2.023,7.485,1.689c-3.646-2.582-5.807-6.836-6.813-10.332C5.46,17.134,6.286,13.39,8.37,8.765
