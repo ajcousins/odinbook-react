@@ -20,7 +20,7 @@ const LeftSideBar = (props) => {
         <SvgHomeIcon height={iconHeight} />
       </SideButton>
 
-      <SideButton text='Notification'>
+      <SideButton text='Notifications'>
         <SvgNotificationIcon height={iconHeight} />
       </SideButton>
 

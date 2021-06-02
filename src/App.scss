@@ -1,6 +1,9 @@
 $test-colour: #bada55;
 $twitter-black: #0f1419;
+$twitter-grey-text: rgb(91, 112, 131);
 $twitter-main: #1da1f2;
+$hover-highlight: #e8f5fe;
+$divider-lines: #ebeef0;
 
 * {
   margin: 0;
@@ -26,26 +29,45 @@ $twitter-main: #1da1f2;
   // display: flex;
   // box-sizing: content-box;
   margin: auto;
-  background-color: rgb(211, 255, 240);
+  // background-color: rgb(211, 255, 240);
 }
 
 .leftsidebar {
   position: fixed;
   display: flex;
+  align-items: flex-start;
+  // justify-content: space-between;
   flex-direction: column;
-  background-color: hsl(43, 74%, 92%);
+  // background-color: hsl(43, 74%, 92%);
   height: 100vh;
   width: 251px;
   padding: 0 12px;
+  border-right: solid 1px $divider-lines;
 
   &__button {
-    display: block;
+    display: flex;
+    // flex-shrink: 2;
+    // align-items: flex-start;
     font-size: 20px;
     font-weight: 700;
     color: black;
     list-style: none;
-    background-color: rgb(194, 194, 68);
-    // height: auto;
+    margin-top: 0.1em;
+    margin-bottom: 0.5em;
+    border-radius: 1.2em;
+    padding: 0.5em;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $hover-highlight;
+
+      .leftsidebar__icon {
+        fill: $twitter-main;
+      }
+      .leftsidebar__text {
+        color: $twitter-main;
+      }
+    }
   }
 
   &__icon {
@@ -55,30 +77,155 @@ $twitter-main: #1da1f2;
   &__logo {
     fill: $twitter-main;
   }
+
+  &__text {
+    padding: 0 0.8em;
+  }
 }
 
 .content {
   display: flex;
   justify-content: space-between;
-  width: 990px;
+  max-width: 990px;
   min-height: 100vh;
-  background-color: hsl(203, 100%, 96%);
+  // background-color: hsl(203, 100%, 96%);
   margin-left: 251px;
 }
 
 .mainfeed {
   display: flex;
-  width: 600px;
+  flex-direction: column;
+  position: relative;
+  max-width: 600px;
   min-height: 100vh;
+  border-right: solid 1px $divider-lines;
+  // background-color: hsl(128, 58%, 52%);
 
-  background-color: hsl(128, 58%, 52%);
+  &__header {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    height: 53px;
+    width: 100%;
+    background-color: #ffffff;
+    border-bottom: solid 1px $divider-lines;
+    padding: 0 16px;
+
+    &__text {
+      font-size: 20px;
+      font-weight: 800;
+      color: black;
+    }
+  }
+}
+
+.tweet {
+  display: flex;
+  // height: 30px;
+  max-width: 598px;
+  border-bottom: solid 1px $divider-lines;
+  padding: 12px 16px;
+  font-size: 15px;
+  line-height: 20px;
+  color: $twitter-black;
+
+  &__col-2 {
+    width: 100%;
+  }
+  &__col-2__row-1 {
+    // display: flex;
+  }
+
+  &__avatar {
+    height: 48px;
+    margin-right: 12px;
+    border-radius: 50%;
+  }
+
+  &__name {
+    font-weight: 700;
+  }
+  &__handle,
+  &__time {
+    color: $twitter-grey-text;
+  }
+
+  &__bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    // background-color: #bada55;
+    max-width: 425px;
+    margin-top: 12px;
+  }
+  &__button {
+    display: flex;
+    cursor: pointer;
+    font-size: 13px;
+    // background-color: aqua;
+
+    &:hover {
+      color: $twitter-main;
+      .tweet__icon-area {
+        background-color: $hover-highlight;
+      }
+      .tweet__icon {
+        fill: $twitter-main;
+      }
+    }
+  }
+
+  &__icon-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: rgb(205, 205, 255);
+    height: 35px;
+    width: 35px;
+    margin: -8px;
+    border-radius: 50%;
+  }
+
+  &__icon {
+    fill: $twitter-grey-text;
+  }
 }
 
 .rightsidebar {
   display: flex;
   // margin-left: 40px;
+  margin-left: 25px;
   width: 350px;
   min-height: 100vh;
   height: 1500px;
-  background-color: hsl(204, 58%, 52%);
+  background-color: hsl(0, 0%, 98%);
+}
+
+@media screen and (max-width: 1300px) {
+  .leftsidebar {
+    // background-color: blue;
+    width: 88px;
+    align-items: center;
+    &__text {
+      // position: absolute;
+      // visibility: hidden;
+      display: none;
+    }
+  }
+  .content {
+    width: auto;
+    margin-left: 88px;
+  }
+
+  .rightsidebar {
+  }
+}
+
+@media screen and (max-width: 1095px) {
+  .rightsidebar {
+    display: none;
+  }
+  .content {
+    width: auto;
+  }
 }

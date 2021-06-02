@@ -1,5 +1,6 @@
 import "./App.scss";
 import LeftSideBar from "./components/LeftSideBar";
+import MainFeed from "./components/MainFeed";
 
 function App() {
   return (
@@ -7,12 +8,8 @@ function App() {
       <div className='wrapper-main'>
         <LeftSideBar />
         <div className='content'>
-          <div className='mainfeed'></div>
-          <div className='rightsidebar'>
-            Rightsidebar rightsidebar rightsidebar rightsidebar rightsidebar
-            rightsidebar rightsidebar rightsidebar rightsidebar rightsidebar
-            rightsidebar rightsidebar
-          </div>
+          <MainFeed title='Home' />
+          <div className='rightsidebar'></div>
         </div>
       </div>
     </div>

@@ -4,10 +4,12 @@ import React from "react";
 
 const SideButton = (props) => {
   return (
-    <div className='leftsidebar__button'>
+    <span className='leftsidebar__button'>
       {props.children}
-      {props.text}
-    </div>
+      <div className={props.text == null ? "" : "leftsidebar__text"}>
+        {props.text}
+      </div>
+    </span>
   );
 };
 
