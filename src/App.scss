@@ -4,6 +4,7 @@ $twitter-grey-text: rgb(91, 112, 131);
 $twitter-main: #1da1f2;
 $hover-highlight: #e8f5fe;
 $divider-lines: #ebeef0;
+$input-outline: #c4cfd6;
 
 * {
   margin: 0;
@@ -30,6 +31,40 @@ $divider-lines: #ebeef0;
   // box-sizing: content-box;
   margin: auto;
   // background-color: rgb(211, 255, 240);
+}
+
+.login {
+  // background-color: antiquewhite;
+  max-width: 400px;
+  margin-top: 20px;
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &__title {
+    color: $twitter-black;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  &__input {
+    color: $twitter-black;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+    padding: 1em 0.5em;
+    border: solid 1px $input-outline;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1.1em;
+  }
+
+  &__input:focus {
+    outline: none;
+    border: 3px solid $twitter-main;
+  }
 }
 
 .leftsidebar {
