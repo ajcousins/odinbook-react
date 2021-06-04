@@ -1,6 +1,7 @@
 import "./App.scss";
 import LeftSideBar from "./components/LeftSideBar";
 import MainFeed from "./components/MainFeed";
+import Test from "./components/Test";
 
 function App() {
   return (

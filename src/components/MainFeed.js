@@ -1,5 +1,6 @@
 import React from "react";
 import Tweet from "./../components/Tweet";
+import Test from "./../components/Test";
 
 const MainFeed = (props) => {
   return (
@@ -29,6 +30,7 @@ const MainFeed = (props) => {
         retweets='52.9K'
         likes='135.6K'
       />
+      <Test />
     </div>
   );
 };
