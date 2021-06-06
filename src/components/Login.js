@@ -8,7 +8,13 @@ const Login = (props) => {
       <h1 className='login__title'>Log in to Twitter</h1>
       <input className='login__input' type='text' placeholder='Username' />
       <input className='login__input' type='password' placeholder='Password' />
-      Login Page
+      <button type='submit'>Log in</button>
+      {/* Login Page */}
+      <div className='login__footer'>
+        <a href='#'>Forgot password?</a>
+        &nbsp;·&nbsp;
+        <a href='#'>Sign up for Twitter</a>
+      </div>
     </div>
   );
 };

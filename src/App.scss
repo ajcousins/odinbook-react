@@ -2,6 +2,8 @@ $test-colour: #bada55;
 $twitter-black: #0f1419;
 $twitter-grey-text: rgb(91, 112, 131);
 $twitter-main: #1da1f2;
+$twitter-main-hover: #1a91da;
+$twitter-link: rgb(27, 149, 224);
 $hover-highlight: #e8f5fe;
 $divider-lines: #ebeef0;
 $input-outline: #c4cfd6;
@@ -10,6 +12,32 @@ $input-outline: #c4cfd6;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: $twitter-link;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+button {
+  width: 100%;
+  background-color: $twitter-main;
+  color: white;
+  padding: 1em 0;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+
+  &:hover {
+    background-color: $twitter-main-hover;
+  }
 }
 
 .--fixed-pos {
@@ -42,6 +70,7 @@ $input-outline: #c4cfd6;
   padding-right: 16px;
   margin-left: auto;
   margin-right: auto;
+  color: $twitter-black;
 
   &__title {
     color: $twitter-black;
@@ -53,7 +82,7 @@ $input-outline: #c4cfd6;
     color: $twitter-black;
     width: 100%;
     box-sizing: border-box;
-    margin-bottom: 1em;
+    margin-bottom: 1.3em;
     padding: 1em 0.5em;
     border: solid 1px $input-outline;
     border-radius: 4px;
@@ -62,8 +91,15 @@ $input-outline: #c4cfd6;
   }
 
   &__input:focus {
-    outline: none;
-    border: 3px solid $twitter-main;
+    outline-color: $twitter-main;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 3.5em;
+    font-size: 0.9rem;
   }
 }
 
