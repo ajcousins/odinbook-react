@@ -30,7 +30,7 @@ const MainFeed = (props) => {
         retweets='52.9K'
         likes='135.6K'
       />
-      <Test />
+      <Test header={props.header} />
     </div>
   );
 };
