@@ -4,7 +4,8 @@ import axios from "axios";
 
 const Login = (props) => {
   const [input, setInput] = useState({});
-  const [serverData, setServerData] = useState("");
+  const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
 
   const changeHandler = (e) => {
     let inputCopy = input;
@@ -20,14 +21,18 @@ const Login = (props) => {
 
   const login = async () => {
     const response = await axios.post("/api/v1/users/login", input);
-    const data = await response.data.token;
-    setServerData(data);
-    // console.log(serverData);
+    const data = await response.data;
+    setToken(data.token);
+
+    console.log("id:", data.data.user._id);
+    props.tokenHandler(token);
+    // props.userIdHandler(userId);
   };
 
-  useEffect(() => {
-    props.tokenHandler(serverData);
-  }, [serverData]);
+  // useEffect(() => {
+  //   // props.tokenHandler(token);
+  //   props.userIdHandler(userId);
+  // }, [userId]);
 
   return (
     <div className='login'>

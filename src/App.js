@@ -9,6 +9,7 @@ import Login from "./components/Login";
 function App() {
   const [header, setHeader] = useState({});
   const [isAuth, setIsAuth] = useState(false);
+  const [userId, setUserId] = useState("");
 
   const tokenHandler = (token) => {
     let tokenCopy = token;
@@ -16,39 +17,37 @@ function App() {
     // console.log("From App:", token);
     setHeader({ Authorization: `Bearer ${tokenCopy}` });
     // console.log(header);
+    setIsAuth(true);
   };
 
-  // useEffect(() => {
-  //   console.log(header);
-  //   if (header.Authorization && header.Authorization.length > 10) {
-  //     setIsAuth(true);
-  //     console.log("True!");
-  //   }
-  // }, [header]);
-
   useEffect(async () => {
-    const response = await fetch("/tweets/", {
-      method: "GET",
-      // headers: new Headers(props.header),
-    });
-    const data = await response.json();
-    // setTestMessage(JSON.stringify(data.data.tweets));
-    console.log(data);
-    if (data.status === "fail") setIsAuth(false);
-    else setIsAuth(true);
-  });
+    try {
+      const response = await fetch("/tweets/", {
+        method: "GET",
+        // headers: new Headers(props.header),
+      });
+      const data = await response.json();
+      // setTestMessage(JSON.stringify(data.data.tweets));
+      console.log("data:", data);
+      if (
+        data.status === "fail" ||
+        data.status === "error" ||
+        data.status === null
+      )
+        setIsAuth(false);
+      else {
+        setIsAuth(true);
+        setUserId(data.data.currentUser);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, [isAuth]);
 
   if (!isAuth) {
     return (
       <div className='App'>
         <Login tokenHandler={tokenHandler} />
-        {/* <div className='wrapper-main'>
-          <LeftSideBar />
-          <div className='content'>
-            <MainFeed title='Home' />
-            <div className='rightsidebar'></div>
-          </div>
-        </div> */}
       </div>
     );
   } else {
@@ -58,6 +57,7 @@ function App() {
           <LeftSideBar />
           <div className='content'>
             <MainFeed title='Home' header={header} />
+            {userId}
             <div className='rightsidebar'></div>
           </div>
         </div>
