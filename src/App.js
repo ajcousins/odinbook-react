@@ -3,46 +3,55 @@ import React, { useEffect, useState } from "react";
 import "./App.scss";
 import LeftSideBar from "./components/LeftSideBar";
 import MainFeed from "./components/MainFeed";
-import Test from "./components/Test";
+
 import Login from "./components/Login";
 
 function App() {
   const [header, setHeader] = useState({});
   const [isAuth, setIsAuth] = useState(false);
   const [userId, setUserId] = useState("");
+  const [menuVis, setMenuVis] = useState(false);
 
   const tokenHandler = (token) => {
     let tokenCopy = token;
-
-    // console.log("From App:", token);
     setHeader({ Authorization: `Bearer ${tokenCopy}` });
-    // console.log(header);
     setIsAuth(true);
   };
 
   useEffect(async () => {
+    const response = await fetch("/tweets/", {
+      method: "GET",
+    });
+    const data = await response.json();
+    if (
+      data.status === "fail" ||
+      data.status === "error" ||
+      data.status === null
+    )
+      setIsAuth(false);
+    else {
+      setIsAuth(true);
+      setUserId(data.data.currentUser);
+    }
+  }, [isAuth]);
+
+  const menuHandler = () => {
+    console.log("Menu handler from App");
+    if (menuVis) setMenuVis(false);
+    else setMenuVis(true);
+  };
+
+  const logOut = async () => {
     try {
-      const response = await fetch("/tweets/", {
+      await fetch("/api/v1/users/logout", {
         method: "GET",
-        // headers: new Headers(props.header),
       });
-      const data = await response.json();
-      // setTestMessage(JSON.stringify(data.data.tweets));
-      console.log("data:", data);
-      if (
-        data.status === "fail" ||
-        data.status === "error" ||
-        data.status === null
-      )
-        setIsAuth(false);
-      else {
-        setIsAuth(true);
-        setUserId(data.data.currentUser);
-      }
+      setMenuVis(false);
+      setIsAuth(false);
     } catch (err) {
       console.log(err);
     }
-  }, [isAuth]);
+  };
 
   if (!isAuth) {
     return (
@@ -53,8 +62,19 @@ function App() {
   } else {
     return (
       <div className='App'>
+        {!menuVis ? null : (
+          <div>
+            <div className='menu__click-area' onClick={menuHandler}>
+              <div className='menu'>
+                <div className='menu__item' onClick={logOut}>
+                  Log out @Ganaden1024
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div className='wrapper-main'>
-          <LeftSideBar />
+          <LeftSideBar menu={menuHandler} />
           <div className='content'>
             <MainFeed title='Home' header={header} />
             {userId}
