@@ -3,13 +3,6 @@ import defaultAvatar from "./../static/default-avatar.png";
 import SvgEllipsis from "./../iconComponents/SvgEllipsis";
 
 const UserAdmin = (props) => {
-  // const [menuVis, setMenuVis] = useState(false);
-
-  // const onClickHandler = () => {
-  //   if (menuVis) setMenuVis(false);
-  //   else setMenuVis(true);
-  // };
-
   return (
     <div className='leftsidebar__container'>
       <div className='leftsidebar__useradmin' onClick={props.menu}>

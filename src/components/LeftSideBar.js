@@ -13,7 +13,7 @@ const iconHeight = "26px";
 const LeftSideBar = (props) => {
   return (
     <div className='leftsidebar'>
-      <div>
+      <div className='leftsidebar__upper-container'>
         <SideButton>
           <SvgTwitterLogo height='29px' />
         </SideButton>

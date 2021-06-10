@@ -50,17 +50,25 @@ button {
 
 .App {
   // text-align: center;
-  color: $test-colour;
+  color: $twitter-grey-text;
   display: flex;
+  // background-color: aqua;
+}
+
+.wrapper-login {
+  display: flex;
+  margin: auto;
+  width: auto;
 }
 
 .wrapper-main {
-  // display: flex;
+  display: flex;
   // box-sizing: content-box;
   margin: auto;
   // background-color: rgb(211, 255, 240);
   position: relative;
   // display: none;
+  width: auto;
 }
 
 .login {
@@ -105,9 +113,79 @@ button {
   }
 }
 
+.register {
+  &__wrapper {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    // background-color: pink;
+    width: 100%;
+    height: 100vh;
+  }
+
+  &__background {
+    background-color: #00000066;
+    position: fixed;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  &__form {
+    position: absolute;
+    background-color: white;
+    width: 600px;
+    height: 630px;
+    border-radius: 1em;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0.75em 2em;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    // background-color: red;
+  }
+
+  &__title {
+    color: $twitter-black;
+    font-size: 1.44rem;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    // display: flex;
+    // justify-content: center;
+    // background-color: red;
+  }
+
+  &__success-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  &__success-button {
+    margin-top: auto;
+    margin-bottom: 30px;
+  }
+
+  &__spacer {
+    height: 12em;
+    width: 100%;
+    // background-color: rgba(255, 0, 0, 0.116);
+  }
+}
+
 .leftsidebar {
   position: fixed;
   display: flex;
+  flex-shrink: 0;
   align-items: flex-start;
   justify-content: space-between;
   flex-direction: column;
@@ -116,6 +194,12 @@ button {
   width: 251px;
   padding: 0 12px;
   border-right: solid 1px $divider-lines;
+
+  &__upper-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
   &__button {
     display: flex;
@@ -225,34 +309,24 @@ button {
   }
 
   &__click-area {
-    // background-color: pink;
+    background-color: transparent;
     width: 100%;
     height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: fixed;
     z-index: 1;
   }
 }
 
-.content {
-  display: flex;
-  justify-content: space-between;
-  max-width: 990px;
-  min-height: 100vh;
-  // background-color: hsl(203, 100%, 96%);
-  margin-left: 251px;
-  // z-index: -1;
-}
-
 .mainfeed {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   position: relative;
+  margin-left: 251px;
   max-width: 600px;
   min-height: 100vh;
   border-right: solid 1px $divider-lines;
-  // background-color: hsl(128, 58%, 52%);
+  // background-color: hsla(128, 58%, 52%, 0.24);
 
   &__header {
     display: flex;
@@ -271,14 +345,22 @@ button {
       color: black;
     }
   }
+
+  &__divider {
+    height: 12px;
+    background-color: #f7f9fa;
+    border-bottom: solid 1px $divider-lines;
+    width: 100%;
+  }
 }
 
 .tweet {
   display: flex;
+  // flex-grow: 1;
   // height: 30px;
   // align-content: stretch;
   max-width: 598px;
-  width: 598px;
+  // width: 598px;
   border-bottom: solid 1px $divider-lines;
   padding: 12px 16px;
   font-size: 15px;
@@ -345,16 +427,50 @@ button {
   &__icon {
     fill: $twitter-grey-text;
   }
+
+  &__compose {
+    &__col-2 {
+      // background-color: blue;
+      width: 100%;
+    }
+    &__input {
+      padding: 12px 0;
+      border: none;
+      resize: none;
+      width: 100%;
+      // background-color: orange;
+      font-size: 1.25rem;
+      font-family: inherit;
+      outline: none;
+    }
+
+    &__footer {
+      // background-color: red;
+      display: flex;
+      justify-content: flex-end;
+      // height: 2em;
+      width: 100%;
+    }
+
+    &--submit {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: auto;
+      padding: 0.65em 1.05em;
+    }
+  }
 }
 
 .rightsidebar {
   display: flex;
+  flex-shrink: 0;
   // margin-left: 40px;
-  margin-left: 25px;
-  width: 350px;
+  // margin-left: 25px;
+  width: 375px;
   min-height: 100vh;
-  height: 1500px;
-  background-color: hsl(0, 0%, 98%);
+  // height: 1500px;
+  background-color: hsla(0, 75%, 89%, 0.186);
 }
 
 @media screen and (max-width: 1300px) {
@@ -369,10 +485,13 @@ button {
     }
   }
 
-  .content {
-    width: auto;
+  .mainfeed {
     margin-left: 88px;
   }
+  // .content {
+  //   width: auto;
+  //   margin-left: 88px;
+  // }
 
   .leftsidebar__useradmin__name {
     display: none;

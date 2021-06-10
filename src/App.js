@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import "./App.scss";
+import MenuPopUp from "./components/MenuPopUp";
 import LeftSideBar from "./components/LeftSideBar";
 import MainFeed from "./components/MainFeed";
 
@@ -44,7 +45,6 @@ function App() {
   }, [isAuth]);
 
   const menuHandler = () => {
-    console.log("Menu handler from App");
     if (menuVis) setMenuVis(false);
     else setMenuVis(true);
   };
@@ -72,22 +72,15 @@ function App() {
     return (
       <div className='App'>
         <div className='wrapper-main'>
-          {!menuVis ? null : (
-            <div>
-              <div className='menu__click-area' onClick={menuHandler}>
-                <div className='menu'>
-                  <div className='menu__item' onClick={logOut}>
-                    Log out @{currentUser.handle}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          <MenuPopUp
+            menuVis={menuVis}
+            menuHandler={menuHandler}
+            logOut={logOut}
+            currentUser={currentUser}
+          />
           <LeftSideBar menu={menuHandler} currentUser={currentUser} />
-          <div className='content'>
-            <MainFeed title='Home' header={header} />
-            <div className='rightsidebar'></div>
-          </div>
+          <MainFeed title='Home' header={header} currentUser={currentUser} />
+          <div className='rightsidebar'></div>
         </div>
       </div>
     );
