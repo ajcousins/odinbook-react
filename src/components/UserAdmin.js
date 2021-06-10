@@ -15,8 +15,12 @@ const UserAdmin = (props) => {
       <div className='leftsidebar__useradmin' onClick={props.menu}>
         <img className='leftsidebar__useradmin__avatar' src={defaultAvatar} />
         <div>
-          <div className='leftsidebar__useradmin__name'>James Ganaden</div>
-          <div className='leftsidebar__useradmin__handle'>@Ganaden1024</div>
+          <div className='leftsidebar__useradmin__name'>
+            {props.currentUser.name}
+          </div>
+          <div className='leftsidebar__useradmin__handle'>
+            @{props.currentUser.handle}
+          </div>
         </div>
         <SvgEllipsis className='leftsidebar__useradmin__ellipsis' />
       </div>

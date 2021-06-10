@@ -9,7 +9,7 @@ import Login from "./components/Login";
 function App() {
   const [header, setHeader] = useState({});
   const [isAuth, setIsAuth] = useState(false);
-  const [userId, setUserId] = useState("");
+  const [currentUser, setCurrentUser] = useState({});
   const [menuVis, setMenuVis] = useState(false);
 
   const tokenHandler = (token) => {
@@ -19,19 +19,27 @@ function App() {
   };
 
   useEffect(async () => {
-    const response = await fetch("/tweets/", {
-      method: "GET",
-    });
-    const data = await response.json();
-    if (
-      data.status === "fail" ||
-      data.status === "error" ||
-      data.status === null
-    )
+    try {
+      const response = await fetch("/tweets/", {
+        method: "GET",
+      });
+      const data = await response.json();
+      if (
+        data.status === "fail" ||
+        data.status === "error" ||
+        data.status === null
+      )
+        setIsAuth(false);
+      else {
+        setIsAuth(true);
+        const currentUserCopy = { ...data.data.currentUser };
+
+        setCurrentUser(currentUserCopy);
+        console.log(currentUser);
+      }
+    } catch (err) {
+      console.log(err);
       setIsAuth(false);
-    else {
-      setIsAuth(true);
-      setUserId(data.data.currentUser);
     }
   }, [isAuth]);
 
@@ -48,6 +56,7 @@ function App() {
       });
       setMenuVis(false);
       setIsAuth(false);
+      setCurrentUser({});
     } catch (err) {
       console.log(err);
     }
@@ -62,22 +71,21 @@ function App() {
   } else {
     return (
       <div className='App'>
-        {!menuVis ? null : (
-          <div>
-            <div className='menu__click-area' onClick={menuHandler}>
-              <div className='menu'>
-                <div className='menu__item' onClick={logOut}>
-                  Log out @Ganaden1024
+        <div className='wrapper-main'>
+          {!menuVis ? null : (
+            <div>
+              <div className='menu__click-area' onClick={menuHandler}>
+                <div className='menu'>
+                  <div className='menu__item' onClick={logOut}>
+                    Log out @{currentUser.handle}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-        <div className='wrapper-main'>
-          <LeftSideBar menu={menuHandler} />
+          )}
+          <LeftSideBar menu={menuHandler} currentUser={currentUser} />
           <div className='content'>
             <MainFeed title='Home' header={header} />
-            {userId}
             <div className='rightsidebar'></div>
           </div>
         </div>
