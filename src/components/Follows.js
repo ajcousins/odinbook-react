@@ -1,6 +1,8 @@
 const Follows = (props) => {
   const numberFormat = (int) => {
-    return int.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    let intCopy = int * 1;
+
+    return intCopy.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   return (

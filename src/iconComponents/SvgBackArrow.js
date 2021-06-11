@@ -3,6 +3,7 @@ import React from "react";
 function SvgBackArrow(props) {
   return (
     <svg
+      onClick={props.changePage}
       viewBox='0 0 24 24'
       className='btn--back-arrow'
       // width='24'

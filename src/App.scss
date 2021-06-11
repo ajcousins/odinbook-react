@@ -379,6 +379,7 @@ strong {
     background-color: #ffffff;
     border-bottom: solid 1px $divider-lines;
     padding: 0 16px;
+    z-index: 1;
 
     &__text {
       font-size: 20px;
@@ -533,7 +534,12 @@ strong {
 
   &__name {
     font-weight: 700;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
   }
+
   &__handle,
   &__time {
     color: $twitter-grey-text;

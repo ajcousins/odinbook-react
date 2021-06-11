@@ -5,6 +5,7 @@ import ComposeTweet from "./../components/ComposeTweet";
 const MainFeedIndex = (props) => {
   const [tweets, setTweets] = useState([]);
   const [tweetPosted, setTweetPosted] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       const response = await fetch("/tweets/", {
@@ -36,6 +37,7 @@ const MainFeedIndex = (props) => {
           <Tweet
             className='tweet'
             name={tweet.user.name}
+            id={tweet.user._id}
             handle={`@${tweet.user.handle}`}
             profilePic=''
             time={tweet.tweetAge}
@@ -43,6 +45,8 @@ const MainFeedIndex = (props) => {
             replies={tweet.replies_short}
             retweets={tweet.retweets_short}
             likes={tweet.likes_short}
+            changePage={props.changePage}
+            fetchUser={props.fetchUser}
           />
         );
       })}

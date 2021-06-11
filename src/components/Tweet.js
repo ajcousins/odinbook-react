@@ -14,7 +14,13 @@ const Tweet = (props) => {
       </div>
       <div className='tweet__col-2'>
         <div className='tweet__col-2__row-1'>
-          <span className='tweet__name'>{props.name}</span>&nbsp;
+          <span
+            className='tweet__name'
+            onClick={() => props.fetchUser(props.id)}
+          >
+            {props.name}
+          </span>
+          &nbsp;
           <span className='tweet__handle'>{props.handle}&nbsp;·&nbsp;</span>
           <span className='tweet__time'>{props.time}</span>
         </div>

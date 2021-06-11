@@ -6,13 +6,44 @@ import Tweet from "./Tweet";
 import ComposeTweet from "./ComposeTweet";
 
 const MainFeedUser = (props) => {
+  const [userTweets, setUserTweets] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState("");
+
+  // Get tweets from current user
+  const loadTweets = () => {
+    console.log("Get tweets");
+    console.log("User:", props.user._id);
+    async function fetchData() {
+      const response = await fetch(`/api/v1/tweets/user/${props.user._id}`, {
+        method: "GET",
+      });
+      const data = await response.json();
+      console.log(data.userTweets);
+      setUserTweets(data.userTweets);
+      // copy tweets into userTweets state
+    }
+    fetchData();
+  };
+
+  useEffect(() => {
+    if (!currentUserId) {
+      setCurrentUserId(props.user._id);
+    } else {
+      console.log("Use Effect User:", currentUserId);
+      console.log("Load tweets!");
+      loadTweets();
+    }
+  }, [currentUserId, props.user._id]);
+
   return (
     <div className='mainfeed'>
       <div className='mainfeed__header'>
-        <SvgBackArrow height='22.5px' />
+        <SvgBackArrow height='22.5px' changePage={() => props.changePage(0)} />
         <div className='mainfeed__header__col-2'>
-          <div className='mainfeed__header__text'>Dan Walker</div>
-          <span className='mainfeed__user__tweets'>88K Tweets</span>
+          <div className='mainfeed__header__text'>{props.user.name}</div>
+          <span className='mainfeed__user__tweets'>
+            {userTweets ? userTweets.length : "0"} Tweets
+          </span>
         </div>
       </div>
       <div className='mainfeed__banner'>
@@ -25,8 +56,8 @@ const MainFeedUser = (props) => {
           <button className='btn--follow'>Follow</button>
         </div>
         <div className='mainfeed__bio__row-2'>
-          <h2 className='mainfeed__user-title'>Dan Walker</h2>
-          <p>@mrdanwalker</p>
+          <h2 className='mainfeed__user-title'>{props.user.name}</h2>
+          <p>@{props.user.handle}</p>
         </div>
         <div className='mainfeed__bio__row-3'>
           <p>
@@ -36,8 +67,8 @@ const MainFeedUser = (props) => {
           </p>
         </div>
         <div className='mainfeed__bio__row-5'>
-          <Follows type='Following ' number='1572' />
-          <Follows type='Followers ' number='712123' />
+          <Follows type='Following ' number={props.user.following_length} />
+          <Follows type='Followers ' number={props.user.followers_length} />
         </div>
         <div className='mainfeed__bio__row-7'>
           <div className='mainfeed__bio--selected'>
@@ -49,7 +80,24 @@ const MainFeedUser = (props) => {
           <div>Likes</div>
         </div>
       </div>
-      Stuff!
+      {userTweets.map((tweet) => {
+        return (
+          <Tweet
+            className='tweet'
+            name={tweet.user.name}
+            id={tweet.user._id}
+            handle={`@${tweet.user.handle}`}
+            profilePic=''
+            time={tweet.tweetAge}
+            message={tweet.textContent}
+            replies={tweet.replies_short}
+            retweets={tweet.retweets_short}
+            likes={tweet.likes_short}
+            changePage={props.changePage}
+            fetchUser={props.fetchUser}
+          />
+        );
+      })}
     </div>
   );
 };
