@@ -19,29 +19,32 @@ function App() {
     setIsAuth(true);
   };
 
-  useEffect(async () => {
-    try {
-      const response = await fetch("/tweets/", {
-        method: "GET",
-      });
-      const data = await response.json();
-      if (
-        data.status === "fail" ||
-        data.status === "error" ||
-        data.status === null
-      )
-        setIsAuth(false);
-      else {
-        setIsAuth(true);
-        const currentUserCopy = { ...data.data.currentUser };
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("/tweets/", {
+          method: "GET",
+        });
+        const data = await response.json();
+        if (
+          data.status === "fail" ||
+          data.status === "error" ||
+          data.status === null
+        )
+          setIsAuth(false);
+        else {
+          setIsAuth(true);
+          const currentUserCopy = { ...data.data.currentUser };
 
-        setCurrentUser(currentUserCopy);
-        console.log(currentUser);
+          setCurrentUser(currentUserCopy);
+          console.log(currentUser);
+        }
+      } catch (err) {
+        console.log(err);
+        setIsAuth(false);
       }
-    } catch (err) {
-      console.log(err);
-      setIsAuth(false);
     }
+    fetchData();
   }, [isAuth]);
 
   const menuHandler = () => {
@@ -65,7 +68,7 @@ function App() {
   if (!isAuth) {
     return (
       <div className='App'>
-        <Login tokenHandler={tokenHandler} />
+        <Login tokenHandler={tokenHandler} logOut={logOut} />
       </div>
     );
   } else {
@@ -79,7 +82,7 @@ function App() {
             currentUser={currentUser}
           />
           <LeftSideBar menu={menuHandler} currentUser={currentUser} />
-          <MainFeed title='Home' header={header} currentUser={currentUser} />
+          <MainFeed header={header} currentUser={currentUser} />
           <div className='rightsidebar'></div>
         </div>
       </div>

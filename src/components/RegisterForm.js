@@ -19,6 +19,7 @@ const RegisterForm = (props) => {
       (res) => {
         console.log(res);
         if (res.status === 201) {
+          props.logOut();
           setPage(1);
         }
       },
@@ -107,6 +108,8 @@ const RegisterForm = (props) => {
           </div>
         </div>
       );
+    default:
+      return null;
   }
 };
 

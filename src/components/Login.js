@@ -37,7 +37,11 @@ const Login = (props) => {
 
   return (
     <div className='wrapper-login'>
-      <RegisterForm formActive={formActive} clickHandler={clickHandler} />
+      <RegisterForm
+        formActive={formActive}
+        clickHandler={clickHandler}
+        logOut={props.logOut}
+      />
       <div className='login'>
         <SvgTwitterLogo height='40px' />
         <h1 className='login__title'>Log in to Twitter</h1>
