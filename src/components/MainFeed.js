@@ -45,6 +45,7 @@ const MainFeed = (props) => {
           changePage={changePage}
           selectedUser={selectedUser}
           currentUser={props.currentUser}
+          fetchUser={fetchUser}
         />
       );
     default:

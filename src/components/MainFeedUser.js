@@ -32,10 +32,10 @@ const MainFeedUser = (props) => {
   }, [selectedUserId, props.selectedUser._id]);
 
   const followHandler = () => {
-    console.log("follow handler");
-    console.log(props.currentUser);
+    // console.log("follow handler");
+    // console.log(props.currentUser);
     if (isFollowingState) {
-      console.log("Already following");
+      // console.log("Already following");
       return null;
     }
 
@@ -45,8 +45,27 @@ const MainFeedUser = (props) => {
       })
       .then(
         (res) => {
-          console.log(res);
+          // console.log(res);
           setIsFollowingState(true);
+        },
+        (err) => {
+          // console.log(err);
+        }
+      );
+  };
+
+  const unfollowHandler = () => {
+    console.log("Unfollow!");
+
+    axios
+      .post("/api/v1/users/unfollow", {
+        userToUnfollow: selectedUserId,
+      })
+      .then(
+        (res) => {
+          // console.log(res);
+          console.log("Unfollow state setting to false!");
+          setIsFollowingState(false);
         },
         (err) => {
           console.log(err);
@@ -56,49 +75,17 @@ const MainFeedUser = (props) => {
 
   // Check if selected user is being followed by current user.
   useEffect(() => {
+    console.log("useEffect", isFollowingState);
     if (!props.selectedUser.followers) {
-      setIsFollowingState(false);
+      // setIsFollowingState(false);
       return false;
     } else if (props.selectedUser.followers.includes(props.currentUser._id)) {
-      console.log("Current user ID:", props.currentUser._id);
-      console.log("Selected user followers:", props.selectedUser.followers);
+      // console.log("Current user ID:", props.currentUser._id);
+      // console.log("Selected user followers:", props.selectedUser.followers);
       setIsFollowingState(true);
       return true;
     }
-    return false;
   }, [isFollowingState, props.selectedUser.followers]);
-
-  /*
-  const isFollowing = () => {
-    // Check if selected user is being followed by current user.
-    // console.log("selectedUser:", props.selectedUser.followers);
-    // console.log("currentUser:", props.currentUser._id);
-    if (!props.selectedUser.followers) {
-      console.log("Here");
-      return false;
-    }
-    console.log(
-      "Check:",
-      props.selectedUser.followers.includes(props.currentUser._id)
-    );
-    return props.selectedUser.followers.includes(props.currentUser._id);
-  };
-*/
-  const followingBtn = () => {
-    if (isFollowingState) {
-      return (
-        <button className='btn--following' onClick={followHandler}>
-          Following
-        </button>
-      );
-    } else {
-      return (
-        <button className='btn--follow' onClick={followHandler}>
-          Follow
-        </button>
-      );
-    }
-  };
 
   return (
     <div className='mainfeed'>
@@ -121,8 +108,8 @@ const MainFeedUser = (props) => {
       <div className='mainfeed__bio'>
         <div className='mainfeed__bio__row-1'>
           {isFollowingState ? (
-            <button className='btn--following' onClick={followHandler}>
-              Following
+            <button className='btn--following' onClick={unfollowHandler}>
+              {/* Following */}
             </button>
           ) : (
             <button className='btn--follow' onClick={followHandler}>
