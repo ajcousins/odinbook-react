@@ -45,7 +45,7 @@ const MainFeedIndex = (props) => {
             replies={tweet.replies_short}
             retweets={tweet.retweets_short}
             likes={tweet.likes_short}
-            changePage={props.changePage}
+            // changePage={props.changePage}
             fetchUser={props.fetchUser}
           />
         );

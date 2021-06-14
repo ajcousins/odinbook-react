@@ -60,6 +60,21 @@ strong {
   }
 }
 
+.btn--following {
+  // flex-shrink: 0;
+  box-sizing: content-box;
+  height: 37px;
+  width: 68px;
+  padding: 0 15px;
+  // background-color: white;
+  // color: $twitter-main;
+  // border: 1px solid $twitter-main;
+
+  &:hover {
+    background-color: $twitter-main-hover;
+  }
+}
+
 .btn--back-arrow {
   display: flex;
   // flex-shrink: 2;

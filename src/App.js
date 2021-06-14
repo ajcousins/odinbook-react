@@ -12,6 +12,7 @@ function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [menuVis, setMenuVis] = useState(false);
+  const [page, setPage] = useState(0);
 
   const tokenHandler = (token) => {
     let tokenCopy = token;
@@ -65,6 +66,15 @@ function App() {
     }
   };
 
+  const pageRequest = (page) => {
+    console.log("Page request:", page);
+    setPage(page);
+  };
+
+  useEffect(() => {
+    console.log("Use effect page change");
+  }, [page]);
+
   if (!isAuth) {
     return (
       <div className='App'>
@@ -81,8 +91,18 @@ function App() {
             logOut={logOut}
             currentUser={currentUser}
           />
-          <LeftSideBar menu={menuHandler} currentUser={currentUser} />
-          <MainFeed header={header} currentUser={currentUser} />
+          <LeftSideBar
+            menu={menuHandler}
+            currentUser={currentUser}
+            pageRequest={(page) => pageRequest(page)}
+            // setPage={setPage}
+          />
+          <MainFeed
+            header={header}
+            currentUser={currentUser}
+            page={page}
+            pageRequest={(page) => pageRequest(page)}
+          />
           <div className='rightsidebar'></div>
         </div>
       </div>

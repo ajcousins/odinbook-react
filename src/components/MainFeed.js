@@ -4,25 +4,22 @@ import MainFeedIndex from "./MainFeedIndex";
 import MainFeedUser from "./MainFeedUser";
 
 const MainFeed = (props) => {
-  const [page, setPage] = useState(0);
+  // const [page, setPage] = useState(0);
   const [selectedUser, setSelectedUser] = useState({});
 
-  // useEffect(() => {
-  //   console.log("useEffect from MainFeed");
-  // }, [page]);
-
   const changePage = (page) => {
-    console.log("Fetch User!");
-    console.log("page:", page);
+    // console.log("Fetch User!");
+    // console.log("page:", page);
+    // console.log("page:", page);
     if (page === 0) setSelectedUser({});
-    setPage(page);
+    props.pageRequest(page);
   };
 
   const fetchUser = (id) => {
-    console.log(id);
+    // console.log(id);
 
     axios.get(`/api/v1/users/${id}`).then((res) => {
-      console.log(res);
+      // console.log(res);
       console.log(res.data.data.user);
       setSelectedUser(res.data.data.user);
     });
@@ -30,8 +27,9 @@ const MainFeed = (props) => {
     changePage(1);
   };
 
-  switch (page) {
+  switch (props.page) {
     case 0:
+      console.log("Page 0");
       return (
         <MainFeedIndex
           title='Home'
@@ -40,11 +38,13 @@ const MainFeed = (props) => {
         />
       );
     case 1:
+      console.log("Page 1");
       return (
         <MainFeedUser
           title='User'
           changePage={changePage}
-          user={selectedUser}
+          selectedUser={selectedUser}
+          currentUser={props.currentUser}
         />
       );
     default:
