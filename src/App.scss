@@ -530,6 +530,19 @@ strong {
   }
 }
 
+.loading-tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 598px;
+  height: 5em;
+  // background-color: rgb(111, 226, 226);
+
+  &__gif {
+    height: 5em;
+  }
+}
+
 .tweet {
   display: flex;
   // flex-grow: 1;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Tweet from "./../components/Tweet";
 import ComposeTweet from "./../components/ComposeTweet";
+import LoadingTile from "./../components/LoadingTile";
 
 const MainFeedIndex = (props) => {
   const [tweets, setTweets] = useState([]);
@@ -32,24 +33,28 @@ const MainFeedIndex = (props) => {
         tweetHandler={tweetHandler}
       />
       <div className='mainfeed__divider' />
-      {tweets.map((tweet) => {
-        return (
-          <Tweet
-            className='tweet'
-            name={tweet.user.name}
-            id={tweet.user._id}
-            handle={`@${tweet.user.handle}`}
-            profilePic=''
-            time={tweet.tweetAge}
-            message={tweet.textContent}
-            replies={tweet.replies_short}
-            retweets={tweet.retweets_short}
-            likes={tweet.likes_short}
-            // changePage={props.changePage}
-            fetchUser={props.fetchUser}
-          />
-        );
-      })}
+      {!props.isLoaded ? (
+        <LoadingTile />
+      ) : (
+        tweets.map((tweet) => {
+          return (
+            <Tweet
+              className='tweet'
+              name={tweet.user.name}
+              id={tweet.user._id}
+              handle={`@${tweet.user.handle}`}
+              profilePic=''
+              time={tweet.tweetAge}
+              message={tweet.textContent}
+              replies={tweet.replies_short}
+              retweets={tweet.retweets_short}
+              likes={tweet.likes_short}
+              // changePage={props.changePage}
+              fetchUser={props.fetchUser}
+            />
+          );
+        })
+      )}
     </div>
   );
 };

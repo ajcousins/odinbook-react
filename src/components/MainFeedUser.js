@@ -54,7 +54,6 @@ const MainFeedUser = (props) => {
 
           let length = followerListLength;
           length++;
-          console.log("length", length);
           setFollowerListLength(length);
         },
         (err) => {
@@ -78,7 +77,6 @@ const MainFeedUser = (props) => {
 
           let length = followerListLength;
           length--;
-          console.log("length", length);
           setFollowerListLength(length);
         },
         (err) => {

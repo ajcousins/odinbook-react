@@ -10,6 +10,7 @@ import Login from "./components/Login";
 function App() {
   const [header, setHeader] = useState({});
   const [isAuth, setIsAuth] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [menuVis, setMenuVis] = useState(false);
   const [page, setPage] = useState(0);
@@ -35,10 +36,10 @@ function App() {
           setIsAuth(false);
         else {
           setIsAuth(true);
+          setIsLoaded(true);
           const currentUserCopy = { ...data.data.currentUser };
 
           setCurrentUser(currentUserCopy);
-          console.log(currentUser);
         }
       } catch (err) {
         console.log(err);
@@ -71,17 +72,15 @@ function App() {
     setPage(page);
   };
 
-  useEffect(() => {
-    console.log("Use effect page change");
-  }, [page]);
-
   if (!isAuth) {
+    // Login/ register screen
     return (
       <div className='App'>
         <Login tokenHandler={tokenHandler} logOut={logOut} />
       </div>
     );
   } else {
+    // Main screen
     return (
       <div className='App'>
         <div className='wrapper-main'>
@@ -97,12 +96,15 @@ function App() {
             pageRequest={(page) => pageRequest(page)}
             // setPage={setPage}
           />
+
           <MainFeed
             header={header}
             currentUser={currentUser}
             page={page}
             pageRequest={(page) => pageRequest(page)}
+            isLoaded={isLoaded}
           />
+
           <div className='rightsidebar'></div>
         </div>
       </div>

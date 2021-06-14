@@ -12,7 +12,6 @@ const iconHeight = "26px";
 
 const LeftSideBar = (props) => {
   const clickHandler = (page) => {
-    console.log("Click handler:", page);
     props.pageRequest(page);
   };
   return (

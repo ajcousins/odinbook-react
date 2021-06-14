@@ -20,17 +20,16 @@ const MainFeed = (props) => {
 
   switch (props.page) {
     case 0:
-      console.log("Page 0");
       return (
         <MainFeedIndex
           title='Home'
           changePage={changePage}
           currentUser={props.currentUser}
           fetchUser={fetchUser}
+          isLoaded={props.isLoaded}
         />
       );
     case 1:
-      console.log("Page 1");
       return (
         <MainFeedUser
           title='User'
