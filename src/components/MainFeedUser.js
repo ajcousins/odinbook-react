@@ -8,7 +8,11 @@ import axios from "axios";
 const MainFeedUser = (props) => {
   const [userTweets, setUserTweets] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState("");
-  const [isFollowingState, setIsFollowingState] = useState(false);
+  const [isFollowingState, setIsFollowingState] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const [followerList, setFollowerList] = useState([]);
+  const [followerListLength, setFollowerListLength] = useState(0);
 
   // Get tweets from selected user
   const loadTweets = () => {
@@ -19,6 +23,8 @@ const MainFeedUser = (props) => {
       const data = await response.json();
       // copy tweets into userTweets state
       setUserTweets(data.userTweets);
+
+      setIsLoaded(true);
     }
     fetchData();
   };
@@ -32,40 +38,24 @@ const MainFeedUser = (props) => {
   }, [selectedUserId, props.selectedUser._id]);
 
   const followHandler = () => {
-    // console.log("follow handler");
-    // console.log(props.currentUser);
     if (isFollowingState) {
-      // console.log("Already following");
       return null;
     }
-
     axios
       .post("/api/v1/users/follow", {
         userToFollow: selectedUserId,
       })
       .then(
         (res) => {
-          // console.log(res);
+          const followerListCopy = [...followerList];
+          followerListCopy.push(props.currentUser._id);
+          setFollowerList(followerListCopy);
           setIsFollowingState(true);
-        },
-        (err) => {
-          // console.log(err);
-        }
-      );
-  };
 
-  const unfollowHandler = () => {
-    console.log("Unfollow!");
-
-    axios
-      .post("/api/v1/users/unfollow", {
-        userToUnfollow: selectedUserId,
-      })
-      .then(
-        (res) => {
-          // console.log(res);
-          console.log("Unfollow state setting to false!");
-          setIsFollowingState(false);
+          let length = followerListLength;
+          length++;
+          console.log("length", length);
+          setFollowerListLength(length);
         },
         (err) => {
           console.log(err);
@@ -73,19 +63,65 @@ const MainFeedUser = (props) => {
       );
   };
 
+  const unfollowHandler = () => {
+    axios
+      .post("/api/v1/users/unfollow", {
+        userToUnfollow: selectedUserId,
+      })
+      .then(
+        (res) => {
+          const followerListCopy = [...followerList];
+          let index = followerListCopy.indexOf(props.currentUser._id);
+          followerListCopy.splice(index, 1);
+          setFollowerList(followerListCopy);
+          setIsFollowingState(false);
+
+          let length = followerListLength;
+          length--;
+          console.log("length", length);
+          setFollowerListLength(length);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  };
+
+  useEffect(() => {
+    if (isLoaded) {
+      const followerListCopy = [...props.selectedUser.followers];
+      setFollowerListLength(followerListCopy.length);
+    }
+  }, [isLoaded]);
+
   // Check if selected user is being followed by current user.
   useEffect(() => {
-    console.log("useEffect", isFollowingState);
-    if (!props.selectedUser.followers) {
-      // setIsFollowingState(false);
-      return false;
-    } else if (props.selectedUser.followers.includes(props.currentUser._id)) {
-      // console.log("Current user ID:", props.currentUser._id);
-      // console.log("Selected user followers:", props.selectedUser.followers);
-      setIsFollowingState(true);
-      return true;
+    if (!isLoaded) return;
+    else {
+      const followerListCopy = [...props.selectedUser.followers];
+      setFollowerList(followerListCopy);
+
+      if (followerList.includes(props.currentUser._id)) {
+        setIsFollowingState(true);
+      } else {
+        setIsFollowingState(false);
+      }
     }
-  }, [isFollowingState, props.selectedUser.followers]);
+  }, [isLoaded, isFollowingState]);
+
+  const followBtn = () => {
+    if (!isLoaded) return null;
+    if (props.selectedUser._id === props.currentUser._id) return null;
+    if (isFollowingState) {
+      return <button className='btn--following' onClick={unfollowHandler} />;
+    } else {
+      return (
+        <button className='btn--follow' onClick={followHandler}>
+          Follow
+        </button>
+      );
+    }
+  };
 
   return (
     <div className='mainfeed'>
@@ -106,17 +142,7 @@ const MainFeedUser = (props) => {
         </div>
       </div>
       <div className='mainfeed__bio'>
-        <div className='mainfeed__bio__row-1'>
-          {isFollowingState ? (
-            <button className='btn--following' onClick={unfollowHandler}>
-              {/* Following */}
-            </button>
-          ) : (
-            <button className='btn--follow' onClick={followHandler}>
-              Follow
-            </button>
-          )}
-        </div>
+        <div className='mainfeed__bio__row-1'>{followBtn()}</div>
         <div className='mainfeed__bio__row-2'>
           <h2 className='mainfeed__user-title'>{props.selectedUser.name}</h2>
           <p>@{props.selectedUser.handle}</p>
@@ -133,10 +159,7 @@ const MainFeedUser = (props) => {
             type='Following '
             number={props.selectedUser.following_length}
           />
-          <Follows
-            type='Followers '
-            number={props.selectedUser.followers_length}
-          />
+          <Follows type='Followers ' number={followerListLength} />
         </div>
         <div className='mainfeed__bio__row-7'>
           <div className='mainfeed__bio--selected'>

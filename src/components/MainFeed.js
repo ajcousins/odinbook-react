@@ -4,26 +4,17 @@ import MainFeedIndex from "./MainFeedIndex";
 import MainFeedUser from "./MainFeedUser";
 
 const MainFeed = (props) => {
-  // const [page, setPage] = useState(0);
   const [selectedUser, setSelectedUser] = useState({});
 
   const changePage = (page) => {
-    // console.log("Fetch User!");
-    // console.log("page:", page);
-    // console.log("page:", page);
     if (page === 0) setSelectedUser({});
     props.pageRequest(page);
   };
 
   const fetchUser = (id) => {
-    // console.log(id);
-
     axios.get(`/api/v1/users/${id}`).then((res) => {
-      // console.log(res);
-      console.log(res.data.data.user);
       setSelectedUser(res.data.data.user);
     });
-
     changePage(1);
   };
 
@@ -34,6 +25,7 @@ const MainFeed = (props) => {
         <MainFeedIndex
           title='Home'
           changePage={changePage}
+          currentUser={props.currentUser}
           fetchUser={fetchUser}
         />
       );
