@@ -3,6 +3,7 @@ import axios from "axios";
 import MainFeedIndex from "./MainFeedIndex";
 import MainFeedUser from "./MainFeedUser";
 import SvgBackArrow from "./../iconComponents/SvgBackArrow";
+import FollowHeader from "./FollowHeader";
 
 const MainFeed = (props) => {
   const [selectedUser, setSelectedUser] = useState({});
@@ -22,61 +23,21 @@ const MainFeed = (props) => {
 
   const MainFeedUserFollowing = (props) => {
     return (
-      <div className='mainfeed'>
-        <div className='mainfeed__header'>
-          <SvgBackArrow
-            height='22.5px'
-            changePage={() => props.changePage(1)}
-          />
-          <div className='mainfeed__header__col-2'>
-            <div className='mainfeed__header__text'>
-              {props.selectedUser.name}
-            </div>
-            <span className='mainfeed__user__tweets'>
-              @{props.selectedUser.handle}
-            </span>
-          </div>
-        </div>
-        <div className='mainfeed__follow__nav'>
-          <div
-            className='mainfeed__follow__nav-btn'
-            onClick={() => props.changePage(3)}
-          >
-            Followers
-          </div>
-          <div className='mainfeed__follow__nav-btn--selected'>Following</div>
-        </div>
-      </div>
+      <FollowHeader
+        type='Following'
+        selectedUser={props.selectedUser}
+        changePage={props.changePage}
+      />
     );
   };
 
   const MainFeedUserFollowers = (props) => {
     return (
-      <div className='mainfeed'>
-        <div className='mainfeed__header'>
-          <SvgBackArrow
-            height='22.5px'
-            changePage={() => props.changePage(1)}
-          />
-          <div className='mainfeed__header__col-2'>
-            <div className='mainfeed__header__text'>
-              {props.selectedUser.name}
-            </div>
-            <span className='mainfeed__user__tweets'>
-              @{props.selectedUser.handle}
-            </span>
-          </div>
-        </div>
-        <div className='mainfeed__follow__nav'>
-          <div className='mainfeed__follow__nav-btn--selected'>Followers</div>
-          <div
-            className='mainfeed__follow__nav-btn'
-            onClick={() => props.changePage(2)}
-          >
-            Following
-          </div>
-        </div>
-      </div>
+      <FollowHeader
+        type='Followers'
+        selectedUser={props.selectedUser}
+        changePage={props.changePage}
+      />
     );
   };
 
