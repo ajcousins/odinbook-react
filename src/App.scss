@@ -584,6 +584,15 @@ strong {
   &__follow__nav-btn--selected:hover {
     background-color: $hover-highlight;
   }
+
+  &__follow-list {
+    width: 598px;
+    height: 279px;
+    // background-color: rgb(192, 214, 255);
+    // padding: 12px 16px 0;
+    // margin-bottom: 16px;
+    // border-bottom: 1px solid $divider-lines;
+  }
 }
 
 .loading-tile {
@@ -596,6 +605,63 @@ strong {
 
   &__gif {
     height: 5em;
+  }
+}
+
+.message-tile {
+  // box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 598px;
+  // height: 5em;
+  padding: 40px 20px;
+
+  &__heading {
+    text-align: center;
+    margin-bottom: 0.5em;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $twitter-black;
+  }
+
+  &__message {
+    text-align: center;
+    // font-size: 3rem;
+  }
+}
+
+.userPreviewTile {
+  display: flex;
+  width: 598px;
+  border-bottom: solid 1px $divider-lines;
+  padding: 12px 16px;
+  font-size: 15px;
+  line-height: 20px;
+  color: $twitter-black;
+
+  &__col-2 {
+    width: 100%;
+    background-color: $hover-highlight;
+  }
+
+  &__col-2__row-1 {
+    width: 100%;
+    background-color: rgba(255, 0, 0, 0.123);
+  }
+
+  &__name {
+    font-weight: 700;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__handle,
+  &__time {
+    color: $twitter-grey-text;
   }
 }
 

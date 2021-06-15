@@ -2,7 +2,7 @@ import SvgBackArrow from "./../iconComponents/SvgBackArrow";
 
 const FollowHeader = (props) => {
   return (
-    <div className='mainfeed'>
+    <div>
       <div className='mainfeed__header'>
         <SvgBackArrow height='22.5px' changePage={() => props.changePage(1)} />
         <div className='mainfeed__header__col-2'>

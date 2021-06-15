@@ -4,6 +4,8 @@ import MainFeedIndex from "./MainFeedIndex";
 import MainFeedUser from "./MainFeedUser";
 import SvgBackArrow from "./../iconComponents/SvgBackArrow";
 import FollowHeader from "./FollowHeader";
+import MessageTile from "./MessageTile";
+import defaultAvatar from "./../static/default-avatar.png";
 
 const MainFeed = (props) => {
   const [selectedUser, setSelectedUser] = useState({});
@@ -21,23 +23,104 @@ const MainFeed = (props) => {
     changePage(1);
   };
 
-  const MainFeedUserFollowing = (props) => {
+  const UserTile = (props) => {
     return (
-      <FollowHeader
-        type='Following'
-        selectedUser={props.selectedUser}
-        changePage={props.changePage}
-      />
+      <div className='userPreviewTile'>
+        <div className='userPreviewTile__col-1'>
+          <img className='tweet__avatar' src={defaultAvatar} />
+        </div>
+        <div className='userPreviewTile__col-2'>
+          <div className='userPreviewTile__col-2__row-1'>
+            <div className='userPreviewTile__name'>{props.user.name}</div>
+            <div className='userPreviewTile__handle'>@{props.user.handle}</div>
+          </div>
+          <div className='userPreviewTile__col-2__row-2'>
+            Placeholder bio text.
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const MainFeedUserFollowing = (props) => {
+    const [followingArr, setFollowingArr] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    useEffect(() => {
+      axios
+        .get(`/api/v1/users/${props.selectedUser._id}/following`)
+        .then((res) => {
+          console.log("res:", res);
+          setFollowingArr(res.data.followingInfo);
+          setIsLoaded(true);
+        });
+
+      console.log("followingArr:", followingArr);
+    }, [isLoaded]);
+
+    return (
+      <div className='mainfeed'>
+        <FollowHeader
+          type='Following'
+          selectedUser={props.selectedUser}
+          changePage={props.changePage}
+        />
+        <div className='mainfeed__follow-list'>
+          {console.log(props.selectedUser)}
+          {props.selectedUser.following.length === 0 ? (
+            <MessageTile
+              heading={`@${props.selectedUser.handle} isn't following anyone`}
+              message="When they do, they'll be listed here."
+            />
+          ) : (
+            // Current maps each id number saved in array..
+            // Need to update to map each detailed user in array, saved in state.
+            followingArr.map((user) => {
+              return <UserTile user={user} />;
+            })
+          )}
+        </div>
+      </div>
     );
   };
 
   const MainFeedUserFollowers = (props) => {
+    const [followersArr, setFollowersArr] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    useEffect(() => {
+      axios
+        .get(`/api/v1/users/${props.selectedUser._id}/followers`)
+        .then((res) => {
+          console.log("res:", res);
+          setFollowersArr(res.data.followersInfo);
+          setIsLoaded(true);
+        });
+
+      console.log("followersArr:", followersArr);
+    }, [isLoaded]);
+
     return (
-      <FollowHeader
-        type='Followers'
-        selectedUser={props.selectedUser}
-        changePage={props.changePage}
-      />
+      <div className='mainfeed'>
+        <FollowHeader
+          type='Followers'
+          selectedUser={props.selectedUser}
+          changePage={props.changePage}
+        />
+        <div className='mainfeed__follow-list'>
+          {console.log(props.selectedUser)}
+          {props.selectedUser.followers.length === 0 ? (
+            <MessageTile
+              heading={`@${props.selectedUser.handle} doesn't have any followers`}
+              message="When someone follows them, they'll be listed here."
+            />
+          ) : (
+            followersArr.map((user) => {
+              return <UserTile user={user} />;
+            })
+          )}
+        </div>
+      </div>
     );
   };
 
@@ -67,18 +150,22 @@ const MainFeed = (props) => {
     case 2:
       // SelectedUser following list
       return (
-        <MainFeedUserFollowing
-          selectedUser={selectedUser}
-          changePage={changePage}
-        />
+        <div>
+          <MainFeedUserFollowing
+            selectedUser={selectedUser}
+            changePage={changePage}
+          />
+        </div>
       );
     case 3:
       // SelectedUser follower list
       return (
-        <MainFeedUserFollowers
-          selectedUser={selectedUser}
-          changePage={changePage}
-        />
+        <div>
+          <MainFeedUserFollowers
+            selectedUser={selectedUser}
+            changePage={changePage}
+          />
+        </div>
       );
     default:
       return (

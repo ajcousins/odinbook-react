@@ -62,6 +62,7 @@ function App() {
       setMenuVis(false);
       setIsAuth(false);
       setCurrentUser({});
+      setPage(0);
     } catch (err) {
       console.log(err);
     }
