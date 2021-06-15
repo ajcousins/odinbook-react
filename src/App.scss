@@ -643,12 +643,14 @@ strong {
 
   &__col-2 {
     width: 100%;
-    background-color: $hover-highlight;
+    // background-color: $hover-highlight;
   }
 
   &__col-2__row-1 {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-    background-color: rgba(255, 0, 0, 0.123);
+    // background-color: rgba(255, 0, 0, 0.123);
   }
 
   &__name {

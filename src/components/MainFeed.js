@@ -8,22 +8,29 @@ import MessageTile from "./MessageTile";
 import defaultAvatar from "./../static/default-avatar.png";
 
 const MainFeed = (props) => {
-  const [selectedUser, setSelectedUser] = useState({});
+  // const [selectedUser, setSelectedUser] = useState({});
 
-  const changePage = (page) => {
-    console.log(`Change to page ${page}.`);
-    if (page === 0) setSelectedUser({});
-    props.pageRequest(page);
-  };
+  // const changePage = (page) => {
+  //   console.log(`Change to page ${page}.`);
+  //   if (page === 0) setSelectedUser({});
+  //   props.pageRequest(page);
+  // };
 
-  const fetchUser = (id) => {
-    axios.get(`/api/v1/users/${id}`).then((res) => {
-      setSelectedUser(res.data.data.user);
-    });
-    changePage(1);
-  };
+  // const fetchUser = (id) => {
+  //   axios.get(`/api/v1/users/${id}`).then((res) => {
+  //     setSelectedUser(res.data.data.user);
+  //   });
+  //   props.changePage(1);
+  // };
 
   const UserTile = (props) => {
+    const status = (status) => {
+      if (status === "current user") return null;
+      else if (status === "following")
+        return <button className='btn--following'></button>;
+      else return <button className='btn--follow'>Follow</button>;
+    };
+
     return (
       <div className='userPreviewTile'>
         <div className='userPreviewTile__col-1'>
@@ -31,8 +38,14 @@ const MainFeed = (props) => {
         </div>
         <div className='userPreviewTile__col-2'>
           <div className='userPreviewTile__col-2__row-1'>
-            <div className='userPreviewTile__name'>{props.user.name}</div>
-            <div className='userPreviewTile__handle'>@{props.user.handle}</div>
+            <div>
+              <div className='userPreviewTile__name'>{props.user.name}</div>
+              <div className='userPreviewTile__handle'>
+                @{props.user.handle}
+              </div>
+            </div>
+            {/* <button className='btn--follow'>Follow</button> */}
+            {status(props.status)}
           </div>
           <div className='userPreviewTile__col-2__row-2'>
             Placeholder bio text.
@@ -42,21 +55,44 @@ const MainFeed = (props) => {
     );
   };
 
+  const appendToList = (arr) => {
+    // Appends follow status (whether current user is following any of the users in the array)
+    let arrayNew = [...arr];
+    if (arrayNew) {
+      const appendedArr = arrayNew.map((user) => {
+        if (user._id === props.currentUser._id) {
+          user.followStatus = "current user";
+        } else if (props.currentUser.following.includes(user._id)) {
+          user.followStatus = "following";
+        } else {
+          user.followStatus = "not following";
+        }
+        return user;
+      });
+      return appendedArr;
+      // setFollowingArr(newFollowingArr);
+      // setListAppended(true);
+    }
+  };
+
   const MainFeedUserFollowing = (props) => {
     const [followingArr, setFollowingArr] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [listAppended, setListAppended] = useState(false);
 
     useEffect(() => {
       axios
         .get(`/api/v1/users/${props.selectedUser._id}/following`)
         .then((res) => {
-          console.log("res:", res);
-          setFollowingArr(res.data.followingInfo);
+          setFollowingArr(appendToList(res.data.followingInfo));
           setIsLoaded(true);
+          // setListAppended(true);
         });
-
-      console.log("followingArr:", followingArr);
     }, [isLoaded]);
+
+    // useEffect(() => {
+    //   console.log("listAppended:", followingArr);
+    // }, [listAppended]);
 
     return (
       <div className='mainfeed'>
@@ -66,19 +102,27 @@ const MainFeed = (props) => {
           changePage={props.changePage}
         />
         <div className='mainfeed__follow-list'>
-          {console.log(props.selectedUser)}
+          {/* {console.log(props.selectedUser)} */}
           {props.selectedUser.following.length === 0 ? (
             <MessageTile
               heading={`@${props.selectedUser.handle} isn't following anyone`}
               message="When they do, they'll be listed here."
             />
           ) : (
-            // Current maps each id number saved in array..
-            // Need to update to map each detailed user in array, saved in state.
             followingArr.map((user) => {
-              return <UserTile user={user} />;
+              return <UserTile user={user} status={user.followStatus} />;
             })
           )}
+          {followingArr.map((user) => {
+            return (
+              <div>
+                <div>{user._id}</div>
+                <div>{user.name}</div>
+                <div>{user.followStatus}</div>
+                <div>---</div>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -92,9 +136,9 @@ const MainFeed = (props) => {
       axios
         .get(`/api/v1/users/${props.selectedUser._id}/followers`)
         .then((res) => {
-          console.log("res:", res);
-          setFollowersArr(res.data.followersInfo);
+          setFollowersArr(appendToList(res.data.followersInfo));
           setIsLoaded(true);
+          // setListAppended(true);
         });
 
       console.log("followersArr:", followersArr);
@@ -116,9 +160,19 @@ const MainFeed = (props) => {
             />
           ) : (
             followersArr.map((user) => {
-              return <UserTile user={user} />;
+              return <UserTile user={user} status={user.followStatus} />;
             })
           )}
+          {followersArr.map((user) => {
+            return (
+              <div>
+                <div>{user._id}</div>
+                <div>{user.name}</div>
+                <div>{user.followStatus}</div>
+                <div>---</div>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -130,9 +184,9 @@ const MainFeed = (props) => {
       return (
         <MainFeedIndex
           title='Home'
-          changePage={changePage}
+          changePage={props.changePage}
           currentUser={props.currentUser}
-          fetchUser={fetchUser}
+          fetchUser={props.fetchUser}
           isLoaded={props.isLoaded}
         />
       );
@@ -141,10 +195,10 @@ const MainFeed = (props) => {
       return (
         <MainFeedUser
           title='User'
-          changePage={changePage}
-          selectedUser={selectedUser}
+          changePage={props.changePage}
+          selectedUser={props.selectedUser}
           currentUser={props.currentUser}
-          fetchUser={fetchUser}
+          fetchUser={props.fetchUser}
         />
       );
     case 2:
@@ -152,8 +206,9 @@ const MainFeed = (props) => {
       return (
         <div>
           <MainFeedUserFollowing
-            selectedUser={selectedUser}
-            changePage={changePage}
+            selectedUser={props.selectedUser}
+            changePage={props.changePage}
+            currentUser={props.currentUser}
           />
         </div>
       );
@@ -162,8 +217,8 @@ const MainFeed = (props) => {
       return (
         <div>
           <MainFeedUserFollowers
-            selectedUser={selectedUser}
-            changePage={changePage}
+            selectedUser={props.selectedUser}
+            changePage={props.changePage}
           />
         </div>
       );
@@ -171,7 +226,10 @@ const MainFeed = (props) => {
       return (
         <div className='mainfeed'>
           <div className='mainfeed__header'>
-            <SvgBackArrow height='22.5px' changePage={() => changePage(0)} />
+            <SvgBackArrow
+              height='22.5px'
+              changePage={() => props.changePage(0)}
+            />
             <div className='mainfeed__header__col-2'>
               <div className='mainfeed__header__text'>404: Page Not Found</div>
             </div>

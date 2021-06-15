@@ -51,6 +51,7 @@ const MainFeedIndex = (props) => {
               likes={tweet.likes_short}
               // changePage={props.changePage}
               fetchUser={props.fetchUser}
+              changePage={props.changePage}
             />
           );
         })

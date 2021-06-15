@@ -12,7 +12,9 @@ const iconHeight = "26px";
 
 const LeftSideBar = (props) => {
   const clickHandler = (page) => {
-    props.pageRequest(page);
+    // props.pageRequest(page);
+
+    props.changePage(page);
   };
   return (
     <div className='leftsidebar'>

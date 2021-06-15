@@ -16,7 +16,10 @@ const Tweet = (props) => {
         <div className='tweet__col-2__row-1'>
           <span
             className='tweet__name'
-            onClick={() => props.fetchUser(props.id)}
+            onClick={() => {
+              props.fetchUser(props.id);
+              props.changePage(1);
+            }}
           >
             {props.name}
           </span>

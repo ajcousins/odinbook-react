@@ -4,7 +4,7 @@ import "./App.scss";
 import MenuPopUp from "./components/MenuPopUp";
 import LeftSideBar from "./components/LeftSideBar";
 import MainFeed from "./components/MainFeed";
-
+import axios from "axios";
 import Login from "./components/Login";
 
 function App() {
@@ -12,6 +12,7 @@ function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [selectedUser, setSelectedUser] = useState({});
   const [menuVis, setMenuVis] = useState(false);
   const [page, setPage] = useState(0);
 
@@ -68,9 +69,22 @@ function App() {
     }
   };
 
-  const pageRequest = (page) => {
-    console.log("Page request:", page);
+  // const pageRequest = (page) => {
+  //   console.log("Page request:", page);
+  //   setPage(page);
+  // };
+
+  const changePage = (page) => {
+    console.log(`Change to page ${page}.`);
+    if (page === 0) setSelectedUser({});
     setPage(page);
+  };
+
+  const fetchUser = (id) => {
+    axios.get(`/api/v1/users/${id}`).then((res) => {
+      setSelectedUser(res.data.data.user);
+    });
+    changePage(1);
   };
 
   if (!isAuth) {
@@ -94,15 +108,19 @@ function App() {
           <LeftSideBar
             menu={menuHandler}
             currentUser={currentUser}
-            pageRequest={(page) => pageRequest(page)}
+            // pageRequest={(page) => pageRequest(page)}
+            changePage={changePage}
             // setPage={setPage}
           />
 
           <MainFeed
             header={header}
             currentUser={currentUser}
+            selectedUser={selectedUser}
             page={page}
-            pageRequest={(page) => pageRequest(page)}
+            changePage={changePage}
+            fetchUser={fetchUser}
+            // pageRequest={(page) => pageRequest(page)}
             isLoaded={isLoaded}
           />
 
