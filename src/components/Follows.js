@@ -6,7 +6,11 @@ const Follows = (props) => {
   };
 
   return (
-    <span style={{ marginRight: "1.5em" }}>
+    <span
+      style={{ marginRight: "1.5em" }}
+      className='follow'
+      onClick={() => props.changePage(props.page)}
+    >
       <strong>{numberFormat(props.number)}</strong>&nbsp;{props.type}
     </span>
   );

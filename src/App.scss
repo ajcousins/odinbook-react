@@ -24,6 +24,14 @@ a {
   }
 }
 
+span,
+.follow {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 button {
   width: 100%;
   background-color: $twitter-main;
@@ -527,6 +535,54 @@ strong {
     left: 50%;
     transform: translate(-50%);
     bottom: -17px;
+  }
+
+  &__follow__nav {
+    position: relative;
+    // height: 2em;
+    display: flex;
+    width: 598px;
+    // background-color: #bada55;
+    border-bottom: 3px solid $divider-lines;
+  }
+
+  &__follow__nav-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 3.3em;
+    width: 50%;
+    font-weight: 700;
+  }
+
+  &__follow__nav-btn:hover {
+    background-color: $hover-highlight;
+    color: $twitter-main;
+  }
+
+  &__follow__nav-btn--selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 3.3em;
+    width: 50%;
+    font-weight: 700;
+    color: $twitter-main;
+  }
+
+  &__follow__nav-btn--selected::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    height: 4px;
+    width: 69px;
+    background-color: $twitter-main;
+  }
+
+  &__follow__nav-btn--selected:hover {
+    background-color: $hover-highlight;
   }
 }
 
