@@ -4,7 +4,13 @@ const FollowHeader = (props) => {
   return (
     <div>
       <div className='mainfeed__header'>
-        <SvgBackArrow height='22.5px' changePage={() => props.changePage(1)} />
+        <SvgBackArrow
+          height='22.5px'
+          changePage={() => {
+            props.fetchUser(props.selectedUser._id);
+            props.changePage(1);
+          }}
+        />
         <div className='mainfeed__header__col-2'>
           <div className='mainfeed__header__text'>
             {props.selectedUser.name}

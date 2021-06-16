@@ -50,6 +50,29 @@ function App() {
     fetchData();
   }, [isAuth]);
 
+  const refreshCurrentUser = async () => {
+    await axios.get("/api/v1/users/current").then((res) => {
+      const currentUserCopy = { ...res.data.data.currentUser };
+      setCurrentUser(currentUserCopy);
+      console.log("currentUser refreshed");
+    });
+  };
+
+  const refreshSelectedUser = async () => {
+    await axios.get(`/api/v1/users/${selectedUser._id}`).then((res) => {
+      const selectedUserCopy = { ...res.data.data.user };
+      setSelectedUser(selectedUserCopy);
+      console.log("selectedUser refreshed");
+    });
+  };
+
+  const fetchUser = (id) => {
+    axios.get(`/api/v1/users/${id}`).then((res) => {
+      setSelectedUser(res.data.data.user);
+    });
+    changePage(1);
+  };
+
   const menuHandler = () => {
     if (menuVis) setMenuVis(false);
     else setMenuVis(true);
@@ -69,22 +92,10 @@ function App() {
     }
   };
 
-  // const pageRequest = (page) => {
-  //   console.log("Page request:", page);
-  //   setPage(page);
-  // };
-
   const changePage = (page) => {
     console.log(`Change to page ${page}.`);
     if (page === 0) setSelectedUser({});
     setPage(page);
-  };
-
-  const fetchUser = (id) => {
-    axios.get(`/api/v1/users/${id}`).then((res) => {
-      setSelectedUser(res.data.data.user);
-    });
-    changePage(1);
   };
 
   if (!isAuth) {
@@ -122,6 +133,8 @@ function App() {
             fetchUser={fetchUser}
             // pageRequest={(page) => pageRequest(page)}
             isLoaded={isLoaded}
+            refreshCurrentUser={refreshCurrentUser}
+            refreshSelectedUser={refreshSelectedUser}
           />
 
           <div className='rightsidebar'></div>

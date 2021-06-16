@@ -158,12 +158,16 @@ const MainFeedUser = (props) => {
             number={props.selectedUser.following_length}
             page={2}
             changePage={props.changePage}
+            refreshCurrentUser={props.refreshCurrentUser}
+            refreshSelectedUser={props.refreshSelectedUser}
           />
           <Follows
             type='Followers '
             number={followerListLength}
             page={3}
             changePage={props.changePage}
+            refreshCurrentUser={props.refreshCurrentUser}
+            refreshSelectedUser={props.refreshSelectedUser}
           />
         </div>
         <div className='mainfeed__bio__row-7'>

@@ -9,7 +9,11 @@ const Follows = (props) => {
     <span
       style={{ marginRight: "1.5em" }}
       className='follow'
-      onClick={() => props.changePage(props.page)}
+      onClick={() => {
+        props.changePage(props.page);
+        props.refreshCurrentUser();
+        props.refreshSelectedUser();
+      }}
     >
       <strong>{numberFormat(props.number)}</strong>&nbsp;{props.type}
     </span>
