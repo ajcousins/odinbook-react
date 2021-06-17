@@ -124,6 +124,7 @@ function App() {
             // pageRequest={(page) => pageRequest(page)}
             changePage={changePage}
             // setPage={setPage}
+            fetchUser={fetchUser}
           />
 
           <MainFeed

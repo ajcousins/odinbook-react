@@ -12,10 +12,13 @@ const iconHeight = "26px";
 
 const LeftSideBar = (props) => {
   const clickHandler = (page) => {
-    // props.pageRequest(page);
-
+    // If page request is '1' (currentUser profile page), then fetchUser of currentUser needs to be called.
+    if (page === 1) {
+      props.fetchUser(props.currentUser._id);
+    }
     props.changePage(page);
   };
+
   return (
     <div className='leftsidebar'>
       <div className='leftsidebar__upper-container'>
@@ -27,11 +30,11 @@ const LeftSideBar = (props) => {
           <SvgHomeIcon height={iconHeight} />
         </SideButton>
 
-        <SideButton text='Notifications'>
+        {/* <SideButton text='Notifications'>
           <SvgNotificationIcon height={iconHeight} />
-        </SideButton>
+        </SideButton> */}
 
-        <SideButton text='Profile'>
+        <SideButton text='Profile' clickHandler={() => clickHandler(1)}>
           <SvgProfileIcon height={iconHeight} />
         </SideButton>
       </div>
