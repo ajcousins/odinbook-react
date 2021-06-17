@@ -44,6 +44,19 @@ const MainFeedUser = (props) => {
   }, [selectedUserId, props.selectedUser._id]);
   // }, []);
 
+  const deleteTweet = (tweetId) => {
+    console.log("Delete tweet!", tweetId);
+    // Delete from database
+    axios.delete(`/api/v1/tweets/${tweetId}`).then((res) => {
+      // If delete successful..
+      // Delete from state array.
+      const newTweets = [...userTweets];
+      let index = newTweets.findIndex((tweet) => tweet.id === tweetId);
+      newTweets.splice(index, 1);
+      setUserTweets(newTweets);
+    });
+  };
+
   const followHandler = () => {
     if (isFollowingState) {
       return null;
@@ -193,6 +206,7 @@ const MainFeedUser = (props) => {
             className='tweet'
             name={tweet.user.name}
             id={tweet.user._id}
+            tweetId={tweet._id}
             handle={`@${tweet.user.handle}`}
             profilePic=''
             time={tweet.tweetAge}
@@ -203,6 +217,8 @@ const MainFeedUser = (props) => {
             // changePage={props.changePage}
             fetchUser={props.fetchUser}
             changePage={props.changePage}
+            currentUser={props.currentUser}
+            deleteTweet={deleteTweet}
           />
         );
       })}

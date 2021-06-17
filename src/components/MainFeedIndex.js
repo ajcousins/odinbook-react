@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Tweet from "./../components/Tweet";
 import ComposeTweet from "./../components/ComposeTweet";
 import LoadingTile from "./../components/LoadingTile";
@@ -22,6 +23,25 @@ const MainFeedIndex = (props) => {
 
   const tweetHandler = () => {
     setTweetPosted(true);
+  };
+
+  const deleteTweet = (tweetId) => {
+    console.log("Delete tweet!", tweetId);
+
+    // Delete from database
+
+    axios.delete(`/api/v1/tweets/${tweetId}`).then((res) => {
+      console.log(res);
+      // If delete successful..
+      // Delete from state array.
+      console.log(tweets);
+      const newTweets = [...tweets];
+
+      let index = newTweets.findIndex((tweet) => tweet.id === tweetId);
+      console.log(index);
+      newTweets.splice(index, 1);
+      setTweets(newTweets);
+    });
   };
 
   return (
@@ -49,6 +69,7 @@ const MainFeedIndex = (props) => {
               className='tweet'
               name={tweet.user.name}
               id={tweet.user._id}
+              tweetId={tweet._id}
               handle={`@${tweet.user.handle}`}
               profilePic=''
               time={tweet.tweetAge}
@@ -59,6 +80,8 @@ const MainFeedIndex = (props) => {
               // changePage={props.changePage}
               fetchUser={props.fetchUser}
               changePage={props.changePage}
+              currentUser={props.currentUser}
+              deleteTweet={deleteTweet}
             />
           );
         })
