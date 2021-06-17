@@ -19,7 +19,7 @@ const MainFeedUserFollowers = (props) => {
           orderFollowList(
             appendToList(
               res.data.followersInfo,
-              props.currentUser.followers,
+              props.currentUser.following,
               props.currentUser._id
             )
           )

@@ -67,8 +67,10 @@ function App() {
   };
 
   const fetchUser = (id) => {
+    console.log("here");
     axios.get(`/api/v1/users/${id}`).then((res) => {
       setSelectedUser(res.data.data.user);
+      // refreshSelectedUser();
     });
     changePage(1);
   };

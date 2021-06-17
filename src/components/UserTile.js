@@ -21,6 +21,12 @@ const UserTile = (props) => {
       );
   };
 
+  const nameClickHandler = () => {
+    console.log("id:", props.user._id);
+    props.fetchUser(props.user._id);
+    // props.refreshSelectedUser();
+  };
+
   return (
     <div className='userPreviewTile'>
       <div className='userPreviewTile__col-1'>
@@ -29,7 +35,9 @@ const UserTile = (props) => {
       <div className='userPreviewTile__col-2'>
         <div className='userPreviewTile__col-2__row-1'>
           <div>
-            <div className='userPreviewTile__name'>{props.user.name}</div>
+            <div className='userPreviewTile__name' onClick={nameClickHandler}>
+              {props.user.name}
+            </div>
             <div className='userPreviewTile__handle'>@{props.user.handle}</div>
           </div>
           {status(props.status)}

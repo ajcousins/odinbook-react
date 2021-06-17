@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Tweet from "./../components/Tweet";
 import ComposeTweet from "./../components/ComposeTweet";
 import LoadingTile from "./../components/LoadingTile";
+import MessageTile from "./MessageTile";
 
 const MainFeedIndex = (props) => {
   const [tweets, setTweets] = useState([]);
@@ -33,6 +34,12 @@ const MainFeedIndex = (props) => {
         tweetHandler={tweetHandler}
       />
       <div className='mainfeed__divider' />
+      {tweets.length === 0 ? (
+        <MessageTile
+          heading={"Welcome to Twitter!"}
+          message="This is the best place to see what's happening in your world. Find some people to follow now."
+        />
+      ) : null}
       {!props.isLoaded ? (
         <LoadingTile />
       ) : (

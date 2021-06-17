@@ -17,9 +17,12 @@ const MainFeedUser = (props) => {
   // Get tweets from selected user
   const loadTweets = () => {
     async function fetchData() {
-      const response = await fetch(`/api/v1/tweets/user/${selectedUserId}`, {
-        method: "GET",
-      });
+      const response = await fetch(
+        `/api/v1/tweets/user/${props.selectedUser._id}`,
+        {
+          method: "GET",
+        }
+      );
       const data = await response.json();
       // copy tweets into userTweets state
       setUserTweets(data.userTweets);
@@ -30,12 +33,16 @@ const MainFeedUser = (props) => {
   };
 
   useEffect(() => {
+    // A separate variable (selectedUserId) is required as the server crashes if not fed a string.
+
     if (!selectedUserId) {
       setSelectedUserId(props.selectedUser._id);
     } else {
+      console.log("Load tweets useEffect");
       loadTweets();
     }
   }, [selectedUserId, props.selectedUser._id]);
+  // }, []);
 
   const followHandler = () => {
     if (isFollowingState) {
