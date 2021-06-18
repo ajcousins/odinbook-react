@@ -4,7 +4,7 @@ function SvgTwitterLike(props) {
   return (
     <svg
       viewBox='0 0 24 24'
-      class='tweet__icon'
+      className='tweet__icon'
       // width='24'
       height='18.75'
     >

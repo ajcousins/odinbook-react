@@ -16,6 +16,7 @@ const MainFeed = (props) => {
           currentUser={props.currentUser}
           fetchUser={props.fetchUser}
           isLoaded={props.isLoaded}
+          likeTweet={props.likeTweet}
         />
       );
     case 1:
@@ -29,6 +30,7 @@ const MainFeed = (props) => {
           fetchUser={props.fetchUser}
           refreshCurrentUser={props.refreshCurrentUser}
           refreshSelectedUser={props.refreshSelectedUser}
+          likeTweet={props.likeTweet}
         />
       );
     case 2:

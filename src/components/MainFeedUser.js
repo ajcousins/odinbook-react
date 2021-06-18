@@ -213,12 +213,12 @@ const MainFeedUser = (props) => {
             message={tweet.textContent}
             replies={tweet.replies_short}
             retweets={tweet.retweets_short}
-            likes={tweet.likes_short}
-            // changePage={props.changePage}
+            likes={tweet.likes}
             fetchUser={props.fetchUser}
             changePage={props.changePage}
             currentUser={props.currentUser}
             deleteTweet={deleteTweet}
+            likeTweet={props.likeTweet}
           />
         );
       })}

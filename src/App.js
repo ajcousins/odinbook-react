@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import "./App.scss";
 import MenuPopUp from "./components/MenuPopUp";
 import LeftSideBar from "./components/LeftSideBar";
@@ -13,6 +12,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [selectedUser, setSelectedUser] = useState({});
+  const [curUserLikes, setCurUserLikes] = useState([]);
   const [menuVis, setMenuVis] = useState(false);
   const [page, setPage] = useState(0);
 
@@ -39,8 +39,11 @@ function App() {
           setIsAuth(true);
           setIsLoaded(true);
           const currentUserCopy = { ...data.data.currentUser };
+          const curUserLikesCopy = [...data.data.currentUser.likedTweets];
 
           setCurrentUser(currentUserCopy);
+          setCurUserLikes(curUserLikesCopy);
+          // console.log(curUserLikes);
         }
       } catch (err) {
         console.log(err);
@@ -67,7 +70,6 @@ function App() {
   };
 
   const fetchUser = (id) => {
-    console.log("here");
     axios.get(`/api/v1/users/${id}`).then((res) => {
       setSelectedUser(res.data.data.user);
       // refreshSelectedUser();
@@ -85,9 +87,13 @@ function App() {
       await fetch("/api/v1/users/logout", {
         method: "GET",
       });
-      setMenuVis(false);
+      setHeader({});
       setIsAuth(false);
+      setIsLoaded(false);
       setCurrentUser({});
+      setSelectedUser({});
+      setCurUserLikes([]);
+      setMenuVis(false);
       setPage(0);
     } catch (err) {
       console.log(err);
@@ -98,6 +104,27 @@ function App() {
     console.log(`Change to page ${page}.`);
     if (page === 0) setSelectedUser({});
     setPage(page);
+  };
+
+  const likeTweet = (tweetId, add) => {
+    // If second attribute is true-- add to array. If false, remove from array.
+    console.log("Like:", tweetId);
+    const curUserLikesCopy = [...curUserLikes];
+
+    if (add) {
+      axios.patch(`/api/v1/tweets/${tweetId}/like`).then((res) => {
+        curUserLikesCopy.push(tweetId);
+        setCurUserLikes(curUserLikesCopy);
+      });
+    } else {
+      axios.patch(`/api/v1/tweets/${tweetId}/unlike`).then((res) => {
+        // Remove tweet from array.
+        const index = curUserLikesCopy.findIndex((tweet) => tweet === tweetId);
+        curUserLikesCopy.splice(index, 1);
+        console.log("remove:", index);
+        setCurUserLikes(curUserLikesCopy);
+      });
+    }
   };
 
   if (!isAuth) {
@@ -126,7 +153,6 @@ function App() {
             // setPage={setPage}
             fetchUser={fetchUser}
           />
-
           <MainFeed
             header={header}
             currentUser={currentUser}
@@ -138,8 +164,8 @@ function App() {
             isLoaded={isLoaded}
             refreshCurrentUser={refreshCurrentUser}
             refreshSelectedUser={refreshSelectedUser}
+            likeTweet={likeTweet}
           />
-
           <div className='rightsidebar'></div>
         </div>
       </div>

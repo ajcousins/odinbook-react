@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import defaultAvatar from "./../static/default-avatar.png";
 import TweetButton from "./TweetButton";
 import TwitterReply from "./../iconComponents/SvgTwitterReply";
 import TwitterRetweet from "./../iconComponents/SvgTwitterRetweet";
 import TwitterLike from "./../iconComponents/SvgTwitterLike";
+import TwitterLikeActive from "./../iconComponents/SvgTwitterLikeActive";
 import TwitterShare from "./../iconComponents/SvgTwitterShare";
 import Ellipsis from "./../iconComponents/SvgEllipsis";
 
 const Tweet = (props) => {
   const [menuActive, setMenuActive] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likesNumber, setLikesNumber] = useState(0);
 
   const deleteTweetHandler = (tweetId) => {
     console.log("Delete", tweetId);
@@ -50,6 +53,26 @@ const Tweet = (props) => {
     } else return null;
   };
 
+  // Check likes list
+  useEffect(() => {
+    if (props.likes.includes(props.currentUser._id)) {
+      setIsLiked(true);
+    }
+    setLikesNumber(props.likes.length);
+  }, [props.likes, props.currentUser._id]);
+
+  const likeHandler = () => {
+    if (isLiked) {
+      setIsLiked(false);
+      setLikesNumber(likesNumber - 1);
+      props.likeTweet(props.tweetId, false);
+    } else {
+      setIsLiked(true);
+      setLikesNumber(likesNumber + 1);
+      props.likeTweet(props.tweetId, true);
+    }
+  };
+
   return (
     <div className='tweet'>
       <div className='tweet__col-1'>
@@ -81,15 +104,14 @@ const Tweet = (props) => {
             <TweetButton data={props.replies}>
               <TwitterReply />
             </TweetButton>
-
             <TweetButton data={props.retweets}>
               <TwitterRetweet />
             </TweetButton>
-
-            <TweetButton data={props.likes}>
-              <TwitterLike />
-            </TweetButton>
-
+            <span className='tweet__like-btn' onClick={likeHandler}>
+              <TweetButton data={likesNumber}>
+                {isLiked ? <TwitterLikeActive /> : <TwitterLike />}
+              </TweetButton>
+            </span>
             <TweetButton>
               <TwitterShare />
             </TweetButton>

@@ -9,6 +9,7 @@ $menu-highlight: #f7f7f7;
 $divider-lines: #ebeef0;
 $input-outline: #c4cfd6;
 $unfollow-red: #ca2055;
+$heart-red: #e0245e;
 
 * {
   margin: 0;
@@ -786,6 +787,11 @@ strong {
 
   &__icon {
     fill: $twitter-grey-text;
+  }
+
+  &__like-btn {
+    user-select: none;
+    // background-color: #bada55;
   }
 
   &__compose {
