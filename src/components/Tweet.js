@@ -76,7 +76,7 @@ const Tweet = (props) => {
   return (
     <div className='tweet'>
       <div className='tweet__col-1'>
-        <img className='tweet__avatar' src={defaultAvatar} />
+        <img className='tweet__avatar' src={`img/users/${props.profilePic}`} />
       </div>
       <div className='tweet__col-2'>
         <div className='tweet__col-2__row-1'>

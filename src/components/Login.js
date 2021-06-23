@@ -32,7 +32,7 @@ const Login = (props) => {
     // console.log("Register");
     if (formActive) setFormActive(false);
     else setFormActive(true);
-    console.log(formActive);
+    // console.log(formActive);
   };
 
   return (

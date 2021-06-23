@@ -83,6 +83,7 @@ function App() {
   };
 
   const logOut = async () => {
+    console.log("Log out");
     try {
       await fetch("/api/v1/users/logout", {
         method: "GET",

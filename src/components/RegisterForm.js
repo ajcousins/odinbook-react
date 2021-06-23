@@ -12,15 +12,29 @@ const RegisterForm = (props) => {
     setInput(inputCopy);
   };
 
-  const submitHandler = () => {
+  const nextPage = () => {
+    setPage(page + 1);
+  };
+
+  const validateDetails = () => {
+    console.log("Validate details");
+    // TO DO
+    createUser();
+  };
+
+  const createUser = () => {
     console.log("Submit:", input);
+    // // temp
+    // nextPage();
+    // return;
+    // // temp
 
     axios.post("/api/v1/users/signup", input).then(
       (res) => {
         console.log(res);
         if (res.status === 201) {
-          props.logOut();
-          setPage(1);
+          // props.logOut();
+          nextPage();
         }
       },
       (err) => {
@@ -31,6 +45,31 @@ const RegisterForm = (props) => {
     setInput({});
   };
 
+  const backgroundClickHandler = () => {
+    console.log("Background click");
+    setPage(0);
+    props.logOut();
+    props.clickHandler();
+  };
+
+  const validatePhoto = (e) => {
+    e.preventDefault();
+    console.log("Validate photo");
+    const form = new FormData();
+    form.append("photo", document.getElementById("photo").files[0]);
+    console.log(form);
+
+    axios.post("/api/v1/users/updateUser", form).then(
+      (res) => {
+        console.log(res);
+        nextPage();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  };
+
   if (!props.formActive) return null;
 
   switch (page) {
@@ -38,7 +77,10 @@ const RegisterForm = (props) => {
     case 0:
       return (
         <div className='register__wrapper'>
-          <div className='register__background' onClick={props.clickHandler} />
+          <div
+            className='register__background'
+            onClick={backgroundClickHandler}
+          />
           <div className='register__form'>
             <div className='register__header'>
               <SvgTwitterLogo height='29px' />
@@ -76,16 +118,142 @@ const RegisterForm = (props) => {
               placeholder='Confirm Password'
               type='password'
             />
-            <button onClick={submitHandler}>Register</button>
+            <div className='btn__footer'>
+              <button className='btn--next' onClick={validateDetails}>
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+
+    // Upload photo
+    case 1:
+      return (
+        <div className='register__wrapper'>
+          <div
+            className='register__background'
+            onClick={backgroundClickHandler}
+          />
+          <form className='register__form'>
+            {/* <div> */}
+            <div className='register__header'>
+              <SvgTwitterLogo height='29px' />
+            </div>
+            <h2 className='register__title'>Pick a profile picture</h2>
+            <p>Have a favourite selfie? Upload it now.</p>
+
+            <div className='register__avatar-wrapper'>
+              <label for='photo'>
+                <div className='register__avatar-overlay'>
+                  <img
+                    className='register__avatar-preview'
+                    src={`img/users/default.jpg`}
+                  />
+                </div>
+              </label>
+              <input
+                className='register__upload'
+                type='file'
+                accept='image/*'
+                id='photo'
+                name='photo'
+                // style={{ display: "none" }}
+              />
+            </div>
+            <div className='btn__footer'>
+              <button className='btn--skip' onClick={nextPage}>
+                Skip for now
+              </button>
+              <button
+                type='submit'
+                className='btn--next'
+                onClick={validatePhoto}
+              >
+                Next
+              </button>
+            </div>
+            {/* </div> */}
+          </form>
+        </div>
+      );
+
+    // Check photo
+    case 2:
+      return (
+        <div className='register__wrapper'>
+          <div
+            className='register__background'
+            onClick={backgroundClickHandler}
+          />
+          <div className='register__form'>
+            <div className='register__header'>
+              <SvgTwitterLogo height='29px' />
+            </div>
+            <h2 className='register__title'>Looking good?</h2>
+            <p>Not happy with your photo? If not, go back and reupload.</p>
+
+            <div className='register__avatar-wrapper'>
+              <div className='register__avatar-overlay'>
+                <img
+                  className='register__avatar-preview'
+                  src={`img/users/default.jpg`}
+                />
+              </div>
+            </div>
+            <div className='btn__footer'>
+              <button className='btn--skip' onClick={nextPage}>
+                Skip for now
+              </button>
+              <button
+                type='submit'
+                className='btn--next'
+                onClick={validatePhoto}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+
+    // Upload photo
+    case 3:
+      return (
+        <div className='register__wrapper'>
+          <div
+            className='register__background'
+            onClick={backgroundClickHandler}
+          />
+          <div className='register__form'>
+            <div className='register__header'>
+              <SvgTwitterLogo height='29px' />
+            </div>
+            <h2 className='register__title'>Describe yourself</h2>
+            <p>
+              What makes you special? Don't think too hard, just have fun with
+              it.
+            </p>
+            <div className='btn__footer'>
+              <button className='btn--skip' onClick={validateDetails}>
+                Skip for now
+              </button>
+              <button className='btn--next' onClick={validateDetails}>
+                Next
+              </button>
+            </div>
           </div>
         </div>
       );
 
     // Form submission successful
-    case 1:
+    case 4:
       return (
         <div className='register__wrapper'>
-          <div className='register__background' onClick={props.clickHandler} />
+          <div
+            className='register__background'
+            onClick={backgroundClickHandler}
+          />
           <div className='register__form'>
             <div className='register__success-page'>
               <div className='register__spacer' />
@@ -98,9 +266,14 @@ const RegisterForm = (props) => {
                 Get the most out of Twitter by staying up to date with {"\n"}
                 what's happening.
               </p>
+            </div>
+            <div className='btn__footer'>
               <button
-                className='register__success-button'
-                onClick={props.clickHandler}
+                className='btn--next'
+                onClick={() => {
+                  props.clickHandler();
+                  setPage(0);
+                }}
               >
                 Go to login!
               </button>

@@ -71,7 +71,7 @@ const MainFeedIndex = (props) => {
               id={tweet.user._id}
               tweetId={tweet._id}
               handle={`@${tweet.user.handle}`}
-              profilePic=''
+              profilePic={tweet.user.photo}
               time={tweet.tweetAge}
               message={tweet.textContent}
               replies={tweet.replies_short}

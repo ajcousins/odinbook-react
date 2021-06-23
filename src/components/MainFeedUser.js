@@ -156,7 +156,10 @@ const MainFeedUser = (props) => {
       </div>
       <div className='mainfeed__banner'>
         <div className='mainfeed__user-avatar--wrapper'>
-          <img className='mainfeed__user-avatar' src={defaultAvatar} />
+          <img
+            className='mainfeed__user-avatar'
+            src={`img/users/${props.selectedUser.photo}`}
+          />
         </div>
       </div>
       <div className='mainfeed__bio'>
@@ -208,7 +211,7 @@ const MainFeedUser = (props) => {
             id={tweet.user._id}
             tweetId={tweet._id}
             handle={`@${tweet.user.handle}`}
-            profilePic=''
+            profilePic={tweet.user.photo}
             time={tweet.tweetAge}
             message={tweet.textContent}
             replies={tweet.replies_short}
