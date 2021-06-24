@@ -169,11 +169,7 @@ const MainFeedUser = (props) => {
           <p>@{props.selectedUser.handle}</p>
         </div>
         <div className='mainfeed__bio__row-3'>
-          <p>
-            That bloke off BBC Breakfast & The NFL Show. Former Football Focus
-            host, President of #EggClub & author of 'Remarkable People' ...
-            http://amzn.to/2BavjV5
-          </p>
+          <p>{props.selectedUser.bio}</p>
         </div>
         <div className='mainfeed__bio__row-5'>
           <Follows

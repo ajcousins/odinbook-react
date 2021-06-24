@@ -33,6 +33,35 @@ a {
   }
 }
 
+// &__input {
+//   color: $twitter-black;
+//   width: 100%;
+//   box-sizing: border-box;
+//   margin-bottom: 1.3em;
+//   padding: 1em 0.5em;
+//   border: solid 1px $input-outline;
+//   border-radius: 4px;
+//   font-family: inherit;
+//   font-size: 1.1em;
+// }
+
+.bioInput {
+  width: 100%;
+  height: 150px;
+  margin-top: 1.3em;
+  resize: none;
+  box-sizing: border-box;
+  padding: 1em 0.5em;
+  border: solid 1px $input-outline;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1.1rem;
+
+  &:focus {
+    outline-color: $twitter-main;
+  }
+}
+
 button {
   width: 100%;
   background-color: $twitter-main;
@@ -285,22 +314,20 @@ strong {
   }
 
   &__avatar-preview {
-    cursor: pointer;
+    // cursor: pointer;
     border-radius: 100%;
     height: 250px;
   }
 
-  &__avatar-overlay {
-    display: flex;
-    background-color: black;
-    border-radius: 100%;
-    // margin: 0;
-    // padding: 0;
-  }
+  // &__avatar-overlay {
+  //   display: flex;
+  //   background-color: black;
+  //   border-radius: 100%;
+  // }
 
-  &__avatar-preview:hover {
-    opacity: 80%;
-  }
+  // &__avatar-preview:hover {
+  //   opacity: 80%;
+  // }
 
   &__upload {
     margin-top: 2em;

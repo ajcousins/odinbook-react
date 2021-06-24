@@ -4,7 +4,9 @@ import SvgTwitterLogo from "./../iconComponents/SvgTwitterLogo";
 
 const RegisterForm = (props) => {
   const [input, setInput] = useState({});
+  const [bioInput, setBioInput] = useState("");
   const [page, setPage] = useState(0);
+  const [photo, setPhoto] = useState("default.jpg");
 
   const changeHandler = (e) => {
     let inputCopy = input;
@@ -14,6 +16,10 @@ const RegisterForm = (props) => {
 
   const nextPage = () => {
     setPage(page + 1);
+  };
+
+  const prevPage = () => {
+    setPage(page - 1);
   };
 
   const validateDetails = () => {
@@ -57,11 +63,37 @@ const RegisterForm = (props) => {
     console.log("Validate photo");
     const form = new FormData();
     form.append("photo", document.getElementById("photo").files[0]);
-    console.log(form);
 
     axios.post("/api/v1/users/updateUser", form).then(
       (res) => {
         console.log(res);
+        const photo = res.data.data.user.photo;
+        setPhoto(photo);
+        nextPage();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  };
+
+  const bioChangeHandler = (e) => {
+    if (e.target.value.length > 160) return;
+    let bioInputCopy = bioInput;
+    bioInputCopy = e.target.value;
+    setBioInput(bioInputCopy);
+  };
+
+  const validateBio = (e) => {
+    e.preventDefault();
+    console.log("Validate photo");
+    const form = new FormData();
+    form.append("bio", document.getElementById("bio").value);
+
+    axios.post("/api/v1/users/updateUser", form).then(
+      (res) => {
+        console.log(res);
+
         nextPage();
       },
       (err) => {
@@ -119,7 +151,11 @@ const RegisterForm = (props) => {
               type='password'
             />
             <div className='btn__footer'>
-              <button className='btn--next' onClick={validateDetails}>
+              <button
+                type='submit'
+                className='btn--next'
+                onClick={validateDetails}
+              >
                 Next
               </button>
             </div>
@@ -143,7 +179,7 @@ const RegisterForm = (props) => {
             <h2 className='register__title'>Pick a profile picture</h2>
             <p>Have a favourite selfie? Upload it now.</p>
 
-            <div className='register__avatar-wrapper'>
+            {/* <div className='register__avatar-wrapper'>
               <label for='photo'>
                 <div className='register__avatar-overlay'>
                   <img
@@ -151,16 +187,16 @@ const RegisterForm = (props) => {
                     src={`img/users/default.jpg`}
                   />
                 </div>
-              </label>
-              <input
-                className='register__upload'
-                type='file'
-                accept='image/*'
-                id='photo'
-                name='photo'
-                // style={{ display: "none" }}
-              />
-            </div>
+              </label> */}
+            <input
+              className='register__upload'
+              type='file'
+              accept='image/*'
+              id='photo'
+              name='photo'
+              // style={{ display: "none" }}
+            />
+            {/* </div> */}
             <div className='btn__footer'>
               <button className='btn--skip' onClick={nextPage}>
                 Skip for now
@@ -190,26 +226,20 @@ const RegisterForm = (props) => {
             <div className='register__header'>
               <SvgTwitterLogo height='29px' />
             </div>
-            <h2 className='register__title'>Looking good?</h2>
+            <h2 className='register__title'>Looking good!</h2>
             <p>Not happy with your photo? If not, go back and reupload.</p>
 
             <div className='register__avatar-wrapper'>
-              <div className='register__avatar-overlay'>
-                <img
-                  className='register__avatar-preview'
-                  src={`img/users/default.jpg`}
-                />
-              </div>
+              <img
+                className='register__avatar-preview'
+                src={`img/users/${photo}`}
+              />
             </div>
             <div className='btn__footer'>
-              <button className='btn--skip' onClick={nextPage}>
-                Skip for now
+              <button className='btn--skip' onClick={prevPage}>
+                Go back
               </button>
-              <button
-                type='submit'
-                className='btn--next'
-                onClick={validatePhoto}
-              >
+              <button type='submit' className='btn--next' onClick={nextPage}>
                 Next
               </button>
             </div>
@@ -234,13 +264,27 @@ const RegisterForm = (props) => {
               What makes you special? Don't think too hard, just have fun with
               it.
             </p>
+
+            <textarea
+              className='bioInput'
+              onChange={bioChangeHandler}
+              value={bioInput}
+              id='bio'
+            />
+            <div className='register__bio-counter'>{bioInput.length}/160</div>
             <div className='btn__footer'>
-              <button className='btn--skip' onClick={validateDetails}>
+              <button className='btn--skip' onClick={nextPage}>
                 Skip for now
               </button>
-              <button className='btn--next' onClick={validateDetails}>
-                Next
-              </button>
+              <form>
+                <button
+                  type='submit'
+                  className='btn--next'
+                  onClick={validateBio}
+                >
+                  Next
+                </button>
+              </form>
             </div>
           </div>
         </div>
