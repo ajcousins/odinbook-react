@@ -30,7 +30,7 @@ const UserTile = (props) => {
   return (
     <div className='userPreviewTile'>
       <div className='userPreviewTile__col-1'>
-        <img className='tweet__avatar' src={defaultAvatar} />
+        <img className='tweet__avatar' src={`img/users/${props.user.photo}`} />
       </div>
       <div className='userPreviewTile__col-2'>
         <div className='userPreviewTile__col-2__row-1'>
@@ -42,9 +42,7 @@ const UserTile = (props) => {
           </div>
           {status(props.status)}
         </div>
-        <div className='userPreviewTile__col-2__row-2'>
-          Placeholder bio text.
-        </div>
+        <div className='userPreviewTile__col-2__row-2'>{props.user.bio}</div>
       </div>
     </div>
   );

@@ -1,9 +1,18 @@
 import { useState } from "react";
 import axios from "axios";
 import SvgTwitterLogo from "./../iconComponents/SvgTwitterLogo";
+import isEmail from "validator/lib/isEmail";
+import isStrongPassword from "validator/lib/isStrongPassword";
 
 const RegisterForm = (props) => {
   const [input, setInput] = useState({});
+  const [isValid, setIsValid] = useState({
+    email: false,
+    name: false,
+    handle: false,
+    password: false,
+    passwordConfirm: false,
+  });
   const [bioInput, setBioInput] = useState("");
   const [page, setPage] = useState(0);
   const [photo, setPhoto] = useState("default.jpg");
@@ -12,6 +21,7 @@ const RegisterForm = (props) => {
     let inputCopy = input;
     inputCopy[e.target.name] = e.target.value;
     setInput(inputCopy);
+    validateDetails();
   };
 
   const nextPage = () => {
@@ -24,35 +34,74 @@ const RegisterForm = (props) => {
 
   const validateDetails = () => {
     console.log("Validate details");
+    console.log(isValid);
+
     // TO DO
-    createUser();
+    const isValidCopy = { ...isValid };
+
+    // Email address
+    if (input.email) {
+      isValidCopy.email = isEmail(input.email);
+    }
+
+    // Name
+    if (input.name) {
+      // Must be at least 3 chars long.
+      isValidCopy.name = input.name.length > 2;
+    }
+
+    // Name
+    if (input.handle) {
+      // Must be at least 3 chars long.
+      isValidCopy.handle = input.handle.length > 2;
+    }
+
+    // Password
+    if (input.password) {
+      // Must be minimum 8 chars
+      isValidCopy.password = isStrongPassword(input.password, {
+        minSymbols: 0,
+        minUppercase: 0,
+        minLowercase: 0,
+        minNumbers: 0,
+      });
+    }
+
+    // Confirmation
+    if (input.passwordConfirm) {
+      isValidCopy.passwordConfirm = input.passwordConfirm === input.password;
+    }
+
+    setIsValid(isValidCopy);
   };
 
-  const createUser = () => {
-    console.log("Submit:", input);
-    // // temp
-    // nextPage();
-    // return;
-    // // temp
+  const createUser = (e) => {
+    e.preventDefault();
 
     axios.post("/api/v1/users/signup", input).then(
       (res) => {
         console.log(res);
         if (res.status === 201) {
-          // props.logOut();
           nextPage();
+          setInput({});
         }
       },
       (err) => {
         console.log(err);
       }
     );
-
-    setInput({});
   };
 
   const backgroundClickHandler = () => {
     console.log("Background click");
+    setIsValid({
+      email: false,
+      name: false,
+      handle: false,
+      password: false,
+      passwordConfirm: false,
+    });
+    setInput({});
     setPage(0);
     props.logOut();
     props.clickHandler();
@@ -113,53 +162,70 @@ const RegisterForm = (props) => {
             className='register__background'
             onClick={backgroundClickHandler}
           />
-          <div className='register__form'>
+          <form className='register__form'>
             <div className='register__header'>
               <SvgTwitterLogo height='29px' />
             </div>
             <h2 className='register__title'>Create your account</h2>
+
             <input
               name='email'
-              className='login__input'
+              className={`login__input ${
+                !input.email || isValid.email ? null : "login__invalid"
+              }`}
               onChange={changeHandler}
               placeholder='Email'
             />
             <input
               name='name'
-              className='login__input'
+              className={`login__input ${
+                !input.name || isValid.name ? null : "login__invalid"
+              }`}
               onChange={changeHandler}
               placeholder='Full Name'
             />
             <input
               name='handle'
-              className='login__input'
+              className={`login__input ${
+                !input.handle || isValid.handle ? null : "login__invalid"
+              }`}
               onChange={changeHandler}
               placeholder='Handle'
             />
             <input
               name='password'
-              className='login__input'
+              className={`login__input ${
+                !input.password || isValid.password ? null : "login__invalid"
+              }`}
               onChange={changeHandler}
               placeholder='Password'
               type='password'
             />
             <input
               name='passwordConfirm'
-              className='login__input'
+              className={`login__input ${
+                !input.confirm || isValid.confirm ? null : "login__invalid"
+              }`}
               onChange={changeHandler}
               placeholder='Confirm Password'
               type='password'
             />
             <div className='btn__footer'>
-              <button
-                type='submit'
-                className='btn--next'
-                onClick={validateDetails}
-              >
-                Next
-              </button>
+              {Object.values(isValid).every((item) => item === true) ? (
+                <button
+                  type='submit'
+                  className='btn--next'
+                  onClick={createUser}
+                >
+                  Next
+                </button>
+              ) : (
+                <button type='submit' className='btn--next btn--disable'>
+                  Next
+                </button>
+              )}
             </div>
-          </div>
+          </form>
         </div>
       );
 
@@ -172,31 +238,19 @@ const RegisterForm = (props) => {
             onClick={backgroundClickHandler}
           />
           <form className='register__form'>
-            {/* <div> */}
             <div className='register__header'>
               <SvgTwitterLogo height='29px' />
             </div>
             <h2 className='register__title'>Pick a profile picture</h2>
             <p>Have a favourite selfie? Upload it now.</p>
 
-            {/* <div className='register__avatar-wrapper'>
-              <label for='photo'>
-                <div className='register__avatar-overlay'>
-                  <img
-                    className='register__avatar-preview'
-                    src={`img/users/default.jpg`}
-                  />
-                </div>
-              </label> */}
             <input
               className='register__upload'
               type='file'
               accept='image/*'
               id='photo'
               name='photo'
-              // style={{ display: "none" }}
             />
-            {/* </div> */}
             <div className='btn__footer'>
               <button className='btn--skip' onClick={nextPage}>
                 Skip for now
@@ -209,7 +263,6 @@ const RegisterForm = (props) => {
                 Next
               </button>
             </div>
-            {/* </div> */}
           </form>
         </div>
       );
