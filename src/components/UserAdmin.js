@@ -6,7 +6,10 @@ const UserAdmin = (props) => {
   return (
     <div className='leftsidebar__container'>
       <div className='leftsidebar__useradmin' onClick={props.menu}>
-        <img className='leftsidebar__useradmin__avatar' src={defaultAvatar} />
+        <img
+          className='leftsidebar__useradmin__avatar'
+          src={`img/users/${props.currentUser.photo}`}
+        />
         <div>
           <div className='leftsidebar__useradmin__name'>
             {props.currentUser.name}

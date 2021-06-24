@@ -3,6 +3,7 @@ import MainFeedIndex from "./MainFeedIndex";
 import MainFeedUser from "./MainFeedUser";
 import MainFeedUserFollowing from "./MainFeedUserFollowing";
 import MainFeedUserFollowers from "./MainFeedUserFollowers";
+import MainFeedUserUpdate from "./MainFeedUserUpdate";
 import ErrorTile from "./ErrorTile";
 
 const MainFeed = (props) => {
@@ -55,6 +56,20 @@ const MainFeed = (props) => {
           fetchUser={props.fetchUser}
           refreshCurrentUser={props.refreshCurrentUser}
           refreshSelectedUser={props.refreshSelectedUser}
+        />
+      );
+    case 4:
+      // Profile user update
+      return (
+        <MainFeedUserUpdate
+          title='Update'
+          changePage={props.changePage}
+          // selectedUser={props.selectedUser}
+          currentUser={props.currentUser}
+          // fetchUser={props.fetchUser}
+          refreshCurrentUser={props.refreshCurrentUser}
+          refreshSelectedUser={props.refreshSelectedUser}
+          // likeTweet={props.likeTweet}
         />
       );
     default:

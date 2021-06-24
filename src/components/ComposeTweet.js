@@ -29,7 +29,10 @@ const ComposeTweet = (props) => {
   return (
     <div className='tweet'>
       <div className='tweet__col-1'>
-        <img className='tweet__avatar' src={defaultAvatar} />
+        <img
+          className='tweet__avatar'
+          src={`img/users/${props.currentUser.photo}`}
+        />
       </div>
       <div className='tweet__compose__col-2'>
         <TextareaAutosize

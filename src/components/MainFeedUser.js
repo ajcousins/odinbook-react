@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import defaultAvatar from "./../static/default-avatar.png";
+// import defaultAvatar from "./../static/default-avatar.png";
 import SvgBackArrow from "./../iconComponents/SvgBackArrow";
 import Follows from "./Follows";
 import Tweet from "./Tweet";
@@ -127,9 +127,19 @@ const MainFeedUser = (props) => {
     }
   }, [isLoaded, isFollowingState]);
 
+  const editHandler = () => {
+    console.log("Edit profile");
+    props.changePage(4);
+  };
+
   const followBtn = () => {
     if (!isLoaded) return null;
-    if (props.selectedUser._id === props.currentUser._id) return null;
+    if (props.selectedUser._id === props.currentUser._id)
+      return (
+        <button className='btn--follow btn--edit' onClick={editHandler}>
+          Edit profile
+        </button>
+      );
     if (isFollowingState) {
       return <button className='btn--following' onClick={unfollowHandler} />;
     } else {
