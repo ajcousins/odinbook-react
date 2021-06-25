@@ -3,6 +3,7 @@ import "./App.scss";
 import MenuPopUp from "./components/MenuPopUp";
 import LeftSideBar from "./components/LeftSideBar";
 import MainFeed from "./components/MainFeed";
+import RightSideBar from "./components/RightSideBar";
 import axios from "axios";
 import Login from "./components/Login";
 
@@ -167,7 +168,7 @@ function App() {
             refreshSelectedUser={refreshSelectedUser}
             likeTweet={likeTweet}
           />
-          <div className='rightsidebar'></div>
+          <RightSideBar fetchUser={fetchUser} />
         </div>
       </div>
     );

@@ -204,7 +204,9 @@ const RegisterForm = (props) => {
             <input
               name='passwordConfirm'
               className={`login__input ${
-                !input.confirm || isValid.confirm ? null : "login__invalid"
+                !input.passwordConfirm || isValid.passwordConfirm
+                  ? null
+                  : "login__invalid"
               }`}
               onChange={changeHandler}
               placeholder='Confirm Password'

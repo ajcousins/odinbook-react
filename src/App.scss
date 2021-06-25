@@ -11,6 +11,8 @@ $divider-lines: #ebeef0;
 $input-outline: #c4cfd6;
 $unfollow-red: #ca2055;
 $heart-red: #e0245e;
+$rhs-card-background: #f7f9f9;
+$rhs-card-hover: #eff1f1;
 
 * {
   margin: 0;
@@ -521,7 +523,7 @@ strong {
     &__text {
       font-size: 20px;
       font-weight: 800;
-      color: black;
+      color: $twitter-black;
     }
   }
 
@@ -742,9 +744,14 @@ strong {
   width: 598px;
   border-bottom: solid 1px $divider-lines;
   padding: 12px 16px;
+  cursor: pointer;
   font-size: 15px;
   line-height: 20px;
   color: $twitter-black;
+
+  &:hover {
+    background-color: $menu-highlight;
+  }
 
   &__col-2 {
     width: 100%;
@@ -964,13 +971,89 @@ strong {
 
 .rightsidebar {
   display: flex;
+  align-items: flex-start;
   flex-shrink: 0;
   // margin-left: 40px;
   // margin-left: 25px;
   width: 375px;
   min-height: 100vh;
   // height: 1500px;
-  background-color: hsla(0, 75%, 89%, 0.186);
+  // background-color: hsla(0, 75%, 89%, 0.186);
+}
+
+.who-to-follow {
+  position: sticky;
+  top: 53px;
+  // margin-top: 3.5em;
+  width: 100%;
+  // height: 400px;
+  margin-left: 1.8em;
+  background-color: $rhs-card-background;
+  border-radius: 1em;
+  padding-bottom: 1.8em;
+
+  &__header__text {
+    font-size: 20px;
+    font-weight: 800;
+    padding: 0.75em 1em;
+    color: $twitter-black;
+    border-bottom: 1.33px solid rgb(239, 243, 244);
+    // background-color: green;
+  }
+}
+
+.userSideTile {
+  display: flex;
+  // width: 598px;
+  border-bottom: solid 1px $divider-lines;
+  padding: 12px 16px;
+  font-size: 15px;
+  line-height: 20px;
+  color: $twitter-black;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $rhs-card-hover;
+  }
+
+  &__col-2 {
+    width: 100%;
+    // background-color: $hover-highlight;
+  }
+
+  &__col-2__row-1 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    // background-color: rgba(255, 0, 0, 0.123);
+  }
+
+  &__name {
+    font-weight: 700;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__handle,
+  &__time {
+    color: $twitter-grey-text;
+  }
+
+  &__btn--follow {
+    background-color: transparent;
+    height: 2.2em;
+    width: 3em;
+    // padding: 0.1em 0.5em;
+  }
+
+  &__btn--following {
+    // background-color: transparent;
+    height: 2.2em;
+    width: 4.7em;
+    // padding: 0.1em 0.5em;
+  }
 }
 
 @media screen and (max-width: 1300px) {

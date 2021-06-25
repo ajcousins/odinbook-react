@@ -1,19 +1,22 @@
 import defaultAvatar from "./../static/default-avatar.png";
 
-const UserTile = (props) => {
+const UserSideTile = (props) => {
+  // Status button
   const status = (status) => {
     if (status === "current user") return null;
     else if (status === "following")
       return (
         <button
-          className='btn btn--following '
+          id='btn-follow'
+          className='btn btn--following  userSideTile__btn--following '
           onClick={() => props.updateArray(props.user._id, "not following")}
         ></button>
       );
     else
       return (
         <button
-          className='btn btn--follow'
+          id='btn-follow'
+          className='btn btn--follow userSideTile__btn--follow'
           onClick={() => props.updateArray(props.user._id, "following")}
         >
           Follow
@@ -32,24 +35,24 @@ const UserTile = (props) => {
   };
 
   return (
-    <div className='userPreviewTile' onClick={nameClickHandler}>
-      <div className='userPreviewTile__col-1'>
+    <div className='userSideTile' onClick={nameClickHandler}>
+      <div className='userSideTile__col-1'>
         <img className='tweet__avatar' src={`img/users/${props.user.photo}`} />
       </div>
-      <div className='userPreviewTile__col-2'>
-        <div className='userPreviewTile__col-2__row-1'>
+      <div className='userSideTile__col-2'>
+        <div className='userSideTile__col-2__row-1'>
           <div>
-            <div className='userPreviewTile__name' onClick={nameClickHandler}>
+            <div className='userSideTile__name' onClick={nameClickHandler}>
               {props.user.name}
             </div>
-            <div className='userPreviewTile__handle'>@{props.user.handle}</div>
+            <div className='userSideTile__handle'>@{props.user.handle}</div>
           </div>
           {status(props.status)}
         </div>
-        <div className='userPreviewTile__col-2__row-2'>{props.user.bio}</div>
+        <div className='userSideTile__col-2__row-2'>{props.user.bio}</div>
       </div>
     </div>
   );
 };
 
-export default UserTile;
+export default UserSideTile;
