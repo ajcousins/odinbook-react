@@ -32,7 +32,10 @@ const Tweet = (props) => {
     if (menuActive) {
       return (
         <div>
-          <div className='tweet__menu__background' onClick={menuHandler}></div>
+          <div
+            className='btn tweet__menu__background'
+            onClick={menuHandler}
+          ></div>
         </div>
       );
     } else return null;
@@ -73,8 +76,20 @@ const Tweet = (props) => {
     }
   };
 
+  const tweetClickHandler = (e) => {
+    const btns = Array.from(document.querySelectorAll(".btn"));
+
+    // If a button is clicked, the user hasn't clicked a 'name': cancel the operation.
+    if (btns.includes(e.target)) return;
+    console.log(e.target);
+
+    props.fetchTweet(props.tweetId);
+
+    console.log("Expand Tweet");
+  };
+
   return (
-    <div className='tweet'>
+    <div className='tweet' onClick={tweetClickHandler}>
       <div className='tweet__col-1'>
         <img className='tweet__avatar' src={`img/users/${props.profilePic}`} />
       </div>

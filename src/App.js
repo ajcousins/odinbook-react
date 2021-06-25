@@ -13,6 +13,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [selectedUser, setSelectedUser] = useState({});
+  const [selectedTweet, setSelectedTweet] = useState({});
   const [curUserLikes, setCurUserLikes] = useState([]);
   const [menuVis, setMenuVis] = useState(false);
   const [page, setPage] = useState(0);
@@ -76,6 +77,33 @@ function App() {
       // refreshSelectedUser();
     });
     changePage(1);
+  };
+
+  const fetchTweet = (tweetId) => {
+    console.log("fetch:", tweetId);
+    const selectedTweetCopy = { ...selectedTweet };
+
+    axios.get(`/api/v1/tweets/${tweetId}`).then((res) => {
+      const tweetDetails = {
+        textContent: res.data.data.tweet.textContent,
+      };
+
+      // Get user details associated to tweet.
+      axios.get(`/api/v1/users/${res.data.data.tweet.user}`).then((res) => {
+        const userDetails = {
+          name: res.data.data.user.name,
+          handle: res.data.data.user.handle,
+          photo: res.data.data.user.photo,
+        };
+
+        selectedTweetCopy.tweetDetails = tweetDetails;
+        selectedTweetCopy.userDetails = userDetails;
+
+        setSelectedTweet(selectedTweetCopy);
+      });
+    });
+
+    changePage(5);
   };
 
   const menuHandler = () => {
@@ -167,6 +195,8 @@ function App() {
             refreshCurrentUser={refreshCurrentUser}
             refreshSelectedUser={refreshSelectedUser}
             likeTweet={likeTweet}
+            fetchTweet={fetchTweet}
+            selectedTweet={selectedTweet}
           />
           <RightSideBar fetchUser={fetchUser} />
         </div>

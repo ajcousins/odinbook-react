@@ -4,6 +4,7 @@ import MainFeedUser from "./MainFeedUser";
 import MainFeedUserFollowing from "./MainFeedUserFollowing";
 import MainFeedUserFollowers from "./MainFeedUserFollowers";
 import MainFeedUserUpdate from "./MainFeedUserUpdate";
+import MainFeedTweetExpand from "./MainFeedTweetExpand";
 import ErrorTile from "./ErrorTile";
 
 const MainFeed = (props) => {
@@ -18,6 +19,7 @@ const MainFeed = (props) => {
           fetchUser={props.fetchUser}
           isLoaded={props.isLoaded}
           likeTweet={props.likeTweet}
+          fetchTweet={props.fetchTweet}
         />
       );
     case 1:
@@ -32,6 +34,7 @@ const MainFeed = (props) => {
           refreshCurrentUser={props.refreshCurrentUser}
           refreshSelectedUser={props.refreshSelectedUser}
           likeTweet={props.likeTweet}
+          fetchTweet={props.fetchTweet}
         />
       );
     case 2:
@@ -70,6 +73,14 @@ const MainFeed = (props) => {
           refreshCurrentUser={props.refreshCurrentUser}
           refreshSelectedUser={props.refreshSelectedUser}
           // likeTweet={props.likeTweet}
+        />
+      );
+    case 5:
+      // Tweet expand
+      return (
+        <MainFeedTweetExpand
+          changePage={props.changePage}
+          selectedTweet={props.selectedTweet}
         />
       );
     default:

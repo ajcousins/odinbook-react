@@ -82,6 +82,7 @@ const MainFeedIndex = (props) => {
               currentUser={props.currentUser}
               deleteTweet={deleteTweet}
               likeTweet={props.likeTweet}
+              fetchTweet={props.fetchTweet}
             />
           );
         })

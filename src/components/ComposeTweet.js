@@ -27,7 +27,7 @@ const ComposeTweet = (props) => {
   };
 
   return (
-    <div className='tweet'>
+    <div className='tweet__compose'>
       <div className='tweet__col-1'>
         <img
           className='tweet__avatar'
