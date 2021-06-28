@@ -885,18 +885,24 @@ strong {
 }
 
 .rightsidebar {
+  margin-top: 53px;
+  margin-left: 1.8em;
+  // position: sticky;
+  // top: 53px;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  flex-shrink: 0;
-  width: 375px;
-  min-height: 100vh;
+  // flex-shrink: 0;
+  // width: 375px;
+  // min-height: 100vh;
+  // background-color: rgb(255, 223, 223);
 }
 
 .who-to-follow {
-  position: sticky;
-  top: 53px;
+  // position: sticky;
+  // top: 53px;
   width: 100%;
-  margin-left: 1.8em;
+  // margin-left: 1.8em;
   background-color: $rhs-card-background;
   border-radius: 1em;
   padding-bottom: 1.8em;
@@ -1036,6 +1042,24 @@ strong {
 
   &__btn {
     margin-bottom: 0.5em;
+  }
+}
+
+.signature {
+  // position: sticky;
+  // top: 510px;
+  padding: 1em 1.5em;
+  width: 100%;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+
+  &__label {
+    color: $twitter-grey-text;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: $twitter-grey-text;
   }
 }
 
