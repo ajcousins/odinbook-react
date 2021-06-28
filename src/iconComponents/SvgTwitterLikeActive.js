@@ -2,7 +2,7 @@ import React from "react";
 
 function SvgTwitterLike(props) {
   return (
-    <svg viewBox='0 0 24 24' height='18.75'>
+    <svg viewBox='0 0 24 24' height={props.height ? props.height : "18.75"}>
       <g fill='#E0245E'>
         <path
           className='btn'

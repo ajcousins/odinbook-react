@@ -85,7 +85,10 @@ function App() {
 
     axios.get(`/api/v1/tweets/${tweetId}`).then((res) => {
       const tweetDetails = {
+        tweetId: res.data.data.tweet._id,
         textContent: res.data.data.tweet.textContent,
+        dateAdded: res.data.data.tweet.dateAdded_expand,
+        likesQty: res.data.data.tweet.likes.length,
       };
 
       // Get user details associated to tweet.

@@ -81,6 +81,10 @@ const MainFeed = (props) => {
         <MainFeedTweetExpand
           changePage={props.changePage}
           selectedTweet={props.selectedTweet}
+          currentUser={props.currentUser}
+          fetchUser={props.fetchUser}
+          likeTweet={props.likeTweet}
+          fetchTweet={props.fetchTweet}
         />
       );
     default:

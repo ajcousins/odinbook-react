@@ -1,11 +1,13 @@
-$test-colour: #bada55;
 $twitter-black: #0f1419;
-$twitter-grey-text: rgb(91, 112, 131);
+
+// ORIGINAL COLOURS
+$twitter-grey-text: #5b7083;
 $twitter-main: #1da1f2;
 $twitter-main-hover: #1a91da;
-$twitter-link: rgb(27, 149, 224);
+$twitter-link: #1b95e0;
 $twitter-disabled-btn: #8ed0f8;
 $hover-highlight: #e8f5fe;
+
 $menu-highlight: #f7f7f7;
 $divider-lines: #ebeef0;
 $input-outline: #c4cfd6;
@@ -35,18 +37,6 @@ a {
     text-decoration: underline;
   }
 }
-
-// &__input {
-//   color: $twitter-black;
-//   width: 100%;
-//   box-sizing: border-box;
-//   margin-bottom: 1.3em;
-//   padding: 1em 0.5em;
-//   border: solid 1px $input-outline;
-//   border-radius: 4px;
-//   font-family: inherit;
-//   font-size: 1.1em;
-// }
 
 .bioInput {
   width: 100%;
@@ -89,7 +79,6 @@ button {
 }
 
 .btn--skip {
-  // margin-top: auto;
   background-color: transparent;
   padding: 1em;
   width: auto;
@@ -104,7 +93,6 @@ button {
 .btn--next {
   margin-top: auto;
   width: 100%;
-  // margin-bottom: 30px;
 }
 
 .btn--disable {
@@ -120,7 +108,6 @@ strong {
 }
 
 .btn--follow {
-  // flex-shrink: 0;
   box-sizing: content-box;
   height: 37px;
   width: 68px;
@@ -146,18 +133,13 @@ strong {
 }
 
 .btn--following {
-  // flex-shrink: 0;
   box-sizing: content-box;
   height: 37px;
   width: 68px;
   padding: 0 15px;
-  // background-color: white;
-  // color: $twitter-main;
-  // border: 1px solid $twitter-main;
 
   &::after {
     content: "Following";
-    // background-color: $twitter-main-hover;
   }
 
   &:hover {
@@ -171,14 +153,6 @@ strong {
 
 .btn--back-arrow {
   display: flex;
-  // flex-shrink: 2;
-  // align-items: flex-start;
-  // font-size: 20px;
-  // font-weight: 700;
-  // color: black;
-  // list-style: none;
-  // margin-top: 0.1em;
-  // margin-bottom: 0.5em;
   box-sizing: content-box;
   border-radius: 1.2em;
   padding: 0.5em;
@@ -198,10 +172,8 @@ strong {
 }
 
 .App {
-  // text-align: center;
   color: $twitter-grey-text;
   display: flex;
-  // background-color: aqua;
 }
 
 .wrapper-login {
@@ -212,16 +184,12 @@ strong {
 
 .wrapper-main {
   display: flex;
-  // box-sizing: content-box;
   margin: auto;
-  // background-color: rgb(211, 255, 240);
   position: relative;
-  // display: none;
   width: auto;
 }
 
 .login {
-  // background-color: antiquewhite;
   max-width: 400px;
   margin-top: 20px;
   width: 100%;
@@ -274,7 +242,6 @@ strong {
     align-items: center;
     top: 0;
     left: 0;
-    // background-color: pink;
     width: 100%;
     height: 100vh;
   }
@@ -302,7 +269,6 @@ strong {
   &__header {
     display: flex;
     justify-content: center;
-    // background-color: red;
   }
 
   &__title {
@@ -310,9 +276,6 @@ strong {
     font-size: 1.44rem;
     margin-top: 1.5em;
     margin-bottom: 1em;
-    // display: flex;
-    // justify-content: center;
-    // background-color: red;
   }
 
   &__success-page {
@@ -320,13 +283,11 @@ strong {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    // height: 100%;
   }
 
   &__spacer {
     height: 12em;
     width: 100%;
-    // background-color: rgba(255, 0, 0, 0.116);
   }
 
   &__avatar-wrapper {
@@ -335,24 +296,12 @@ strong {
     align-items: center;
     justify-content: center;
     margin-top: 2em;
-    // align-items: center;
   }
 
   &__avatar-preview {
-    // cursor: pointer;
     border-radius: 100%;
     height: 250px;
   }
-
-  // &__avatar-overlay {
-  //   display: flex;
-  //   background-color: black;
-  //   border-radius: 100%;
-  // }
-
-  // &__avatar-preview:hover {
-  //   opacity: 80%;
-  // }
 
   &__upload {
     margin-top: 2em;
@@ -368,7 +317,6 @@ strong {
   align-items: flex-start;
   justify-content: space-between;
   flex-direction: column;
-  // background-color: hsl(43, 74%, 92%);
   height: 100vh;
   width: 251px;
   padding: 0 12px;
@@ -382,8 +330,6 @@ strong {
 
   &__button {
     display: flex;
-    // flex-shrink: 2;
-    // align-items: flex-start;
     font-size: 20px;
     font-weight: 700;
     color: black;
@@ -448,11 +394,9 @@ strong {
 
     &__handle {
       color: $twitter-grey-text;
-      // font-weight: 700;
     }
     &__ellipsis {
       height: 18px;
-      // background-color: blue;
       margin-left: auto;
       margin-right: 0px;
     }
@@ -506,7 +450,6 @@ strong {
   min-height: 100vh;
   border-right: solid 1px $divider-lines;
   font-size: 15px;
-  // background-color: hsla(128, 58%, 52%, 0.24);
 
   &__header {
     display: flex;
@@ -534,8 +477,8 @@ strong {
   &__divider {
     height: 12px;
     background-color: #f7f9fa;
+    border-top: solid 1px $divider-lines;
     border-bottom: solid 1px $divider-lines;
-    // width: 100%;
     width: 598px;
   }
 
@@ -559,9 +502,6 @@ strong {
     position: relative;
     top: 130px;
     left: 16px;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
   }
 
   &__user-avatar {
@@ -572,13 +512,11 @@ strong {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    // text-align: center; /* not part of solution */
   }
 
   &__bio {
     width: 598px;
     height: 279px;
-    // background-color: rgb(192, 214, 255);
     padding: 12px 16px 0;
     margin-bottom: 16px;
     border-bottom: 1px solid $divider-lines;
@@ -590,16 +528,11 @@ strong {
     align-items: flex-start;
     width: 100%;
     height: 64px;
-    // background-color: #bada55;
   }
 
   &__bio__row-2 {
-    // display: flex;
-    // justify-content: flex-end;
-    // align-items: flex-start;
     width: 100%;
     height: 58px;
-    // background-color: #bada55;
   }
 
   &__bio__row-3 {
@@ -623,8 +556,6 @@ strong {
     align-items: center;
     height: 53px;
     width: 100%;
-
-    // background-color: greenyellow;
     font-weight: 700;
   }
 
@@ -646,10 +577,8 @@ strong {
 
   &__follow__nav {
     position: relative;
-    // height: 2em;
     display: flex;
     width: 598px;
-    // background-color: #bada55;
     border-bottom: 3px solid $divider-lines;
   }
 
@@ -695,10 +624,6 @@ strong {
   &__follow-list {
     width: 598px;
     height: 279px;
-    // background-color: rgb(192, 214, 255);
-    // padding: 12px 16px 0;
-    // margin-bottom: 16px;
-    // border-bottom: 1px solid $divider-lines;
   }
 }
 
@@ -708,7 +633,6 @@ strong {
   align-items: center;
   width: 598px;
   height: 5em;
-  // background-color: rgb(111, 226, 226);
 
   &__gif {
     height: 5em;
@@ -716,13 +640,11 @@ strong {
 }
 
 .message-tile {
-  // box-sizing: content-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 598px;
-  // height: 5em;
   padding: 40px 20px;
 
   &__heading {
@@ -735,7 +657,6 @@ strong {
 
   &__message {
     text-align: center;
-    // font-size: 3rem;
   }
 }
 
@@ -755,14 +676,12 @@ strong {
 
   &__col-2 {
     width: 100%;
-    // background-color: $hover-highlight;
   }
 
   &__col-2__row-1 {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    // background-color: rgba(255, 0, 0, 0.123);
   }
 
   &__name {
@@ -781,11 +700,7 @@ strong {
 
 .tweet {
   display: flex;
-  // flex-grow: 1;
-  // height: 30px;
-  // align-content: stretch;
   max-width: 598px;
-  // width: 598px;
   border-bottom: solid 1px $divider-lines;
   padding: 12px 16px;
   cursor: pointer;
@@ -803,7 +718,6 @@ strong {
 
   &__col-2__row-1 {
     display: flex;
-    // background-color: #bada55;
   }
 
   &__menu {
@@ -814,7 +728,6 @@ strong {
 
     &__background {
       position: fixed;
-      // background-color: rgba(73, 73, 73, 0.151);
       top: 0;
       left: 0;
       width: 100%;
@@ -824,7 +737,6 @@ strong {
 
     &__face {
       position: absolute;
-      // width: 200px;
       padding: 20px 30px;
       right: 2em;
       background-color: white;
@@ -834,7 +746,6 @@ strong {
       color: $twitter-black;
       z-index: 1;
       cursor: pointer;
-      // color: red;
 
       &:hover {
         background-color: $menu-highlight;
@@ -868,7 +779,6 @@ strong {
   &__bottom-bar {
     display: flex;
     justify-content: space-between;
-    // background-color: #bada55;
     max-width: 425px;
     margin-top: 12px;
   }
@@ -876,7 +786,6 @@ strong {
     display: flex;
     cursor: pointer;
     font-size: 13px;
-    // background-color: aqua;
 
     &:hover {
       color: $twitter-main;
@@ -910,7 +819,6 @@ strong {
   &__compose {
     display: flex;
     max-width: 598px;
-    border-bottom: solid 1px $divider-lines;
     padding: 12px 16px;
     font-size: 15px;
     line-height: 20px;
@@ -980,20 +888,14 @@ strong {
   display: flex;
   align-items: flex-start;
   flex-shrink: 0;
-  // margin-left: 40px;
-  // margin-left: 25px;
   width: 375px;
   min-height: 100vh;
-  // height: 1500px;
-  // background-color: hsla(0, 75%, 89%, 0.186);
 }
 
 .who-to-follow {
   position: sticky;
   top: 53px;
-  // margin-top: 3.5em;
   width: 100%;
-  // height: 400px;
   margin-left: 1.8em;
   background-color: $rhs-card-background;
   border-radius: 1em;
@@ -1005,13 +907,11 @@ strong {
     padding: 0.75em 1em;
     color: $twitter-black;
     border-bottom: 1.33px solid $divider-lines;
-    // background-color: green;
   }
 }
 
 .userSideTile {
   display: flex;
-  // width: 598px;
   border-bottom: solid 1px $divider-lines;
   padding: 12px 16px;
   font-size: 15px;
@@ -1025,14 +925,12 @@ strong {
 
   &__col-2 {
     width: 100%;
-    // background-color: $hover-highlight;
   }
 
   &__col-2__row-1 {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    // background-color: rgba(255, 0, 0, 0.123);
   }
 
   &__name {
@@ -1052,31 +950,100 @@ strong {
     background-color: transparent;
     height: 2.2em;
     width: 3em;
-    // padding: 0.1em 0.5em;
   }
 
   &__btn--following {
-    // background-color: transparent;
     height: 2.2em;
     width: 4.7em;
-    // padding: 0.1em 0.5em;
   }
 }
 
 .tweet-expanded {
-  background-color: rgb(255, 218, 218);
   width: 598px;
-  height: 279px;
+  padding: 0 1em;
+
+  &__row-1 {
+    display: flex;
+    padding-top: 0.75em;
+
+    &__col-2 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      &__name {
+        font-weight: 700;
+        color: $twitter-black;
+      }
+
+      &__handle {
+      }
+    }
+  }
+
+  &__row-2 {
+    margin-top: 0.5em;
+    font-size: 1.44rem;
+    color: $twitter-black;
+    padding-right: 0.75em;
+  }
+
+  &__row-3 {
+    display: flex;
+    height: 3.8em;
+    align-items: center;
+    border-bottom: 1px solid $divider-lines;
+  }
+
+  &__row-4 {
+    display: flex;
+    padding: 1em 0;
+    padding-left: 0.5em;
+    border-bottom: 1px solid $divider-lines;
+  }
+
+  &__row-5 {
+    display: flex;
+    justify-content: space-around;
+    padding: 1em 0;
+
+    border-bottom: 1px solid $divider-lines;
+  }
+
+  &__reply {
+    display: flex;
+    padding: 1em 0;
+
+    &__col-1 {
+      display: flex;
+    }
+
+    &__col-2 {
+      width: 100%;
+      padding-right: 1em;
+    }
+
+    &__col-3 {
+      display: flex;
+      align-self: flex-end;
+    }
+  }
+
+  &__btn--right {
+    margin-right: 0;
+    margin-left: auto;
+  }
+
+  &__btn {
+    margin-bottom: 0.5em;
+  }
 }
 
 @media screen and (max-width: 1300px) {
   .leftsidebar {
-    // background-color: blue;
     width: 88px;
     align-items: center;
     &__text {
-      // position: absolute;
-      // visibility: hidden;
       display: none;
     }
   }
@@ -1084,10 +1051,6 @@ strong {
   .mainfeed {
     margin-left: 88px;
   }
-  // .content {
-  //   width: auto;
-  //   margin-left: 88px;
-  // }
 
   .leftsidebar__useradmin__name {
     display: none;
@@ -1115,9 +1078,3 @@ strong {
     width: auto;
   }
 }
-
-// @media screen and (max-width: 690) {
-//   .tweet {
-//     width: 100%;
-//   }
-// }

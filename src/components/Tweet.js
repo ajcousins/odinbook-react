@@ -33,7 +33,7 @@ const Tweet = (props) => {
       return (
         <div>
           <div
-            className='btn tweet__menu__background'
+            className='btn btn tweet__menu__background'
             onClick={menuHandler}
           ></div>
         </div>
@@ -46,7 +46,7 @@ const Tweet = (props) => {
       return (
         <div>
           <div
-            className='tweet__menu__face'
+            className='btn tweet__menu__face'
             onClick={() => deleteTweetHandler(props.tweetId)}
           >
             Delete Tweet
@@ -91,12 +91,15 @@ const Tweet = (props) => {
   return (
     <div className='tweet' onClick={tweetClickHandler}>
       <div className='tweet__col-1'>
-        <img className='tweet__avatar' src={`img/users/${props.profilePic}`} />
+        <img
+          className='btn tweet__avatar'
+          src={`img/users/${props.profilePic}`}
+        />
       </div>
       <div className='tweet__col-2'>
         <div className='tweet__col-2__row-1'>
           <span
-            className='tweet__name'
+            className='btn tweet__name'
             onClick={() => {
               props.fetchUser(props.id);
               props.changePage(1);
@@ -116,7 +119,7 @@ const Tweet = (props) => {
         <div className='tweet__col-2__row-2'>{props.message}</div>
         <div className='tweet__col-2__row-3'>
           <div className='tweet__bottom-bar'>
-            <TweetButton data={props.replies}>
+            <TweetButton data={props.replies.length}>
               <TwitterReply />
             </TweetButton>
             <TweetButton data={props.retweets}>

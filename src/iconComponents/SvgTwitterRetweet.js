@@ -6,7 +6,7 @@ function SvgTwitterLike(props) {
       viewBox='0 0 24 24'
       className='btn tweet__icon'
       // width='24'
-      height='18.75'
+      height={props.height ? props.height : "18.75"}
     >
       <g>
         <path
