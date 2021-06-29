@@ -867,6 +867,18 @@ strong {
   }
 }
 
+.retweet {
+  &__header {
+    display: flex;
+    gap: 0.8em;
+    // background-color: #c4cfd6;
+    margin-top: 0.75em;
+    padding-left: 3.8em;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+}
+
 .update-user {
   &__name-input {
     color: $twitter-black;
@@ -899,6 +911,9 @@ strong {
 }
 
 .rightsidebar {
+  position: sticky;
+  top: 53px;
+  align-self: flex-start;
   margin-top: 53px;
   margin-left: 1.8em;
   display: flex;

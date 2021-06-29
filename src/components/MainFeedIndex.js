@@ -4,6 +4,7 @@ import Tweet from "./../components/Tweet";
 import ComposeTweet from "./../components/ComposeTweet";
 import LoadingTile from "./../components/LoadingTile";
 import MessageTile from "./MessageTile";
+import SvgTwitterRetweet from "./../iconComponents/SvgTwitterRetweet";
 
 const MainFeedIndex = (props) => {
   const [tweets, setTweets] = useState([]);
@@ -64,27 +65,58 @@ const MainFeedIndex = (props) => {
         <LoadingTile />
       ) : (
         tweets.map((tweet) => {
-          return (
-            <Tweet
-              className='tweet'
-              name={tweet.user.name}
-              id={tweet.user._id}
-              tweetId={tweet._id}
-              handle={`@${tweet.user.handle}`}
-              profilePic={tweet.user.photo}
-              time={tweet.tweetAge}
-              message={tweet.textContent}
-              replies={tweet.replies_short}
-              retweets={tweet.retweets_short}
-              likes={tweet.likes}
-              fetchUser={props.fetchUser}
-              changePage={props.changePage}
-              currentUser={props.currentUser}
-              deleteTweet={deleteTweet}
-              likeTweet={props.likeTweet}
-              fetchTweet={props.fetchTweet}
-            />
-          );
+          if (tweet.retweetChild) {
+            return (
+              // RETWEET
+              <div>
+                <div className='retweet__header'>
+                  <SvgTwitterRetweet height='16' />
+                  {tweet.user.name} retweeted
+                </div>
+                <Tweet
+                  className='tweet'
+                  name={tweet.retweetChild.user.name}
+                  id={tweet.retweetChild.user._id}
+                  tweetId={tweet.retweetChild._id}
+                  handle={`@${tweet.retweetChild.user.handle}`}
+                  profilePic={tweet.retweetChild.user.photo}
+                  time={tweet.retweetChild.tweetAge}
+                  message={tweet.retweetChild.textContent}
+                  replies={tweet.retweetChild.replies_short}
+                  retweets={tweet.retweetChild.retweets_short}
+                  likes={tweet.retweetChild.likes}
+                  fetchUser={props.fetchUser}
+                  changePage={props.changePage}
+                  currentUser={props.currentUser}
+                  deleteTweet={deleteTweet}
+                  likeTweet={props.likeTweet}
+                  fetchTweet={props.fetchTweet}
+                />
+              </div>
+            );
+          } else {
+            return (
+              <Tweet
+                className='tweet'
+                name={tweet.user.name}
+                id={tweet.user._id}
+                tweetId={tweet._id}
+                handle={`@${tweet.user.handle}`}
+                profilePic={tweet.user.photo}
+                time={tweet.tweetAge}
+                message={tweet.textContent}
+                replies={tweet.replies_short}
+                retweets={tweet.retweets_short}
+                likes={tweet.likes}
+                fetchUser={props.fetchUser}
+                changePage={props.changePage}
+                currentUser={props.currentUser}
+                deleteTweet={deleteTweet}
+                likeTweet={props.likeTweet}
+                fetchTweet={props.fetchTweet}
+              />
+            );
+          }
         })
       )}
     </div>
