@@ -182,6 +182,7 @@ function App() {
       }).then((res) => {
         curUserRetweetsCopy.push(tweetId); // Not sure if parent or child tweet to be passed to state array?
         setCurUserRetweets(curUserRetweetsCopy);
+        // Tweets need to be added to the user model so they can be checked.
       });
     } else {
       console.log("Undo retweet TODO");
