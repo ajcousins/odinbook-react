@@ -4,6 +4,8 @@ import SvgBackArrow from "./../iconComponents/SvgBackArrow";
 import Follows from "./Follows";
 import Tweet from "./Tweet";
 import axios from "axios";
+import SvgTwitterRetweet from "./../iconComponents/SvgTwitterRetweet";
+import LoadingTile from "./../components/LoadingTile";
 
 const MainFeedUser = (props) => {
   const [userTweets, setUserTweets] = useState([]);
@@ -13,6 +15,11 @@ const MainFeedUser = (props) => {
 
   const [followerList, setFollowerList] = useState([]);
   const [followerListLength, setFollowerListLength] = useState(0);
+
+  // TEMPORARY FOR DEBUGGIN
+  useEffect(() => {
+    console.log("userTweets:", userTweets);
+  }, [userTweets]);
 
   // Get tweets from selected user
   const loadTweets = () => {
@@ -26,7 +33,7 @@ const MainFeedUser = (props) => {
       const data = await response.json();
       // copy tweets into userTweets state
       setUserTweets(data.userTweets);
-
+      // console.log("userTweets:", userTweets);
       setIsLoaded(true);
     }
     fetchData();
@@ -209,29 +216,64 @@ const MainFeedUser = (props) => {
           <div>Likes</div>
         </div>
       </div>
-      {userTweets.map((tweet) => {
-        return (
-          <Tweet
-            className='tweet'
-            name={tweet.user.name}
-            id={tweet.user._id}
-            tweetId={tweet._id}
-            handle={`@${tweet.user.handle}`}
-            profilePic={tweet.user.photo}
-            time={tweet.tweetAge}
-            message={tweet.textContent}
-            replies={tweet.replies_short}
-            retweets={tweet.retweets_short}
-            likes={tweet.likes}
-            fetchUser={props.fetchUser}
-            changePage={props.changePage}
-            currentUser={props.currentUser}
-            deleteTweet={deleteTweet}
-            likeTweet={props.likeTweet}
-            fetchTweet={props.fetchTweet}
-          />
-        );
-      })}
+      {!isLoaded ? (
+        <LoadingTile />
+      ) : (
+        userTweets.map((tweet) => {
+          return (
+            <div className='tweet__hover-wrapper'>
+              {tweet.retweetChild ? (
+                // RETWEET
+                <div>
+                  <div className='retweet__header'>
+                    <SvgTwitterRetweet height='16' />
+                    {tweet.user.name} retweeted
+                  </div>
+                  <Tweet
+                    className='tweet'
+                    name={tweet.retweetChild.user.name}
+                    id={tweet.retweetChild.user._id}
+                    tweetId={tweet.retweetChild._id}
+                    handle={`@${tweet.retweetChild.user.handle}`}
+                    profilePic={tweet.retweetChild.user.photo}
+                    time={tweet.retweetChild.tweetAge}
+                    message={tweet.retweetChild.textContent}
+                    replies={tweet.retweetChild.replies_short}
+                    retweets={tweet.retweetChild.retweets_short}
+                    likes={tweet.retweetChild.likes}
+                    fetchUser={props.fetchUser}
+                    changePage={props.changePage}
+                    currentUser={props.currentUser}
+                    deleteTweet={deleteTweet}
+                    likeTweet={props.likeTweet}
+                    fetchTweet={props.fetchTweet}
+                  />
+                </div>
+              ) : (
+                <Tweet
+                  className='tweet'
+                  name={tweet.user.name}
+                  id={tweet.user._id}
+                  tweetId={tweet._id}
+                  handle={`@${tweet.user.handle}`}
+                  profilePic={tweet.user.photo}
+                  time={tweet.tweetAge}
+                  message={tweet.textContent}
+                  replies={tweet.replies_short}
+                  retweets={tweet.retweets_short}
+                  likes={tweet.likes}
+                  fetchUser={props.fetchUser}
+                  changePage={props.changePage}
+                  currentUser={props.currentUser}
+                  deleteTweet={deleteTweet}
+                  likeTweet={props.likeTweet}
+                  fetchTweet={props.fetchTweet}
+                />
+              )}
+            </div>
+          );
+        })
+      )}
     </div>
   );
 };

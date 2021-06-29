@@ -532,7 +532,7 @@ strong {
     width: 598px;
     // height: 279px;
     padding: 12px 16px 0;
-    margin-bottom: 16px;
+    // margin-bottom: 16px;
     border-bottom: 1px solid $divider-lines;
   }
 
@@ -722,8 +722,14 @@ strong {
   line-height: 20px;
   color: $twitter-black;
 
-  &:hover {
-    background-color: $menu-highlight;
+  // &:hover {
+  //   background-color: $menu-highlight;
+  // }
+
+  &__hover-wrapper {
+    &:hover {
+      background-color: $menu-highlight;
+    }
   }
 
   &__col-2 {
