@@ -6,6 +6,7 @@ const Signature = () => {
         <strong className='signature__label'>Back-end:</strong>&nbsp;
         <a
           className='signature__link'
+          target='_blank'
           href='https://github.com/ajcousins/odinbook'
         >
           github.com/ajcousins/odinbook
@@ -15,6 +16,7 @@ const Signature = () => {
         <strong className='signature__label'>Front-end:</strong>&nbsp;
         <a
           className='signature__link'
+          target='_blank'
           href='https://github.com/ajcousins/odinbook-react'
         >
           github.com/ajcousins/odinbook-react

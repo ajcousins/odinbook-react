@@ -18,6 +18,8 @@ const MainFeedTweetExpand = (props) => {
   const [replies, setReplies] = useState([]);
   const [tweetPosted, setTweetPosted] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likesNumber, setLikesNumber] = useState(0);
 
   useEffect(() => {
     if (selectedTweet.tweetDetails) {
@@ -25,17 +27,25 @@ const MainFeedTweetExpand = (props) => {
     }
   }, [selectedTweet, tweetPosted]);
 
+  // Check likes list
+  useEffect(() => {
+    if (isLoaded) {
+      if (selectedTweet.tweetDetails.likes.includes(props.currentUser._id)) {
+        setIsLiked(true);
+      }
+      setLikesNumber(selectedTweet.tweetDetails.likes.length);
+    }
+  }, [selectedTweet, props.currentUser._id, isLoaded]);
+
   const fetchReplies = () => {
     axios({
       method: "GET",
       url: `/tweets/${selectedTweet.tweetDetails.tweetId}/replies`,
     }).then((res) => {
-      console.log(res);
       setReplies(res.data.data.tweets);
       setIsLoaded(true);
       setTweetPosted(false);
     });
-    // console.log(selectedTweet.tweetDetails.tweetId);
   };
 
   useEffect(() => {
@@ -73,17 +83,29 @@ const MainFeedTweetExpand = (props) => {
     // Delete from database
 
     axios.delete(`/api/v1/tweets/${tweetId}`).then((res) => {
-      console.log(res);
-      // If delete successful..
-      // Delete from state array.
-      console.log(replies);
       const newTweets = [...replies];
-
       let index = newTweets.findIndex((tweet) => tweet.id === tweetId);
-      console.log(index);
       newTweets.splice(index, 1);
       setReplies(newTweets);
     });
+  };
+
+  const likeHandler = () => {
+    if (isLiked) {
+      axios
+        .patch(`/api/v1/tweets/${selectedTweet.tweetDetails.tweetId}/unlike`)
+        .then((res) => {
+          setIsLiked(false);
+          setLikesNumber(likesNumber - 1);
+        });
+    } else {
+      axios
+        .patch(`/api/v1/tweets/${selectedTweet.tweetDetails.tweetId}/like`)
+        .then((res) => {
+          setIsLiked(true);
+          setLikesNumber(likesNumber + 1);
+        });
+    }
   };
 
   return (
@@ -103,7 +125,10 @@ const MainFeedTweetExpand = (props) => {
                 src={`img/users/${selectedTweet.userDetails.photo}`}
               />
               <div className='tweet-expanded__row-1__col-2'>
-                <div className='tweet-expanded__row-1__col-2__name'>
+                <div
+                  className='tweet-expanded__row-1__col-2__name'
+                  onClick={() => props.fetchUser(selectedTweet.userDetails.id)}
+                >
                   {selectedTweet.userDetails.name}
                 </div>
                 @{selectedTweet.userDetails.handle}
@@ -116,7 +141,7 @@ const MainFeedTweetExpand = (props) => {
               {selectedTweet.tweetDetails.dateAdded}
             </div>
             <div className='tweet-expanded__row-4'>
-              <strong>{selectedTweet.tweetDetails.likesQty}</strong>
+              <strong>{likesNumber}</strong>
               &nbsp;Likes
             </div>
             <div className='tweet-expanded__row-5'>
@@ -126,11 +151,15 @@ const MainFeedTweetExpand = (props) => {
               <TweetButton>
                 <TwitterRetweet height='24' />
               </TweetButton>
-              <TweetButton>
-                {/* {isLiked ? <TwitterLikeActive /> :  */}
-                <TwitterLike height='24' />
-                {/* } */}
-              </TweetButton>
+              <span className='tweet__like-btn' onClick={likeHandler}>
+                <TweetButton>
+                  {isLiked ? (
+                    <TwitterLikeActive height='24' />
+                  ) : (
+                    <TwitterLike height='24' />
+                  )}
+                </TweetButton>
+              </span>
               <TweetButton>
                 <TwitterShare height='24' />
               </TweetButton>

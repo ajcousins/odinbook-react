@@ -88,6 +88,7 @@ function App() {
         tweetId: res.data.data.tweet._id,
         textContent: res.data.data.tweet.textContent,
         dateAdded: res.data.data.tweet.dateAdded_expand,
+        likes: res.data.data.tweet.likes,
         likesQty: res.data.data.tweet.likes.length,
       };
 
@@ -97,6 +98,7 @@ function App() {
           name: res.data.data.user.name,
           handle: res.data.data.user.handle,
           photo: res.data.data.user.photo,
+          id: res.data.data.user._id,
         };
 
         selectedTweetCopy.tweetDetails = tweetDetails;
@@ -135,7 +137,10 @@ function App() {
 
   const changePage = (page) => {
     console.log(`Change to page ${page}.`);
-    if (page === 0) setSelectedUser({});
+    if (page === 0) {
+      setSelectedUser({});
+      setSelectedTweet({});
+    }
     setPage(page);
   };
 

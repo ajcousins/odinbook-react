@@ -493,7 +493,13 @@ strong {
   &__banner {
     width: 598px;
     height: 200px;
-    background-color: rgb(14, 11, 55);
+    // background-color: rgb(194, 194, 194);
+    background: rgb(234, 109, 255);
+    background: linear-gradient(
+      29deg,
+      rgba(234, 109, 255, 1) 0%,
+      rgba(69, 224, 255, 1) 100%
+    );
   }
 
   &__user__tweets {
@@ -977,6 +983,7 @@ strong {
       justify-content: center;
 
       &__name {
+        cursor: pointer;
         font-weight: 700;
         color: $twitter-black;
       }
