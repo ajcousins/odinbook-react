@@ -3,6 +3,7 @@ import defaultAvatar from "./../static/default-avatar.png";
 import TweetButton from "./TweetButton";
 import TwitterReply from "./../iconComponents/SvgTwitterReply";
 import TwitterRetweet from "./../iconComponents/SvgTwitterRetweet";
+import TwitterRetweetActive from "./../iconComponents/SvgTwitterRetweetActive";
 import TwitterLike from "./../iconComponents/SvgTwitterLike";
 import TwitterLikeActive from "./../iconComponents/SvgTwitterLikeActive";
 import TwitterShare from "./../iconComponents/SvgTwitterShare";
@@ -12,6 +13,8 @@ const Tweet = (props) => {
   const [menuActive, setMenuActive] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [likesNumber, setLikesNumber] = useState(0);
+  const [isRetweeted, setIsRetweeted] = useState(false);
+  const [retweetsNumber, setRetweetsNumber] = useState(0);
 
   const deleteTweetHandler = (tweetId) => {
     console.log("Delete", tweetId);
@@ -76,6 +79,26 @@ const Tweet = (props) => {
     }
   };
 
+  // Check retweets list
+  useEffect(() => {
+    if (props.retweets.includes(props.currentUser._id)) {
+      setIsRetweeted(true);
+    }
+    setRetweetsNumber(props.retweets.length);
+  }, [props.retweets, props.currentUser._id]);
+
+  const retweetHandler = () => {
+    if (isRetweeted) {
+      // setIsRetweeted(false);
+      // setRetweetsNumber(retweetsNumber - 1);
+      // props.retweetTweet(props.tweetId, false);
+    } else {
+      setIsRetweeted(true);
+      setRetweetsNumber(retweetsNumber + 1);
+      props.retweetTweet(props.tweetId, true);
+    }
+  };
+
   const tweetClickHandler = (e) => {
     const btns = Array.from(document.querySelectorAll(".btn"));
 
@@ -122,9 +145,11 @@ const Tweet = (props) => {
             <TweetButton data={props.replies.length}>
               <TwitterReply />
             </TweetButton>
-            <TweetButton data={props.retweets}>
-              <TwitterRetweet />
-            </TweetButton>
+            <span className='tweet__retweet-btn' onClick={retweetHandler}>
+              <TweetButton data={retweetsNumber}>
+                {isRetweeted ? <TwitterRetweetActive /> : <TwitterRetweet />}
+              </TweetButton>
+            </span>
             <span className='tweet__like-btn' onClick={likeHandler}>
               <TweetButton data={likesNumber}>
                 {isLiked ? <TwitterLikeActive /> : <TwitterLike />}

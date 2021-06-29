@@ -246,6 +246,7 @@ const MainFeedUser = (props) => {
                     currentUser={props.currentUser}
                     deleteTweet={deleteTweet}
                     likeTweet={props.likeTweet}
+                    retweetTweet={props.retweetTweet}
                     fetchTweet={props.fetchTweet}
                   />
                 </div>
@@ -267,6 +268,7 @@ const MainFeedUser = (props) => {
                   currentUser={props.currentUser}
                   deleteTweet={deleteTweet}
                   likeTweet={props.likeTweet}
+                  retweetTweet={props.retweetTweet}
                   fetchTweet={props.fetchTweet}
                 />
               )}

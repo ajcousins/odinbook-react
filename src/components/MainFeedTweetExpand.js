@@ -217,6 +217,7 @@ const MainFeedTweetExpand = (props) => {
                 currentUser={props.currentUser}
                 deleteTweet={deleteTweet}
                 likeTweet={props.likeTweet}
+                retweetTweet={props.retweetTweet}
                 fetchTweet={props.fetchTweet}
               />
             );

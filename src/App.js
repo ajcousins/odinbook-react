@@ -15,6 +15,7 @@ function App() {
   const [selectedUser, setSelectedUser] = useState({});
   const [selectedTweet, setSelectedTweet] = useState({});
   const [curUserLikes, setCurUserLikes] = useState([]);
+  const [curUserRetweets, setCurUserRetweets] = useState([]);
   const [menuVis, setMenuVis] = useState(false);
   const [page, setPage] = useState(0);
 
@@ -42,6 +43,7 @@ function App() {
           setIsLoaded(true);
           const currentUserCopy = { ...data.data.currentUser };
           const curUserLikesCopy = [...data.data.currentUser.likedTweets];
+          // const curUserRetweetsCopy = [...data.data.currentUser.likedTweets]; //// TO DO <----- Need to add an array to retweeted tweets to user model and retweet route.
 
           setCurrentUser(currentUserCopy);
           setCurUserLikes(curUserLikesCopy);
@@ -165,6 +167,29 @@ function App() {
     }
   };
 
+  const retweetTweet = (tweetId, add) => {
+    console.log("Retweet:", tweetId);
+    const curUserRetweetsCopy = [...curUserRetweets];
+
+    if (add) {
+      axios({
+        method: "POST",
+        url: "/api/v1/tweets/",
+        data: {
+          user: currentUser._id,
+          retweetChild: tweetId,
+        },
+      }).then((res) => {
+        curUserRetweetsCopy.push(tweetId); // Not sure if parent or child tweet to be passed to state array?
+        setCurUserRetweets(curUserRetweetsCopy);
+      });
+    } else {
+      console.log("Undo retweet TODO");
+      // Delete parent tweet.
+      // Need to amend delete route to handle retweets. Should delete parent and remove id from child.
+    }
+  };
+
   if (!isAuth) {
     // Login/ register screen
     return (
@@ -203,6 +228,7 @@ function App() {
             refreshCurrentUser={refreshCurrentUser}
             refreshSelectedUser={refreshSelectedUser}
             likeTweet={likeTweet}
+            retweetTweet={retweetTweet}
             fetchTweet={fetchTweet}
             selectedTweet={selectedTweet}
           />

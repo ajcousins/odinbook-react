@@ -19,6 +19,7 @@ const MainFeed = (props) => {
           fetchUser={props.fetchUser}
           isLoaded={props.isLoaded}
           likeTweet={props.likeTweet}
+          retweetTweet={props.retweetTweet}
           fetchTweet={props.fetchTweet}
         />
       );
@@ -35,6 +36,7 @@ const MainFeed = (props) => {
           refreshCurrentUser={props.refreshCurrentUser}
           refreshSelectedUser={props.refreshSelectedUser}
           likeTweet={props.likeTweet}
+          retweetTweet={props.retweetTweet}
           fetchTweet={props.fetchTweet}
         />
       );
@@ -85,6 +87,7 @@ const MainFeed = (props) => {
           currentUser={props.currentUser}
           fetchUser={props.fetchUser}
           likeTweet={props.likeTweet}
+          retweetTweet={props.retweetTweet}
           fetchTweet={props.fetchTweet}
         />
       );
