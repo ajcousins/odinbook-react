@@ -15,6 +15,7 @@ const Tweet = (props) => {
   const [likesNumber, setLikesNumber] = useState(0);
   const [isRetweeted, setIsRetweeted] = useState(false);
   const [retweetsNumber, setRetweetsNumber] = useState(0);
+  const [checkRetweetsList, setCheckRetweetsList] = useState(false);
 
   const deleteTweetHandler = (tweetId) => {
     console.log("Delete", tweetId);
@@ -83,19 +84,29 @@ const Tweet = (props) => {
   useEffect(() => {
     if (props.retweets.includes(props.currentUser._id)) {
       setIsRetweeted(true);
-    }
+    } else setIsRetweeted(false);
     setRetweetsNumber(props.retweets.length);
-  }, [props.retweets, props.currentUser._id]);
+    setCheckRetweetsList(false);
+  }, [props.retweets, props.currentUser._id, checkRetweetsList]);
 
+  //// This should be moved down a level. Index, User and Expand will handle retweet differently.
   const retweetHandler = () => {
     if (isRetweeted) {
       // setIsRetweeted(false);
       // setRetweetsNumber(retweetsNumber - 1);
-      // props.retweetTweet(props.tweetId, false);
+      // SEND PARENT TWEET ID- NOT THE CHILD.
+      console.log("props.tweetId:", props.tweetId);
+      props.retweetTweet(props.parentTweetId, false);
+      props.tweetHandler();
+      setCheckRetweetsList(true);
     } else {
-      setIsRetweeted(true);
-      setRetweetsNumber(retweetsNumber + 1);
+      // setIsRetweeted(true);
+      // setRetweetsNumber(retweetsNumber + 1);
+      // SEND CHILD TWEET ID
+      console.log("props.tweetId:", props.tweetId);
       props.retweetTweet(props.tweetId, true);
+      props.tweetHandler();
+      setCheckRetweetsList(true);
     }
   };
 

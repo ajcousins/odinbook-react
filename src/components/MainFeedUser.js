@@ -6,9 +6,11 @@ import Tweet from "./Tweet";
 import axios from "axios";
 import SvgTwitterRetweet from "./../iconComponents/SvgTwitterRetweet";
 import LoadingTile from "./../components/LoadingTile";
+import removeDuplicates from "./../utils/removeDuplicates";
 
 const MainFeedUser = (props) => {
   const [userTweets, setUserTweets] = useState([]);
+  const [tweetPosted, setTweetPosted] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [isFollowingState, setIsFollowingState] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -32,8 +34,9 @@ const MainFeedUser = (props) => {
       );
       const data = await response.json();
       // copy tweets into userTweets state
-      setUserTweets(data.userTweets);
+      setUserTweets(removeDuplicates(data.userTweets));
       // console.log("userTweets:", userTweets);
+      setTweetPosted(false);
       setIsLoaded(true);
     }
     fetchData();
@@ -137,6 +140,12 @@ const MainFeedUser = (props) => {
   const editHandler = () => {
     console.log("Edit profile");
     props.changePage(4);
+  };
+
+  const tweetHandler = () => {
+    console.log("tweetHandler");
+    setTweetPosted(true);
+    loadTweets();
   };
 
   const followBtn = () => {
@@ -248,6 +257,7 @@ const MainFeedUser = (props) => {
                     likeTweet={props.likeTweet}
                     retweetTweet={props.retweetTweet}
                     fetchTweet={props.fetchTweet}
+                    tweetHandler={tweetHandler}
                   />
                 </div>
               ) : (
@@ -270,6 +280,7 @@ const MainFeedUser = (props) => {
                   likeTweet={props.likeTweet}
                   retweetTweet={props.retweetTweet}
                   fetchTweet={props.fetchTweet}
+                  tweetHandler={tweetHandler}
                 />
               )}
             </div>

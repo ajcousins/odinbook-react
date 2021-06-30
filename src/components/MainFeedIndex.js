@@ -5,10 +5,13 @@ import ComposeTweet from "./../components/ComposeTweet";
 import LoadingTile from "./../components/LoadingTile";
 import MessageTile from "./MessageTile";
 import SvgTwitterRetweet from "./../iconComponents/SvgTwitterRetweet";
+import removeDuplicates from "./../utils/removeDuplicates";
 
 const MainFeedIndex = (props) => {
   const [tweets, setTweets] = useState([]);
   const [tweetPosted, setTweetPosted] = useState(false);
+  const [retweets, setRetweets] = useState([]);
+  // const [tweetsRendered, setTweetsRendered] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -16,11 +19,35 @@ const MainFeedIndex = (props) => {
         method: "GET",
       });
       const data = await response.json();
-      setTweets(data.data.tweets);
+
+      setTweets(removeDuplicates(data.data.tweets));
+
+      // setTweets(data.data.tweets);
       setTweetPosted(false);
     }
     fetchData();
   }, [tweetPosted]);
+
+  // // Populate retweets list
+  // useEffect(() => {
+  //   const retweets = tweets
+  //     .filter((tweet) => {
+  //       if (tweet.retweetChild) return true;
+  //       else return false;
+  //     })
+  //     .map((tweet) => {
+  //       return tweet.retweetChild._id;
+  //     });
+  //   setRetweets(retweets);
+  // }, [tweets]);
+
+  // useEffect(() => {
+  //   console.log("retweets list:", retweets);
+  // }, [retweets]);
+
+  useEffect(() => {
+    console.log("tweets list:", tweets);
+  }, [tweets]);
 
   const tweetHandler = () => {
     setTweetPosted(true);
@@ -79,6 +106,7 @@ const MainFeedIndex = (props) => {
                     name={tweet.retweetChild.user.name}
                     id={tweet.retweetChild.user._id}
                     tweetId={tweet.retweetChild._id}
+                    parentTweetId={tweet._id}
                     handle={`@${tweet.retweetChild.user.handle}`}
                     profilePic={tweet.retweetChild.user.photo}
                     time={tweet.retweetChild.tweetAge}
@@ -93,6 +121,7 @@ const MainFeedIndex = (props) => {
                     likeTweet={props.likeTweet}
                     retweetTweet={props.retweetTweet}
                     fetchTweet={props.fetchTweet}
+                    tweetHandler={tweetHandler}
                   />
                 </div>
               ) : (
@@ -115,6 +144,7 @@ const MainFeedIndex = (props) => {
                   likeTweet={props.likeTweet}
                   retweetTweet={props.retweetTweet}
                   fetchTweet={props.fetchTweet}
+                  tweetHandler={tweetHandler}
                 />
               )}
             </div>

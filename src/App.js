@@ -26,6 +26,14 @@ function App() {
   };
 
   useEffect(() => {
+    console.log("curUserRetweets", curUserRetweets);
+  }, [curUserRetweets]);
+
+  // useEffect(() => {
+  //   console.log("tweetlist", );
+  // })
+
+  useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch("/tweets/", {
@@ -43,10 +51,13 @@ function App() {
           setIsLoaded(true);
           const currentUserCopy = { ...data.data.currentUser };
           const curUserLikesCopy = [...data.data.currentUser.likedTweets];
-          // const curUserRetweetsCopy = [...data.data.currentUser.likedTweets]; //// TO DO <----- Need to add an array to retweeted tweets to user model and retweet route.
+          // const curUserRetweetsCopy = [
+          //   ...data.data.currentUser.retweetedTweets,
+          // ];
 
           setCurrentUser(currentUserCopy);
           setCurUserLikes(curUserLikesCopy);
+          // setCurUserRetweets(curUserRetweetsCopy);
           // console.log(curUserLikes);
         }
       } catch (err) {
@@ -169,7 +180,7 @@ function App() {
 
   const retweetTweet = (tweetId, add) => {
     console.log("Retweet:", tweetId);
-    const curUserRetweetsCopy = [...curUserRetweets];
+    // const curUserRetweetsCopy = [...curUserRetweets];
 
     if (add) {
       axios({
@@ -180,14 +191,26 @@ function App() {
           retweetChild: tweetId,
         },
       }).then((res) => {
-        curUserRetweetsCopy.push(tweetId); // Not sure if parent or child tweet to be passed to state array?
-        setCurUserRetweets(curUserRetweetsCopy);
+        // curUserRetweetsCopy.push(tweetId); // Child tweet to be passed to state array.
+        // setCurUserRetweets(curUserRetweetsCopy);
         // Tweets need to be added to the user model so they can be checked.
       });
     } else {
-      console.log("Undo retweet TODO");
+      // tweetId needs to be parent ID.
+      console.log("Undo Retweet:", tweetId);
       // Delete parent tweet.
-      // Need to amend delete route to handle retweets. Should delete parent and remove id from child.
+      axios({
+        method: "POST",
+        url: "/api/v1/tweets/undoRetweet",
+        data: {
+          retweetParent: tweetId,
+        },
+      }).then((res) => {
+        // Where I left off..
+        // curUserRetweetsCopy.splice(tweetId); // Child tweet to be passed to state array.
+        // setCurUserRetweets(curUserRetweetsCopy);
+        // Tweets need to be added to the user model so they can be checked.
+      });
     }
   };
 
