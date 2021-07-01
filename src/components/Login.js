@@ -21,7 +21,7 @@ const Login = (props) => {
 
   const login = async () => {
     axios
-      .post("/api/v1/users/login", input)
+      .post("https://hydro-eds-18702.herokuapp.com/api/v1/users/login", input)
       .then((res) => {
         const data = res.data;
         setToken(data.token);

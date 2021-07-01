@@ -75,17 +75,19 @@ const RegisterForm = (props) => {
   const createUser = (e) => {
     e.preventDefault();
 
-    axios.post("/api/v1/users/signup", input).then(
-      (res) => {
-        if (res.status === 201) {
-          nextPage();
-          setInput({});
+    axios
+      .post("https://hydro-eds-18702.herokuapp.com/api/v1/users/signup", input)
+      .then(
+        (res) => {
+          if (res.status === 201) {
+            nextPage();
+            setInput({});
+          }
+        },
+        (err) => {
+          console.log(err);
         }
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+      );
   };
 
   const backgroundClickHandler = () => {
@@ -107,16 +109,21 @@ const RegisterForm = (props) => {
     const form = new FormData();
     form.append("photo", document.getElementById("photo").files[0]);
 
-    axios.post("/api/v1/users/updateUser", form).then(
-      (res) => {
-        const photo = res.data.data.user.photo;
-        setPhoto(photo);
-        nextPage();
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    axios
+      .post(
+        "https://hydro-eds-18702.herokuapp.com/api/v1/users/updateUser",
+        form
+      )
+      .then(
+        (res) => {
+          const photo = res.data.data.user.photo;
+          setPhoto(photo);
+          nextPage();
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   };
 
   const bioChangeHandler = (e) => {
@@ -131,14 +138,19 @@ const RegisterForm = (props) => {
     const form = new FormData();
     form.append("bio", document.getElementById("bio").value);
 
-    axios.post("/api/v1/users/updateUser", form).then(
-      (res) => {
-        nextPage();
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    axios
+      .post(
+        "https://hydro-eds-18702.herokuapp.com/api/v1/users/updateUser",
+        form
+      )
+      .then(
+        (res) => {
+          nextPage();
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   };
 
   if (!props.formActive) return null;
