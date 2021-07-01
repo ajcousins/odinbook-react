@@ -28,9 +28,12 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/tweets/", {
-          method: "GET",
-        });
+        const response = await fetch(
+          "https://hydro-eds-18702.herokuapp.com/tweets/",
+          {
+            method: "GET",
+          }
+        );
         const data = await response.json();
         if (
           data.status === "fail" ||
@@ -60,58 +63,72 @@ function App() {
   }, [isAuth]);
 
   const refreshCurrentUser = async () => {
-    await axios.get("/api/v1/users/current").then((res) => {
-      const currentUserCopy = { ...res.data.data.currentUser };
-      setCurrentUser(currentUserCopy);
+    await axios
+      .get("https://hydro-eds-18702.herokuapp.com/api/v1/users/current")
+      .then((res) => {
+        const currentUserCopy = { ...res.data.data.currentUser };
+        setCurrentUser(currentUserCopy);
 
-      const curUserRetweetsCopy = currentUserCopy.retweetedTweets;
-      setCurUserRetweets(curUserRetweetsCopy);
-    });
+        const curUserRetweetsCopy = currentUserCopy.retweetedTweets;
+        setCurUserRetweets(curUserRetweetsCopy);
+      });
   };
 
   const refreshSelectedUser = async () => {
     if (!selectedUser._id) return;
-    await axios.get(`/api/v1/users/${selectedUser._id}`).then((res) => {
-      const selectedUserCopy = { ...res.data.data.user };
-      setSelectedUser(selectedUserCopy);
-      // console.log("selectedUser refreshed");
-    });
+    await axios
+      .get(
+        `https://hydro-eds-18702.herokuapp.com/api/v1/users/${selectedUser._id}`
+      )
+      .then((res) => {
+        const selectedUserCopy = { ...res.data.data.user };
+        setSelectedUser(selectedUserCopy);
+        // console.log("selectedUser refreshed");
+      });
   };
 
   const fetchUser = (id) => {
-    axios.get(`/api/v1/users/${id}`).then((res) => {
-      setSelectedUser(res.data.data.user);
-    });
+    axios
+      .get(`https://hydro-eds-18702.herokuapp.com/api/v1/users/${id}`)
+      .then((res) => {
+        setSelectedUser(res.data.data.user);
+      });
     changePage(1);
   };
 
   const fetchTweet = (tweetId) => {
     const selectedTweetCopy = { ...selectedTweet };
 
-    axios.get(`/api/v1/tweets/${tweetId}`).then((res) => {
-      const tweetDetails = {
-        tweetId: res.data.data.tweet._id,
-        textContent: res.data.data.tweet.textContent,
-        dateAdded: res.data.data.tweet.dateAdded_expand,
-        likes: res.data.data.tweet.likes,
-        likesQty: res.data.data.tweet.likes.length,
-      };
-
-      // Get user details associated to tweet.
-      axios.get(`/api/v1/users/${res.data.data.tweet.user}`).then((res) => {
-        const userDetails = {
-          name: res.data.data.user.name,
-          handle: res.data.data.user.handle,
-          photo: res.data.data.user.photo,
-          id: res.data.data.user._id,
+    axios
+      .get(`https://hydro-eds-18702.herokuapp.com/api/v1/tweets/${tweetId}`)
+      .then((res) => {
+        const tweetDetails = {
+          tweetId: res.data.data.tweet._id,
+          textContent: res.data.data.tweet.textContent,
+          dateAdded: res.data.data.tweet.dateAdded_expand,
+          likes: res.data.data.tweet.likes,
+          likesQty: res.data.data.tweet.likes.length,
         };
 
-        selectedTweetCopy.tweetDetails = tweetDetails;
-        selectedTweetCopy.userDetails = userDetails;
+        // Get user details associated to tweet.
+        axios
+          .get(
+            `https://hydro-eds-18702.herokuapp.com/api/v1/users/${res.data.data.tweet.user}`
+          )
+          .then((res) => {
+            const userDetails = {
+              name: res.data.data.user.name,
+              handle: res.data.data.user.handle,
+              photo: res.data.data.user.photo,
+              id: res.data.data.user._id,
+            };
 
-        setSelectedTweet(selectedTweetCopy);
+            selectedTweetCopy.tweetDetails = tweetDetails;
+            selectedTweetCopy.userDetails = userDetails;
+
+            setSelectedTweet(selectedTweetCopy);
+          });
       });
-    });
 
     changePage(5);
   };
@@ -123,7 +140,7 @@ function App() {
 
   const logOut = async () => {
     try {
-      await fetch("/api/v1/users/logout", {
+      await fetch("https://hydro-eds-18702.herokuapp.com/api/v1/users/logout", {
         method: "GET",
       });
       setHeader({});
@@ -152,17 +169,27 @@ function App() {
     const curUserLikesCopy = [...curUserLikes];
 
     if (add) {
-      axios.patch(`/api/v1/tweets/${tweetId}/like`).then((res) => {
-        curUserLikesCopy.push(tweetId);
-        setCurUserLikes(curUserLikesCopy);
-      });
+      axios
+        .patch(
+          `https://hydro-eds-18702.herokuapp.com/api/v1/tweets/${tweetId}/like`
+        )
+        .then((res) => {
+          curUserLikesCopy.push(tweetId);
+          setCurUserLikes(curUserLikesCopy);
+        });
     } else {
-      axios.patch(`/api/v1/tweets/${tweetId}/unlike`).then((res) => {
-        // Remove tweet from array.
-        const index = curUserLikesCopy.findIndex((tweet) => tweet === tweetId);
-        curUserLikesCopy.splice(index, 1);
-        setCurUserLikes(curUserLikesCopy);
-      });
+      axios
+        .patch(
+          `https://hydro-eds-18702.herokuapp.com/api/v1/tweets/${tweetId}/unlike`
+        )
+        .then((res) => {
+          // Remove tweet from array.
+          const index = curUserLikesCopy.findIndex(
+            (tweet) => tweet === tweetId
+          );
+          curUserLikesCopy.splice(index, 1);
+          setCurUserLikes(curUserLikesCopy);
+        });
     }
   };
 
@@ -170,7 +197,7 @@ function App() {
     if (add) {
       axios({
         method: "POST",
-        url: "/api/v1/tweets/",
+        url: "https://hydro-eds-18702.herokuapp.com/api/v1/tweets/",
         data: {
           user: currentUser._id,
           retweetChild: tweetId,
@@ -184,7 +211,7 @@ function App() {
       // Delete parent tweet.
       axios({
         method: "POST",
-        url: "/api/v1/tweets/undoRetweet",
+        url: "https://hydro-eds-18702.herokuapp.com/api/v1/tweets/undoRetweet",
         data: {
           retweetParent: tweetId,
         },
