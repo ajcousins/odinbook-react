@@ -10,8 +10,6 @@ import removeDuplicates from "./../utils/removeDuplicates";
 const MainFeedIndex = (props) => {
   const [tweets, setTweets] = useState([]);
   const [tweetPosted, setTweetPosted] = useState(false);
-  const [retweets, setRetweets] = useState([]);
-  // const [tweetsRendered, setTweetsRendered] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -21,52 +19,23 @@ const MainFeedIndex = (props) => {
       const data = await response.json();
 
       setTweets(removeDuplicates(data.data.tweets));
-
-      // setTweets(data.data.tweets);
       setTweetPosted(false);
     }
     fetchData();
   }, [tweetPosted]);
-
-  // // Populate retweets list
-  // useEffect(() => {
-  //   const retweets = tweets
-  //     .filter((tweet) => {
-  //       if (tweet.retweetChild) return true;
-  //       else return false;
-  //     })
-  //     .map((tweet) => {
-  //       return tweet.retweetChild._id;
-  //     });
-  //   setRetweets(retweets);
-  // }, [tweets]);
-
-  // useEffect(() => {
-  //   console.log("retweets list:", retweets);
-  // }, [retweets]);
-
-  useEffect(() => {
-    console.log("tweets list:", tweets);
-  }, [tweets]);
 
   const tweetHandler = () => {
     setTweetPosted(true);
   };
 
   const deleteTweet = (tweetId) => {
-    console.log("Delete tweet!", tweetId);
-
     // Delete from database
-
     axios.delete(`/api/v1/tweets/${tweetId}`).then((res) => {
-      console.log(res);
       // If delete successful..
       // Delete from state array.
-      console.log(tweets);
       const newTweets = [...tweets];
 
       let index = newTweets.findIndex((tweet) => tweet.id === tweetId);
-      console.log(index);
       newTweets.splice(index, 1);
       setTweets(newTweets);
     });
@@ -84,7 +53,7 @@ const MainFeedIndex = (props) => {
       <div className='mainfeed__divider' />
       {tweets.length === 0 ? (
         <MessageTile
-          heading={"Welcome to Twitter!"}
+          heading={"Welcome to Twittr!"}
           message="This is the best place to see what's happening in your world. Find some people to follow now."
         />
       ) : null}

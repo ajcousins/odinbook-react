@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import defaultAvatar from "./../static/default-avatar.png";
 import TextareaAutosize from "react-autosize-textarea";
 import axios from "axios";
 

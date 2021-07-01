@@ -1,5 +1,3 @@
-// import classes from "./LeftSideBar.module.scss";
-
 import React from "react";
 
 const SideButton = (props) => {

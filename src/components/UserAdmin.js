@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import defaultAvatar from "./../static/default-avatar.png";
 import SvgEllipsis from "./../iconComponents/SvgEllipsis";
 
 const UserAdmin = (props) => {

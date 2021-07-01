@@ -29,9 +29,7 @@ const UserSideTile = (props) => {
 
     // If a button is clicked, the user hasn't clicked a 'name': cancel the operation.
     if (btns.includes(e.target)) return;
-
     props.fetchUser(props.user._id);
-    // props.refreshSelectedUser();
   };
 
   return (

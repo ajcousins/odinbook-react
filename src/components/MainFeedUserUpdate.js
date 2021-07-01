@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import SvgBackArrow from "./../iconComponents/SvgBackArrow";
-import Follows from "./Follows";
 import axios from "axios";
 
 const MainFeedUserUpdate = (props) => {

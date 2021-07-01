@@ -53,7 +53,7 @@ const Login = (props) => {
       />
       <form className='login'>
         <SvgTwitterLogo height='40px' />
-        <h1 className='login__title'>Log in to Twitter</h1>
+        <h1 className='login__title'>Log in to Twittr</h1>
         {errorMessage ? (
           <div className='login__error-message'>{errorMessage}</div>
         ) : null}
@@ -79,7 +79,7 @@ const Login = (props) => {
         </button>
         <div className='login__footer'>
           <a href='#' onClick={clickHandler}>
-            Sign up for Twitter
+            Sign up for Twittr
           </a>
         </div>
       </form>

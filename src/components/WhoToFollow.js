@@ -41,7 +41,6 @@ const WhoToFollow = (props) => {
             status={user.followStatus}
             updateArray={updateArray}
             fetchUser={props.fetchUser}
-            // refreshSelectedUser={props.refreshSelectedUser}
           />
         );
       })}

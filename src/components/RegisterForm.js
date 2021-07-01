@@ -362,7 +362,7 @@ const RegisterForm = (props) => {
               />
               <h2 className='register__title'>Success!</h2>
               <p style={{ whiteSpace: "pre-wrap", textAlign: "center" }}>
-                Get the most out of Twitter by staying up to date with {"\n"}
+                Get the most out of Twittr by staying up to date with {"\n"}
                 what's happening.
               </p>
             </div>

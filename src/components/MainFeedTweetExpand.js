@@ -54,8 +54,6 @@ const MainFeedTweetExpand = (props) => {
     setSelectedTweet(props.selectedTweet);
   }, [props.selectedTweet]);
 
-  useEffect(() => {});
-
   const onChangeHandler = (e) => {
     setTweetText(e.target.value);
   };
@@ -108,6 +106,16 @@ const MainFeedTweetExpand = (props) => {
           setLikesNumber(likesNumber + 1);
         });
     }
+  };
+
+  const childToParent = (childTweetId) => {
+    if (!props.curUserRetweets) return;
+    if (props.curUserRetweets.length === 0) return;
+    const index = props.curUserRetweets.findIndex(
+      (retweet) => retweet.retweetChild === childTweetId
+    );
+    if (index < 0) return;
+    return props.curUserRetweets[index]._id;
   };
 
   return (
@@ -239,7 +247,8 @@ const MainFeedTweetExpand = (props) => {
                     name={tweet.user.name}
                     id={tweet.user._id}
                     tweetId={tweet._id}
-                    parentTweetId={tweet._id} // <--------------------
+                    // ID needs to be converted to parent for request to work.
+                    parentTweetId={childToParent(tweet._id)} // <-------------------- In tweet expand, only the child tweet is visible.
                     handle={`@${tweet.user.handle}`}
                     profilePic={tweet.user.photo}
                     time={tweet.tweetAge}

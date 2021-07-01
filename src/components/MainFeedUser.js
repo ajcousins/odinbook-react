@@ -25,6 +25,7 @@ const MainFeedUser = (props) => {
 
   // Get tweets from selected user
   const loadTweets = () => {
+    if (!props.selectedUser._id) return;
     async function fetchData() {
       const response = await fetch(
         `/api/v1/tweets/user/${props.selectedUser._id}`,
@@ -33,9 +34,7 @@ const MainFeedUser = (props) => {
         }
       );
       const data = await response.json();
-      // copy tweets into userTweets state
       setUserTweets(removeDuplicates(data.userTweets));
-      // console.log("userTweets:", userTweets);
       setTweetPosted(false);
       setIsLoaded(true);
     }
@@ -43,16 +42,18 @@ const MainFeedUser = (props) => {
   };
 
   useEffect(() => {
+    loadTweets();
+  }, [tweetPosted]);
+
+  useEffect(() => {
     // A separate variable (selectedUserId) is required as the server crashes if not fed a string.
 
     if (!selectedUserId) {
       setSelectedUserId(props.selectedUser._id);
     } else {
-      console.log("Load tweets useEffect");
       loadTweets();
     }
   }, [selectedUserId, props.selectedUser._id]);
-  // }, []);
 
   const deleteTweet = (tweetId) => {
     console.log("Delete tweet!", tweetId);
@@ -138,12 +139,10 @@ const MainFeedUser = (props) => {
   }, [isLoaded, isFollowingState]);
 
   const editHandler = () => {
-    console.log("Edit profile");
     props.changePage(4);
   };
 
   const tweetHandler = () => {
-    console.log("tweetHandler");
     setTweetPosted(true);
     loadTweets();
   };
@@ -243,6 +242,7 @@ const MainFeedUser = (props) => {
                     name={tweet.retweetChild.user.name}
                     id={tweet.retweetChild.user._id}
                     tweetId={tweet.retweetChild._id}
+                    parentTweetId={tweet._id}
                     handle={`@${tweet.retweetChild.user.handle}`}
                     profilePic={tweet.retweetChild.user.photo}
                     time={tweet.retweetChild.tweetAge}

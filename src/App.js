@@ -26,14 +26,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("curUserRetweets", curUserRetweets);
-  }, [curUserRetweets]);
-
-  // useEffect(() => {
-  //   console.log("tweetlist", );
-  // })
-
-  useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch("/tweets/", {
@@ -51,14 +43,13 @@ function App() {
           setIsLoaded(true);
           const currentUserCopy = { ...data.data.currentUser };
           const curUserLikesCopy = [...data.data.currentUser.likedTweets];
-          // const curUserRetweetsCopy = [
-          //   ...data.data.currentUser.retweetedTweets,
-          // ];
+          const curUserRetweetsCopy = [
+            ...data.data.currentUser.retweetedTweets,
+          ];
 
           setCurrentUser(currentUserCopy);
           setCurUserLikes(curUserLikesCopy);
-          // setCurUserRetweets(curUserRetweetsCopy);
-          // console.log(curUserLikes);
+          setCurUserRetweets(curUserRetweetsCopy);
         }
       } catch (err) {
         console.log(err);
@@ -72,11 +63,14 @@ function App() {
     await axios.get("/api/v1/users/current").then((res) => {
       const currentUserCopy = { ...res.data.data.currentUser };
       setCurrentUser(currentUserCopy);
-      console.log("currentUser refreshed");
+
+      const curUserRetweetsCopy = currentUserCopy.retweetedTweets;
+      setCurUserRetweets(curUserRetweetsCopy);
     });
   };
 
   const refreshSelectedUser = async () => {
+    if (!selectedUser._id) return;
     await axios.get(`/api/v1/users/${selectedUser._id}`).then((res) => {
       const selectedUserCopy = { ...res.data.data.user };
       setSelectedUser(selectedUserCopy);
@@ -87,7 +81,6 @@ function App() {
   const fetchUser = (id) => {
     axios.get(`/api/v1/users/${id}`).then((res) => {
       setSelectedUser(res.data.data.user);
-      // refreshSelectedUser();
     });
     changePage(1);
   };
@@ -179,9 +172,6 @@ function App() {
   };
 
   const retweetTweet = (tweetId, add) => {
-    console.log("Retweet:", tweetId);
-    // const curUserRetweetsCopy = [...curUserRetweets];
-
     if (add) {
       axios({
         method: "POST",
@@ -191,9 +181,8 @@ function App() {
           retweetChild: tweetId,
         },
       }).then((res) => {
-        // curUserRetweetsCopy.push(tweetId); // Child tweet to be passed to state array.
-        // setCurUserRetweets(curUserRetweetsCopy);
-        // Tweets need to be added to the user model so they can be checked.
+        refreshCurrentUser();
+        refreshSelectedUser();
       });
     } else {
       // tweetId needs to be parent ID.
@@ -206,10 +195,8 @@ function App() {
           retweetParent: tweetId,
         },
       }).then((res) => {
-        // Where I left off..
-        // curUserRetweetsCopy.splice(tweetId); // Child tweet to be passed to state array.
-        // setCurUserRetweets(curUserRetweetsCopy);
-        // Tweets need to be added to the user model so they can be checked.
+        refreshCurrentUser();
+        refreshSelectedUser();
       });
     }
   };
@@ -255,6 +242,7 @@ function App() {
             retweetTweet={retweetTweet}
             fetchTweet={fetchTweet}
             selectedTweet={selectedTweet}
+            curUserRetweets={curUserRetweets}
           />
           <RightSideBar fetchUser={fetchUser} />
         </div>

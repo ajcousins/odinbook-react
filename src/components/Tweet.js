@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import defaultAvatar from "./../static/default-avatar.png";
 import TweetButton from "./TweetButton";
 import TwitterReply from "./../iconComponents/SvgTwitterReply";
 import TwitterRetweet from "./../iconComponents/SvgTwitterRetweet";
@@ -28,8 +27,6 @@ const Tweet = (props) => {
   const menuHandler = () => {
     if (!menuActive) setMenuActive(true);
     else setMenuActive(false);
-    console.log("Menu");
-    console.log("id:", props.tweetId);
   };
 
   const MenuBackground = () => {
@@ -89,25 +86,19 @@ const Tweet = (props) => {
     setCheckRetweetsList(false);
   }, [props.retweets, props.currentUser._id, checkRetweetsList]);
 
-  //// This should be moved down a level. Index, User and Expand will handle retweet differently.
   const retweetHandler = () => {
     if (isRetweeted) {
-      // setIsRetweeted(false);
-      // setRetweetsNumber(retweetsNumber - 1);
       // SEND PARENT TWEET ID- NOT THE CHILD.
-      console.log("props.tweetId:", props.tweetId);
+      // From tweet expand... need to receive child and then convert to parent.
+      // Child to parent ID conversion happens in MainFeedExpand: "childToParent" function.
       props.retweetTweet(props.parentTweetId, false);
       props.tweetHandler();
-      setCheckRetweetsList(true);
     } else {
-      // setIsRetweeted(true);
-      // setRetweetsNumber(retweetsNumber + 1);
       // SEND CHILD TWEET ID
-      console.log("props.tweetId:", props.tweetId);
       props.retweetTweet(props.tweetId, true);
       props.tweetHandler();
-      setCheckRetweetsList(true);
     }
+    setCheckRetweetsList(true);
   };
 
   const tweetClickHandler = (e) => {
@@ -115,11 +106,9 @@ const Tweet = (props) => {
 
     // If a button is clicked, the user hasn't clicked a 'name': cancel the operation.
     if (btns.includes(e.target)) return;
-    console.log(e.target);
 
     props.fetchTweet(props.tweetId);
-
-    console.log("Expand Tweet");
+    console.log("Expand Tweet", e.target);
   };
 
   return (

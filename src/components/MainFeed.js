@@ -89,6 +89,7 @@ const MainFeed = (props) => {
           likeTweet={props.likeTweet}
           retweetTweet={props.retweetTweet}
           fetchTweet={props.fetchTweet}
+          curUserRetweets={props.curUserRetweets}
         />
       );
     default:
