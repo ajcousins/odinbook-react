@@ -3,10 +3,7 @@ import React from "react";
 function SvgTwitterLogo(props) {
   return (
     <svg
-      // width='90px'
       height={props.height}
-      // onClick={props.clickHandler}
-      meta
       className='leftsidebar__logo'
       viewBox='0 0 90 80' // Keep to maintain aspect ratio
     >

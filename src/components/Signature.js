@@ -7,6 +7,7 @@ const Signature = () => {
         <a
           className='signature__link'
           target='_blank'
+          rel='noreferrer'
           href='https://github.com/ajcousins/odinbook'
         >
           github.com/ajcousins/odinbook
@@ -17,6 +18,7 @@ const Signature = () => {
         <a
           className='signature__link'
           target='_blank'
+          rel='noreferrer'
           href='https://github.com/ajcousins/odinbook-react'
         >
           github.com/ajcousins/odinbook-react

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import TextareaAutosize from "react-autosize-textarea";
 import axios from "axios";
+import TextareaAutosize from "react-autosize-textarea";
 
 const ComposeTweet = (props) => {
   const [tweetText, setTweetText] = useState("");
@@ -31,6 +31,7 @@ const ComposeTweet = (props) => {
         <img
           className='tweet__avatar'
           src={`img/users/${props.currentUser.photo}`}
+          alt='user'
         />
       </div>
       <div className='tweet__compose__col-2'>

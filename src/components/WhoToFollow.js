@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import UserSideTile from "./UserSideTile";
 import updateDatabase from "./../utils/updateDatabase";
 
@@ -13,7 +13,6 @@ const WhoToFollow = (props) => {
   const getNotFollowing = async () => {
     await axios.get("/api/v1/users/whoToFollow").then((res) => {
       const usersToFollowCopy = [...res.data.whoToFollow];
-      console.log("who to follow:", usersToFollowCopy);
       setUsersToFollow(usersToFollowCopy);
     });
   };
@@ -41,6 +40,7 @@ const WhoToFollow = (props) => {
             status={user.followStatus}
             updateArray={updateArray}
             fetchUser={props.fetchUser}
+            key={user._id}
           />
         );
       })}

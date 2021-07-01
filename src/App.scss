@@ -1,13 +1,4 @@
 $twitter-black: #0f1419;
-
-// ORIGINAL COLOURS
-$twitter-grey-text: #5b7083;
-$twitter-main: #1da1f2;
-$twitter-main-hover: #1a91da;
-$twitter-link: #1b95e0;
-$twitter-disabled-btn: #8ed0f8;
-$hover-highlight: #e8f5fe;
-
 $menu-highlight: #f7f7f7;
 $divider-lines: #ebeef0;
 $input-outline: #c4cfd6;
@@ -15,6 +6,14 @@ $unfollow-red: #ca2055;
 $heart-red: #e0245e;
 $rhs-card-background: #f7f9f9;
 $rhs-card-hover: #eff1f1;
+
+// TWITTER BLUE COLOUR SCHEME
+$twitter-grey-text: #5b7083;
+$twitter-main: #1da1f2;
+$twitter-main-hover: #1a91da;
+$twitter-link: #1b95e0;
+$twitter-disabled-btn: #8ed0f8;
+$hover-highlight: #e8f5fe;
 
 * {
   margin: 0;
@@ -69,6 +68,19 @@ button {
 
   &:hover {
     background-color: $twitter-main-hover;
+  }
+}
+
+.link-btn {
+  width: auto;
+  margin-top: 2em;
+  background-color: white;
+  text-decoration: none;
+  color: $twitter-link;
+  font-weight: 400;
+  &:hover {
+    background-color: white;
+    text-decoration: underline;
   }
 }
 
@@ -225,7 +237,7 @@ strong {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    height: 3.5em;
+    height: 5em;
     font-size: 0.9rem;
   }
 
@@ -493,7 +505,6 @@ strong {
   &__banner {
     width: 598px;
     height: 200px;
-    // background-color: rgb(194, 194, 194);
     background: rgb(234, 109, 255);
     background: linear-gradient(
       29deg,
@@ -530,9 +541,7 @@ strong {
 
   &__bio {
     width: 598px;
-    // height: 279px;
     padding: 12px 16px 0;
-    // margin-bottom: 16px;
     border-bottom: 1px solid $divider-lines;
   }
 
@@ -722,10 +731,6 @@ strong {
   line-height: 20px;
   color: $twitter-black;
 
-  // &:hover {
-  //   background-color: $menu-highlight;
-  // }
-
   &__hover-wrapper {
     &:hover {
       background-color: $menu-highlight;
@@ -877,7 +882,6 @@ strong {
   &__header {
     display: flex;
     gap: 0.8em;
-    // background-color: #c4cfd6;
     margin-top: 1em;
     margin-bottom: -0.5em;
     padding-left: 3.8em;
@@ -1009,9 +1013,6 @@ strong {
         font-weight: 700;
         color: $twitter-black;
       }
-
-      &__handle {
-      }
     }
   }
 
@@ -1074,8 +1075,6 @@ strong {
 }
 
 .signature {
-  // position: sticky;
-  // top: 510px;
   padding: 1em 1.5em;
   width: 100%;
   font-size: 0.8rem;

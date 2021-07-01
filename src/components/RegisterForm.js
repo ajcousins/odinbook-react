@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import SvgTwitterLogo from "./../iconComponents/SvgTwitterLogo";
 import isEmail from "validator/lib/isEmail";
@@ -33,9 +33,6 @@ const RegisterForm = (props) => {
   };
 
   const validateDetails = () => {
-    console.log("Validate details");
-    console.log(isValid);
-
     // TO DO
     const isValidCopy = { ...isValid };
 
@@ -80,7 +77,6 @@ const RegisterForm = (props) => {
 
     axios.post("/api/v1/users/signup", input).then(
       (res) => {
-        console.log(res);
         if (res.status === 201) {
           nextPage();
           setInput({});
@@ -93,7 +89,6 @@ const RegisterForm = (props) => {
   };
 
   const backgroundClickHandler = () => {
-    console.log("Background click");
     setIsValid({
       email: false,
       name: false,
@@ -109,13 +104,11 @@ const RegisterForm = (props) => {
 
   const validatePhoto = (e) => {
     e.preventDefault();
-    console.log("Validate photo");
     const form = new FormData();
     form.append("photo", document.getElementById("photo").files[0]);
 
     axios.post("/api/v1/users/updateUser", form).then(
       (res) => {
-        console.log(res);
         const photo = res.data.data.user.photo;
         setPhoto(photo);
         nextPage();
@@ -135,14 +128,11 @@ const RegisterForm = (props) => {
 
   const validateBio = (e) => {
     e.preventDefault();
-    console.log("Validate photo");
     const form = new FormData();
     form.append("bio", document.getElementById("bio").value);
 
     axios.post("/api/v1/users/updateUser", form).then(
       (res) => {
-        console.log(res);
-
         nextPage();
       },
       (err) => {
@@ -288,6 +278,7 @@ const RegisterForm = (props) => {
               <img
                 className='register__avatar-preview'
                 src={`img/users/${photo}`}
+                alt='user'
               />
             </div>
             <div className='btn__footer'>

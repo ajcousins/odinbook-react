@@ -62,7 +62,10 @@ const MainFeedIndex = (props) => {
       ) : (
         tweets.map((tweet) => {
           return (
-            <div className='tweet__hover-wrapper'>
+            <div
+              className='tweet__hover-wrapper'
+              key={`${tweet.retweetChild ? tweet.retweetChild._id : tweet._id}`}
+            >
               {tweet.retweetChild ? (
                 // RETWEET
                 <div>

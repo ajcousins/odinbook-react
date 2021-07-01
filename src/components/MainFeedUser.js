@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-// import defaultAvatar from "./../static/default-avatar.png";
+import axios from "axios";
 import SvgBackArrow from "./../iconComponents/SvgBackArrow";
 import Follows from "./Follows";
 import Tweet from "./Tweet";
-import axios from "axios";
 import SvgTwitterRetweet from "./../iconComponents/SvgTwitterRetweet";
 import LoadingTile from "./../components/LoadingTile";
 import removeDuplicates from "./../utils/removeDuplicates";
@@ -17,11 +16,6 @@ const MainFeedUser = (props) => {
 
   const [followerList, setFollowerList] = useState([]);
   const [followerListLength, setFollowerListLength] = useState(0);
-
-  // TEMPORARY FOR DEBUGGIN
-  useEffect(() => {
-    console.log("userTweets:", userTweets);
-  }, [userTweets]);
 
   // Get tweets from selected user
   const loadTweets = () => {
@@ -56,7 +50,6 @@ const MainFeedUser = (props) => {
   }, [selectedUserId, props.selectedUser._id]);
 
   const deleteTweet = (tweetId) => {
-    console.log("Delete tweet!", tweetId);
     // Delete from database
     axios.delete(`/api/v1/tweets/${tweetId}`).then((res) => {
       // If delete successful..
@@ -184,6 +177,7 @@ const MainFeedUser = (props) => {
           <img
             className='mainfeed__user-avatar'
             src={`img/users/${props.selectedUser.photo}`}
+            alt={`${props.selectedUser.name}`}
           />
         </div>
       </div>
@@ -229,7 +223,10 @@ const MainFeedUser = (props) => {
       ) : (
         userTweets.map((tweet) => {
           return (
-            <div className='tweet__hover-wrapper'>
+            <div
+              className='tweet__hover-wrapper'
+              key={`${tweet.retweetChild ? tweet.retweetChild._id : tweet._id}`}
+            >
               {tweet.retweetChild ? (
                 // RETWEET
                 <div>

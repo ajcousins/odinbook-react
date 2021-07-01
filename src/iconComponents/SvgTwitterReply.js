@@ -5,8 +5,6 @@ function SvgTwitterReply(props) {
     <svg
       viewBox='0 0 24 24'
       className='btn tweet__icon'
-      // width='24'
-
       height={props.height ? props.height : "18.75"}
     >
       <g>

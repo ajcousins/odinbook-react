@@ -133,6 +133,7 @@ const MainFeedTweetExpand = (props) => {
               <img
                 className='tweet__avatar'
                 src={`img/users/${selectedTweet.userDetails.photo}`}
+                alt={`${selectedTweet.userDetails.name}`}
               />
               <div className='tweet-expanded__row-1__col-2'>
                 <div
@@ -179,6 +180,7 @@ const MainFeedTweetExpand = (props) => {
                 <img
                   className='tweet__avatar'
                   src={`img/users/${props.currentUser.photo}`}
+                  alt={`${props.currentUser.name}`}
                 />
               </div>
               <div className='tweet-expanded__reply__col-2'>
@@ -210,7 +212,12 @@ const MainFeedTweetExpand = (props) => {
         ) : (
           replies.map((tweet) => {
             return (
-              <div className='tweet__hover-wrapper'>
+              <div
+                className='tweet__hover-wrapper'
+                key={`${
+                  tweet.retweetChild ? tweet.retweetChild._id : tweet._id
+                }`}
+              >
                 {tweet.retweetChild ? (
                   // RETWEET
                   <div>

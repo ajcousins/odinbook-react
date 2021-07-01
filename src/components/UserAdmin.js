@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import SvgEllipsis from "./../iconComponents/SvgEllipsis";
 
 const UserAdmin = (props) => {
@@ -8,6 +8,7 @@ const UserAdmin = (props) => {
         <img
           className='leftsidebar__useradmin__avatar'
           src={`img/users/${props.currentUser.photo}`}
+          alt={`${props.currentUser.name}`}
         />
         <div>
           <div className='leftsidebar__useradmin__name'>

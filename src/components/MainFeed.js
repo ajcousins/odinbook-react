@@ -70,12 +70,9 @@ const MainFeed = (props) => {
         <MainFeedUserUpdate
           title='Update'
           changePage={props.changePage}
-          // selectedUser={props.selectedUser}
           currentUser={props.currentUser}
-          // fetchUser={props.fetchUser}
           refreshCurrentUser={props.refreshCurrentUser}
           refreshSelectedUser={props.refreshSelectedUser}
-          // likeTweet={props.likeTweet}
         />
       );
     case 5:

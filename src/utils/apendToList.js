@@ -9,8 +9,6 @@ const appendToList = (arr, userFollows, id) => {
     if (user._id === id) {
       user.followStatus = "current user";
     } else if (userFollows.includes(user._id)) {
-      console.log("userFollows:", userFollows);
-      console.log("user._id:", user._id);
       user.followStatus = "following";
     } else {
       user.followStatus = "not following";

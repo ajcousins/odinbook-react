@@ -63,6 +63,7 @@ const MainFeedUserFollowers = (props) => {
                 status={user.followStatus}
                 updateArray={updateArray}
                 fetchUser={props.fetchUser}
+                key={user._id}
               />
             );
           })

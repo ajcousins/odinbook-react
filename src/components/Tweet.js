@@ -17,7 +17,6 @@ const Tweet = (props) => {
   const [checkRetweetsList, setCheckRetweetsList] = useState(false);
 
   const deleteTweetHandler = (tweetId) => {
-    console.log("Delete", tweetId);
     // Delete tweet from array and database
     props.deleteTweet(tweetId);
     // Close menu
@@ -108,7 +107,7 @@ const Tweet = (props) => {
     if (btns.includes(e.target)) return;
 
     props.fetchTweet(props.tweetId);
-    console.log("Expand Tweet", e.target);
+    // console.log("Expand Tweet", e.target);
   };
 
   return (
@@ -117,6 +116,7 @@ const Tweet = (props) => {
         <img
           className='btn tweet__avatar'
           src={`img/users/${props.profilePic}`}
+          alt={`${props.name}`}
         />
       </div>
       <div className='tweet__col-2'>

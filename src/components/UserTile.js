@@ -1,5 +1,3 @@
-import defaultAvatar from "./../static/default-avatar.png";
-
 const UserTile = (props) => {
   const status = (status) => {
     if (status === "current user") return null;
@@ -33,7 +31,11 @@ const UserTile = (props) => {
   return (
     <div className='userPreviewTile' onClick={nameClickHandler}>
       <div className='userPreviewTile__col-1'>
-        <img className='tweet__avatar' src={`img/users/${props.user.photo}`} />
+        <img
+          className='tweet__avatar'
+          src={`img/users/${props.user.photo}`}
+          alt={`${props.user.name}`}
+        />
       </div>
       <div className='userPreviewTile__col-2'>
         <div className='userPreviewTile__col-2__row-1'>

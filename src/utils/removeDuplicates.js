@@ -12,7 +12,6 @@ const removeDuplicates = (tweets) => {
     else if (!tweet.retweetChild && cache.includes(tweet._id)) return false;
     else return true;
   });
-  console.log("filtered", filtered);
   return filtered;
 };
 

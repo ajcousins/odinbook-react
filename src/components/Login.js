@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import SvgTwitterLogo from "./../iconComponents/SvgTwitterLogo";
 import RegisterForm from "./RegisterForm";
-import axios from "axios";
 
 const Login = (props) => {
   const [input, setInput] = useState({});
@@ -16,8 +16,6 @@ const Login = (props) => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("VALIDATE (TO DO)");
-    console.log("submit:", input);
     login();
   };
 
@@ -27,8 +25,6 @@ const Login = (props) => {
       .then((res) => {
         const data = res.data;
         setToken(data.token);
-
-        console.log("id:", data.data.user._id);
         props.tokenHandler(token);
       })
       .catch((err) => {
@@ -78,9 +74,9 @@ const Login = (props) => {
           Log in
         </button>
         <div className='login__footer'>
-          <a href='#' onClick={clickHandler}>
+          <button className='link-btn' onClick={clickHandler}>
             Sign up for Twittr
-          </a>
+          </button>
         </div>
       </form>
     </div>

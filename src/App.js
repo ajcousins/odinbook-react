@@ -74,7 +74,7 @@ function App() {
     await axios.get(`/api/v1/users/${selectedUser._id}`).then((res) => {
       const selectedUserCopy = { ...res.data.data.user };
       setSelectedUser(selectedUserCopy);
-      console.log("selectedUser refreshed");
+      // console.log("selectedUser refreshed");
     });
   };
 
@@ -86,7 +86,6 @@ function App() {
   };
 
   const fetchTweet = (tweetId) => {
-    console.log("fetch:", tweetId);
     const selectedTweetCopy = { ...selectedTweet };
 
     axios.get(`/api/v1/tweets/${tweetId}`).then((res) => {
@@ -123,7 +122,6 @@ function App() {
   };
 
   const logOut = async () => {
-    console.log("Log out");
     try {
       await fetch("/api/v1/users/logout", {
         method: "GET",
@@ -142,7 +140,6 @@ function App() {
   };
 
   const changePage = (page) => {
-    console.log(`Change to page ${page}.`);
     if (page === 0) {
       setSelectedUser({});
       setSelectedTweet({});
@@ -152,7 +149,6 @@ function App() {
 
   const likeTweet = (tweetId, add) => {
     // If second attribute is true-- add to array. If false, remove from array.
-    console.log("Like:", tweetId);
     const curUserLikesCopy = [...curUserLikes];
 
     if (add) {
@@ -165,7 +161,6 @@ function App() {
         // Remove tweet from array.
         const index = curUserLikesCopy.findIndex((tweet) => tweet === tweetId);
         curUserLikesCopy.splice(index, 1);
-        console.log("remove:", index);
         setCurUserLikes(curUserLikesCopy);
       });
     }
@@ -186,7 +181,6 @@ function App() {
       });
     } else {
       // tweetId needs to be parent ID.
-      console.log("Undo Retweet:", tweetId);
       // Delete parent tweet.
       axios({
         method: "POST",
@@ -222,9 +216,7 @@ function App() {
           <LeftSideBar
             menu={menuHandler}
             currentUser={currentUser}
-            // pageRequest={(page) => pageRequest(page)}
             changePage={changePage}
-            // setPage={setPage}
             fetchUser={fetchUser}
           />
           <MainFeed
@@ -234,7 +226,6 @@ function App() {
             page={page}
             changePage={changePage}
             fetchUser={fetchUser}
-            // pageRequest={(page) => pageRequest(page)}
             isLoaded={isLoaded}
             refreshCurrentUser={refreshCurrentUser}
             refreshSelectedUser={refreshSelectedUser}

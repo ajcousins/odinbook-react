@@ -1,5 +1,3 @@
-import defaultAvatar from "./../static/default-avatar.png";
-
 const UserSideTile = (props) => {
   // Status button
   const status = (status) => {
@@ -35,7 +33,11 @@ const UserSideTile = (props) => {
   return (
     <div className='userSideTile' onClick={nameClickHandler}>
       <div className='userSideTile__col-1'>
-        <img className='tweet__avatar' src={`img/users/${props.user.photo}`} />
+        <img
+          className='tweet__avatar'
+          src={`img/users/${props.user.photo}`}
+          alt={`${props.user.name}`}
+        />
       </div>
       <div className='userSideTile__col-2'>
         <div className='userSideTile__col-2__row-1'>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import SvgBackArrow from "./../iconComponents/SvgBackArrow";
 import axios from "axios";
+import SvgBackArrow from "./../iconComponents/SvgBackArrow";
 
 const MainFeedUserUpdate = (props) => {
   const [userInfo, setUserInfo] = useState({ name: " ", bio: "" });
@@ -15,11 +15,9 @@ const MainFeedUserUpdate = (props) => {
     const userInfoCopy = { ...userInfo };
     userInfoCopy[e.target.name] = e.target.value;
     setUserInfo(userInfoCopy);
-    console.log(userInfo);
   };
 
   const saveHandler = () => {
-    console.log("Save");
     const form = new FormData();
     form.append("name", userInfo.name);
     form.append("bio", userInfo.bio);
@@ -27,7 +25,6 @@ const MainFeedUserUpdate = (props) => {
 
     axios.post("/api/v1/users/updateUser", form).then(
       (res) => {
-        console.log(res);
         props.refreshCurrentUser();
         props.refreshSelectedUser();
         props.changePage(1);
@@ -63,6 +60,7 @@ const MainFeedUserUpdate = (props) => {
             <img
               className='mainfeed__user-avatar update-user__avatar'
               src={`img/users/${props.currentUser.photo}`}
+              alt={`${props.currentUser.name}`}
             />
           </label>
         </div>

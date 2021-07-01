@@ -1,12 +1,9 @@
-import classes from "./LeftSideBar.module.scss";
+import React from "react";
 import SideButton from "./SideButton";
 import SvgTwitterLogo from "../iconComponents/SvgTwitterLogo";
 import SvgHomeIcon from "../iconComponents/SvgHomeIcon";
-import SvgNotificationIcon from "../iconComponents/SvgNotificationIcon";
 import SvgProfileIcon from "../iconComponents/SvgProfileIcon";
 import UserAdmin from "../components/UserAdmin";
-
-import React from "react";
 
 const iconHeight = "26px";
 
@@ -29,10 +26,6 @@ const LeftSideBar = (props) => {
         <SideButton text='Home' clickHandler={() => clickHandler(0)}>
           <SvgHomeIcon height={iconHeight} />
         </SideButton>
-
-        {/* <SideButton text='Notifications'>
-          <SvgNotificationIcon height={iconHeight} />
-        </SideButton> */}
 
         <SideButton text='Profile' clickHandler={() => clickHandler(1)}>
           <SvgProfileIcon height={iconHeight} />
